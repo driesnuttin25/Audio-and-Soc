@@ -1,0 +1,44 @@
+{
+   "ActiveEmotionalView":"Default View",
+   "Default View_ScaleFactor":"1.04735",
+   "Default View_TopLeft":"-197,-467",
+   "ExpandedHierarchyInLayout":"",
+   "guistr":"# # String gsaved with Nlview 7.5.8 2022-09-21 7111 VDI=41 GEI=38 GUI=JA:10.0
+#  -string -flagsOSRD
+preplace port DDR -pg 1 -lvl 5 -x 1420 -y -180 -defaultsOSRD
+preplace port FIXED_IO -pg 1 -lvl 5 -x 1420 -y -150 -defaultsOSRD
+preplace port port-id_sonar_echo_0 -pg 1 -lvl 0 -x -30 -y -90 -defaultsOSRD
+preplace port port-id_sonar_trig_0 -pg 1 -lvl 5 -x 1420 -y -90 -defaultsOSRD
+preplace port port-id_sys_clock -pg 1 -lvl 0 -x -30 -y -240 -defaultsOSRD
+preplace port port-id_sonar_echo_1 -pg 1 -lvl 0 -x -30 -y -370 -defaultsOSRD
+preplace port port-id_sonar_trig_1 -pg 1 -lvl 5 -x 1420 -y -370 -defaultsOSRD
+preplace inst processing_system7_0 -pg 1 -lvl 2 -x 470 -y 100 -defaultsOSRD
+preplace inst ultrasoon_0 -pg 1 -lvl 2 -x 470 -y -90 -defaultsOSRD
+preplace inst ps7_0_axi_periph -pg 1 -lvl 4 -x 1230 -y -120 -defaultsOSRD
+preplace inst rst_ps7_0_100M -pg 1 -lvl 3 -x 880 -y -70 -defaultsOSRD
+preplace inst clk_wiz_0 -pg 1 -lvl 2 -x 470 -y -240 -defaultsOSRD
+preplace inst ultrasoon_1 -pg 1 -lvl 1 -x 140 -y -370 -defaultsOSRD
+preplace netloc processing_system7_0_FCLK_CLK0 1 0 4 0 -70 280 210 700 40 1080
+preplace netloc processing_system7_0_FCLK_RESET0_N 1 2 1 710 -90n
+preplace netloc rst_ps7_0_100M_peripheral_aresetn 1 0 4 10 -50 260 220 NJ 220 1090
+preplace netloc clk_wiz_0_clk_out1 1 0 3 -10 -260 270 -320 660
+preplace netloc sonar_echo_0_1 1 0 2 N -90 N
+preplace netloc ultrasoon_0_sonar_trig 1 2 3 680J 30 NJ 30 1400J
+preplace netloc sys_clock_1 1 0 2 N -240 N
+preplace netloc sonar_echo_1_1 1 0 1 N -370
+preplace netloc ultrasoon_1_sonar_trig 1 1 4 NJ -370 NJ -370 NJ -370 NJ
+preplace netloc processing_system7_0_DDR 1 2 3 660J -190 1050 -270 1400
+preplace netloc processing_system7_0_FIXED_IO 1 2 3 670J -180 1060 -260 1390
+preplace netloc processing_system7_0_M_AXI_GP0 1 2 2 690J -170 1070J
+preplace netloc ps7_0_axi_periph_M00_AXI 1 1 4 280 -310 NJ -310 NJ -310 1370
+preplace netloc ps7_0_axi_periph_M01_AXI 1 0 5 20 -270 260J -300 NJ -300 NJ -300 1380
+levelinfo -pg 1 -30 140 470 880 1230 1420
+pagesize -pg 1 -db -bbox -sgen -170 -470 1550 230
+"
+}
+{
+   "da_axi4_cnt":"3",
+   "da_board_cnt":"2",
+   "da_clkrst_cnt":"3",
+   "da_ps7_cnt":"2"
+}
