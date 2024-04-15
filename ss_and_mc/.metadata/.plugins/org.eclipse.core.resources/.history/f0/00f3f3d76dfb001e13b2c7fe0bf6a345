@@ -1,0 +1,33 @@
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.NUMERIC_STD.ALL;
+
+entity pwm is
+    Port (
+        clk : in STD_LOGIC;         -- Clock input
+        pwm_out : out STD_LOGIC     -- PWM output
+    );
+end pwm;
+
+architecture Behavioral of pwm is
+    signal counter : unsigned(7 downto 0) := (others => '0');  -- Counter to generate PWM signal
+    signal duty_cycle : unsigned(7 downto 0) := "10000000";   -- Duty cycle for 50% (128 out of 256)
+begin
+    process(clk)
+    begin
+        if rising_edge(clk) then
+            if counter < duty_cycle then
+                pwm_out <= '1';  -- Set PWM output high
+            else
+                pwm_out <= '0';  -- Set PWM output low
+            end if;
+
+            -- Increment counter
+            if counter = "11111111" then
+                counter <= (others => '0');  -- Reset counter if it reaches maximum value
+            else
+                counter <= counter + 1;      -- Otherwise, increment counter
+            end if;
+        end if;
+    end process;
+end Behavioral;

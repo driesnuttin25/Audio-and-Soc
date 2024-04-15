@@ -1,0 +1,36 @@
+{
+   "ActiveEmotionalView":"Default View",
+   "Default View_ScaleFactor":"1.08086",
+   "Default View_TopLeft":"-132,-576",
+   "ExpandedHierarchyInLayout":"",
+   "guistr":"# # String gsaved with Nlview 7.5.8 2022-09-21 7111 VDI=41 GEI=38 GUI=JA:10.0
+#  -string -flagsOSRD
+preplace port DDR -pg 1 -lvl 6 -x 1480 -y -180 -defaultsOSRD
+preplace port FIXED_IO -pg 1 -lvl 6 -x 1480 -y -150 -defaultsOSRD
+preplace port port-id_sys_clock -pg 1 -lvl 0 -x 0 -y -430 -defaultsOSRD
+preplace port port-id_Sensor_Pin_0 -pg 1 -lvl 0 -x 0 -y -250 -defaultsOSRD
+preplace inst processing_system7_0 -pg 1 -lvl 3 -x 610 -y -120 -defaultsOSRD
+preplace inst speed_sensor_0 -pg 1 -lvl 2 -x 320 -y -250 -defaultsOSRD
+preplace inst clk_wiz_0 -pg 1 -lvl 1 -x 110 -y -440 -defaultsOSRD
+preplace inst ps7_0_axi_periph -pg 1 -lvl 5 -x 1320 -y -310 -defaultsOSRD
+preplace inst rst_ps7_0_100M -pg 1 -lvl 4 -x 990 -y -270 -defaultsOSRD
+preplace netloc sys_clock_1 1 0 1 20J -440n
+preplace netloc processing_system7_0_FCLK_CLK0 1 1 4 220 -120 420 -10 810 -160 1170
+preplace netloc processing_system7_0_FCLK_RESET0_N 1 3 1 820 -290n
+preplace netloc rst_ps7_0_100M_peripheral_aresetn 1 1 4 210 -380 NJ -380 NJ -380 1160
+preplace netloc clk_wiz_0_clk_out1 1 1 1 200 -440n
+preplace netloc Sensor_Pin_0_1 1 0 2 NJ -250 NJ
+preplace netloc processing_system7_0_DDR 1 3 3 NJ -170 1180 -180 N
+preplace netloc processing_system7_0_FIXED_IO 1 3 3 NJ -150 N -150 N
+preplace netloc processing_system7_0_M_AXI_GP0 1 3 2 800J -370 NJ
+preplace netloc ps7_0_axi_periph_M00_AXI 1 1 5 220 -430 NJ -430 NJ -430 NJ -430 1460
+levelinfo -pg 1 0 110 320 610 990 1320 1480
+pagesize -pg 1 -db -bbox -sgen -140 -510 1590 200
+"
+}
+{
+   "da_axi4_cnt":"1",
+   "da_board_cnt":"2",
+   "da_clkrst_cnt":"1",
+   "da_ps7_cnt":"1"
+}

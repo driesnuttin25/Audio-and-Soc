@@ -1,0 +1,54 @@
+{
+   "ActiveEmotionalView":"Default View",
+   "Default View_ScaleFactor":"0.919926",
+   "Default View_TopLeft":"-371,3",
+   "ExpandedHierarchyInLayout":"",
+   "guistr":"# # String gsaved with Nlview 7.5.8 2022-09-21 7111 VDI=41 GEI=38 GUI=JA:10.0 threadsafe
+#  -string -flagsOSRD
+preplace port DDR -pg 1 -lvl 4 -x 1120 -y 540 -defaultsOSRD
+preplace port FIXED_IO -pg 1 -lvl 4 -x 1120 -y 570 -defaultsOSRD
+preplace port GPIO_0_0 -pg 1 -lvl 4 -x 1120 -y 510 -defaultsOSRD
+preplace port port-id_sys_clock -pg 1 -lvl 0 -x 0 -y 880 -defaultsOSRD
+preplace port port-id_pwm0_0 -pg 1 -lvl 4 -x 1120 -y 340 -defaultsOSRD
+preplace port port-id_pwm0_1 -pg 1 -lvl 4 -x 1120 -y 120 -defaultsOSRD
+preplace port port-id_Sensor_Pin_0 -pg 1 -lvl 0 -x 0 -y 980 -defaultsOSRD
+preplace port port-id_Sensor_Pin_1 -pg 1 -lvl 0 -x 0 -y 940 -defaultsOSRD
+preplace inst processing_system7_0 -pg 1 -lvl 3 -x 890 -y 580 -defaultsOSRD
+preplace inst speed_sensor_0 -pg 1 -lvl 3 -x 890 -y 980 -defaultsOSRD
+preplace inst axi_timer_0 -pg 1 -lvl 3 -x 890 -y 110 -defaultsOSRD
+preplace inst axi_timer_1 -pg 1 -lvl 3 -x 890 -y 330 -defaultsOSRD
+preplace inst clk_wiz_0 -pg 1 -lvl 2 -x 520 -y 880 -defaultsOSRD
+preplace inst ps7_0_axi_periph -pg 1 -lvl 2 -x 520 -y 640 -defaultsOSRD
+preplace inst rst_ps7_0_100M -pg 1 -lvl 1 -x 200 -y 570 -defaultsOSRD
+preplace inst speed_sensor_1 -pg 1 -lvl 3 -x 890 -y 800 -defaultsOSRD
+preplace inst xlconcat_0 -pg 1 -lvl 2 -x 520 -y 370 -defaultsOSRD
+preplace netloc processing_system7_0_FCLK_CLK0 1 0 4 30 470 370 820 680 700 1080
+preplace netloc processing_system7_0_FCLK_RESET0_N 1 0 4 20 460 NJ 460 NJ 460 1090
+preplace netloc rst_ps7_0_100M_peripheral_aresetn 1 1 2 380 950 690
+preplace netloc sys_clock_1 1 0 2 NJ 880 NJ
+preplace netloc clk_wiz_0_clk_out1 1 2 1 700 780n
+preplace netloc axi_timer_1_pwm0 1 3 1 NJ 340
+preplace netloc axi_timer_0_pwm0 1 3 1 NJ 120
+preplace netloc Sensor_Pin_0_1 1 0 3 NJ 980 NJ 980 NJ
+preplace netloc Sensor_Pin_1_1 1 0 3 NJ 940 NJ 940 660J
+preplace netloc xlconcat_0_dout 1 2 1 700 370n
+preplace netloc axi_timer_0_interrupt 1 1 3 380 220 NJ 220 1080
+preplace netloc axi_timer_1_interrupt 1 1 3 380 440 NJ 440 1080
+preplace netloc processing_system7_0_DDR 1 3 1 NJ 540
+preplace netloc processing_system7_0_FIXED_IO 1 3 1 1100J 560n
+preplace netloc processing_system7_0_M_AXI_GP0 1 1 3 380 450 NJ 450 1080
+preplace netloc ps7_0_axi_periph_M00_AXI 1 2 1 660 60n
+preplace netloc ps7_0_axi_periph_M01_AXI 1 2 1 670 280n
+preplace netloc ps7_0_axi_periph_M02_AXI 1 2 1 670 650n
+preplace netloc processing_system7_0_GPIO_0 1 3 1 1100J 510n
+preplace netloc ps7_0_axi_periph_M03_AXI 1 2 1 660 670n
+levelinfo -pg 1 0 200 520 890 1120
+pagesize -pg 1 -db -bbox -sgen -140 0 1230 1080
+"
+}
+{
+   "da_axi4_cnt":"4",
+   "da_board_cnt":"3",
+   "da_clkrst_cnt":"1",
+   "da_ps7_cnt":"1"
+}

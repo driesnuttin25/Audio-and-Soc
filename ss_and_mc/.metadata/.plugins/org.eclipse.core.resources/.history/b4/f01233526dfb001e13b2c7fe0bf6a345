@@ -1,0 +1,52 @@
+#include "xtmrctr.h"
+#include "xparameters.h"
+#include "xil_printf.h"
+#include "xgpiops.h" // Include XGPIO for GPIO operations
+
+#define PWM_PERIOD 100000000    // PWM period (adjust based on your requirements)
+#define TIMER_DEVICE_ID XPAR_TMRCTR_0_DEVICE_ID
+#define GPIO_DEVICE_ID XPAR_GPIO_0_DEVICE_ID  // Assumed GPIO device ID
+
+// Function prototypes
+void SetDutyCycle(XTmrCtr *InstancePtr, u32 Channel, u32 DutyCyclePercentage);
+
+
+	int main(void) {
+	    XTmrCtr TimerInstance;
+	    int Status;
+
+	    // Initialize the timer counter instance
+	    Status = XTmrCtr_Initialize(&TimerInstance, TIMER_DEVICE_ID);
+	    if (Status != XST_SUCCESS) {
+	        xil_printf("Timer initialization failed\r\n");
+	        return XST_FAILURE;
+	    }
+
+	    // Initialize the PWM
+	    InitializePwm(&TimerInstance, 1, PWM_PERIOD);
+
+	    xil_printf("PWM started on axi_timer_0 channel 1 (pwm0_1)\r\n");
+
+    while (1) {
+        // Set duty cycle to 100%
+        SetDutyCycle(&TimerCounterInst, 0, 100);
+        xil_printf("Duty Cycle set to 100%%\r\n");
+        sleep(5);  // sleep for 5 seconds
+
+        // Set duty cycle to 50%
+        SetDutyCycle(&TimerCounterInst, 0, 50);
+        xil_printf("Duty Cycle set to 50%%\r\n");
+        sleep(5);  // sleep for 5 seconds
+    }
+
+    // Should never reach here
+    XTmrCtr_Stop(&TimerCounterInst, 0);
+    return XST_SUCCESS;
+}
+
+// Function to set the duty cycle of PWM
+void SetDutyCycle(XTmrCtr *InstancePtr, u32 Channel, u32 DutyCyclePercentage) {
+    u32 HighTime = (PWM_PERIOD * DutyCyclePercentage) / 100;
+    XTmrCtr_SetResetValue(InstancePtr, Channel, PWM_PERIOD - 1);
+    XTmrCtr_SetResetValue(InstancePtr, Channel, HighTime - 1);
+}

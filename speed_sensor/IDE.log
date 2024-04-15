@@ -1,0 +1,626 @@
+11:16:49 DEBUG : Logs will be stored at 'C:/Users/dries/speed_sensor/IDE.log'.
+11:16:52 INFO  : Launching XSCT server: xsct.bat -n  -interactive C:\Users\dries\speed_sensor\temp_xsdb_launch_script.tcl
+11:16:52 INFO  : Platform repository initialization has completed.
+11:16:52 INFO  : Registering command handlers for Vitis TCF services
+11:16:55 INFO  : XSCT server has started successfully.
+11:16:55 INFO  : Successfully done setting XSCT server connection channel  
+11:16:57 INFO  : plnx-install-location is set to ''
+11:16:57 INFO  : Successfully done setting workspace for the tool. 
+11:16:57 INFO  : Successfully done query RDI_DATADIR 
+11:17:41 INFO  : Result from executing command 'getProjects': design_1_wrapper
+11:17:41 INFO  : Result from executing command 'getPlatforms': 
+11:17:42 WARN  : An unexpected exception occurred in the module 'platform project logging'
+11:17:42 INFO  : Platform 'design_1_wrapper' is added to custom repositories.
+11:17:50 INFO  : Platform 'design_1_wrapper' is added to custom repositories.
+11:26:37 INFO  : Result from executing command 'getProjects': design_1_wrapper
+11:26:37 INFO  : Result from executing command 'getPlatforms': design_1_wrapper|C:/Users/dries/speed_sensor/design_1_wrapper/export/design_1_wrapper/design_1_wrapper.xpfm
+11:26:37 INFO  : Checking for BSP changes to sync application flags for project 'speed_sensor_test'...
+11:27:12 INFO  : Connected to target on host '127.0.0.1' and port '3121'.
+11:27:12 INFO  : Jtag cable 'Xilinx HW-FTDI-TEST FT2232H 1234-tulA' is selected.
+11:27:12 INFO  : 'jtag frequency' command is executed.
+11:27:12 INFO  : Context for 'APU' is selected.
+11:27:12 INFO  : System reset is completed.
+11:27:15 INFO  : 'after 3000' command is executed.
+11:27:16 INFO  : 'targets -set -filter {jtag_cable_name =~ "Xilinx HW-FTDI-TEST FT2232H 1234-tulA" && level==0 && jtag_device_ctx=="jsn-HW-FTDI-TEST FT2232H-1234-tulA-23727093-0"}' command is executed.
+11:27:18 INFO  : Device configured successfully with "C:/Users/dries/speed_sensor/speed_sensor_test/_ide/bitstream/design_1_wrapper.bit"
+11:27:18 INFO  : Context for 'APU' is selected.
+11:27:18 INFO  : Hardware design and registers information is loaded from 'C:/Users/dries/speed_sensor/design_1_wrapper/export/design_1_wrapper/hw/design_1_wrapper.xsa'.
+11:27:18 INFO  : 'configparams force-mem-access 1' command is executed.
+11:27:18 INFO  : Context for 'APU' is selected.
+11:27:18 INFO  : Sourcing of 'C:/Users/dries/speed_sensor/speed_sensor_test/_ide/psinit/ps7_init.tcl' is done.
+11:27:18 INFO  : 'ps7_init' command is executed.
+11:27:18 INFO  : 'ps7_post_config' command is executed.
+11:27:18 INFO  : Context for processor 'ps7_cortexa9_0' is selected.
+11:27:19 INFO  : The application 'C:/Users/dries/speed_sensor/speed_sensor_test/Debug/speed_sensor_test.elf' is downloaded to processor 'ps7_cortexa9_0'.
+11:27:19 INFO  : 'configparams force-mem-access 0' command is executed.
+11:27:19 INFO  : ----------------XSDB Script----------------
+connect -url tcp:127.0.0.1:3121
+targets -set -nocase -filter {name =~"APU*"}
+rst -system
+after 3000
+targets -set -filter {jtag_cable_name =~ "Xilinx HW-FTDI-TEST FT2232H 1234-tulA" && level==0 && jtag_device_ctx=="jsn-HW-FTDI-TEST FT2232H-1234-tulA-23727093-0"}
+fpga -file C:/Users/dries/speed_sensor/speed_sensor_test/_ide/bitstream/design_1_wrapper.bit
+targets -set -nocase -filter {name =~"APU*"}
+loadhw -hw C:/Users/dries/speed_sensor/design_1_wrapper/export/design_1_wrapper/hw/design_1_wrapper.xsa -mem-ranges [list {0x40000000 0xbfffffff}] -regs
+configparams force-mem-access 1
+targets -set -nocase -filter {name =~"APU*"}
+source C:/Users/dries/speed_sensor/speed_sensor_test/_ide/psinit/ps7_init.tcl
+ps7_init
+ps7_post_config
+targets -set -nocase -filter {name =~ "*A9*#0"}
+dow C:/Users/dries/speed_sensor/speed_sensor_test/Debug/speed_sensor_test.elf
+configparams force-mem-access 0
+----------------End of Script----------------
+
+11:27:19 INFO  : Context for processor 'ps7_cortexa9_0' is selected.
+11:27:19 INFO  : 'con' command is executed.
+11:27:19 INFO  : ----------------XSDB Script (After Launch)----------------
+targets -set -nocase -filter {name =~ "*A9*#0"}
+con
+----------------End of Script----------------
+
+11:27:19 INFO  : Launch script is exported to file 'C:\Users\dries\speed_sensor\speed_sensor_test_system\_ide\scripts\debugger_speed_sensor_test-default.tcl'
+11:27:34 INFO  : Disconnected from the channel tcfchan#2.
+11:27:35 INFO  : Connected to target on host '127.0.0.1' and port '3121'.
+11:27:35 INFO  : Jtag cable 'Xilinx HW-FTDI-TEST FT2232H 1234-tulA' is selected.
+11:27:35 INFO  : 'jtag frequency' command is executed.
+11:27:35 INFO  : Context for 'APU' is selected.
+11:27:35 INFO  : System reset is completed.
+11:27:39 INFO  : 'after 3000' command is executed.
+11:27:39 INFO  : 'targets -set -filter {jtag_cable_name =~ "Xilinx HW-FTDI-TEST FT2232H 1234-tulA" && level==0 && jtag_device_ctx=="jsn-HW-FTDI-TEST FT2232H-1234-tulA-23727093-0"}' command is executed.
+11:27:41 INFO  : Device configured successfully with "C:/Users/dries/speed_sensor/speed_sensor_test/_ide/bitstream/design_1_wrapper.bit"
+11:27:41 INFO  : Context for 'APU' is selected.
+11:27:41 INFO  : Hardware design and registers information is loaded from 'C:/Users/dries/speed_sensor/design_1_wrapper/export/design_1_wrapper/hw/design_1_wrapper.xsa'.
+11:27:41 INFO  : 'configparams force-mem-access 1' command is executed.
+11:27:41 INFO  : Context for 'APU' is selected.
+11:27:41 INFO  : Sourcing of 'C:/Users/dries/speed_sensor/speed_sensor_test/_ide/psinit/ps7_init.tcl' is done.
+11:27:41 INFO  : 'ps7_init' command is executed.
+11:27:41 INFO  : 'ps7_post_config' command is executed.
+11:27:41 INFO  : Context for processor 'ps7_cortexa9_0' is selected.
+11:27:42 INFO  : The application 'C:/Users/dries/speed_sensor/speed_sensor_test/Debug/speed_sensor_test.elf' is downloaded to processor 'ps7_cortexa9_0'.
+11:27:42 INFO  : 'configparams force-mem-access 0' command is executed.
+11:27:42 INFO  : ----------------XSDB Script----------------
+connect -url tcp:127.0.0.1:3121
+targets -set -nocase -filter {name =~"APU*"}
+rst -system
+after 3000
+targets -set -filter {jtag_cable_name =~ "Xilinx HW-FTDI-TEST FT2232H 1234-tulA" && level==0 && jtag_device_ctx=="jsn-HW-FTDI-TEST FT2232H-1234-tulA-23727093-0"}
+fpga -file C:/Users/dries/speed_sensor/speed_sensor_test/_ide/bitstream/design_1_wrapper.bit
+targets -set -nocase -filter {name =~"APU*"}
+loadhw -hw C:/Users/dries/speed_sensor/design_1_wrapper/export/design_1_wrapper/hw/design_1_wrapper.xsa -mem-ranges [list {0x40000000 0xbfffffff}] -regs
+configparams force-mem-access 1
+targets -set -nocase -filter {name =~"APU*"}
+source C:/Users/dries/speed_sensor/speed_sensor_test/_ide/psinit/ps7_init.tcl
+ps7_init
+ps7_post_config
+targets -set -nocase -filter {name =~ "*A9*#0"}
+dow C:/Users/dries/speed_sensor/speed_sensor_test/Debug/speed_sensor_test.elf
+configparams force-mem-access 0
+----------------End of Script----------------
+
+11:27:42 INFO  : Context for processor 'ps7_cortexa9_0' is selected.
+11:27:42 INFO  : 'con' command is executed.
+11:27:42 INFO  : ----------------XSDB Script (After Launch)----------------
+targets -set -nocase -filter {name =~ "*A9*#0"}
+con
+----------------End of Script----------------
+
+11:27:42 INFO  : Launch script is exported to file 'C:\Users\dries\speed_sensor\speed_sensor_test_system\_ide\scripts\debugger_speed_sensor_test-default.tcl'
+11:28:11 INFO  : Disconnected from the channel tcfchan#3.
+11:28:12 INFO  : Connected to target on host '127.0.0.1' and port '3121'.
+11:28:12 INFO  : Jtag cable 'Xilinx HW-FTDI-TEST FT2232H 1234-tulA' is selected.
+11:28:12 INFO  : 'jtag frequency' command is executed.
+11:28:12 INFO  : Context for 'APU' is selected.
+11:28:12 INFO  : System reset is completed.
+11:28:15 INFO  : 'after 3000' command is executed.
+11:28:15 INFO  : 'targets -set -filter {jtag_cable_name =~ "Xilinx HW-FTDI-TEST FT2232H 1234-tulA" && level==0 && jtag_device_ctx=="jsn-HW-FTDI-TEST FT2232H-1234-tulA-23727093-0"}' command is executed.
+11:28:18 INFO  : Device configured successfully with "C:/Users/dries/speed_sensor/speed_sensor_test/_ide/bitstream/design_1_wrapper.bit"
+11:28:18 INFO  : Context for 'APU' is selected.
+11:28:18 INFO  : Hardware design and registers information is loaded from 'C:/Users/dries/speed_sensor/design_1_wrapper/export/design_1_wrapper/hw/design_1_wrapper.xsa'.
+11:28:18 INFO  : 'configparams force-mem-access 1' command is executed.
+11:28:18 INFO  : Context for 'APU' is selected.
+11:28:18 INFO  : Sourcing of 'C:/Users/dries/speed_sensor/speed_sensor_test/_ide/psinit/ps7_init.tcl' is done.
+11:28:18 INFO  : 'ps7_init' command is executed.
+11:28:18 INFO  : 'ps7_post_config' command is executed.
+11:28:18 INFO  : Context for processor 'ps7_cortexa9_0' is selected.
+11:28:18 INFO  : The application 'C:/Users/dries/speed_sensor/speed_sensor_test/Debug/speed_sensor_test.elf' is downloaded to processor 'ps7_cortexa9_0'.
+11:28:18 INFO  : 'configparams force-mem-access 0' command is executed.
+11:28:18 INFO  : ----------------XSDB Script----------------
+connect -url tcp:127.0.0.1:3121
+targets -set -nocase -filter {name =~"APU*"}
+rst -system
+after 3000
+targets -set -filter {jtag_cable_name =~ "Xilinx HW-FTDI-TEST FT2232H 1234-tulA" && level==0 && jtag_device_ctx=="jsn-HW-FTDI-TEST FT2232H-1234-tulA-23727093-0"}
+fpga -file C:/Users/dries/speed_sensor/speed_sensor_test/_ide/bitstream/design_1_wrapper.bit
+targets -set -nocase -filter {name =~"APU*"}
+loadhw -hw C:/Users/dries/speed_sensor/design_1_wrapper/export/design_1_wrapper/hw/design_1_wrapper.xsa -mem-ranges [list {0x40000000 0xbfffffff}] -regs
+configparams force-mem-access 1
+targets -set -nocase -filter {name =~"APU*"}
+source C:/Users/dries/speed_sensor/speed_sensor_test/_ide/psinit/ps7_init.tcl
+ps7_init
+ps7_post_config
+targets -set -nocase -filter {name =~ "*A9*#0"}
+dow C:/Users/dries/speed_sensor/speed_sensor_test/Debug/speed_sensor_test.elf
+configparams force-mem-access 0
+----------------End of Script----------------
+
+11:28:18 INFO  : Context for processor 'ps7_cortexa9_0' is selected.
+11:28:18 INFO  : 'con' command is executed.
+11:28:18 INFO  : ----------------XSDB Script (After Launch)----------------
+targets -set -nocase -filter {name =~ "*A9*#0"}
+con
+----------------End of Script----------------
+
+11:28:18 INFO  : Launch script is exported to file 'C:\Users\dries\speed_sensor\speed_sensor_test_system\_ide\scripts\debugger_speed_sensor_test-default_1.tcl'
+11:28:58 INFO  : Checking for BSP changes to sync application flags for project 'speed_sensor_test'...
+11:29:14 INFO  : Disconnected from the channel tcfchan#4.
+11:29:15 INFO  : Connected to target on host '127.0.0.1' and port '3121'.
+11:29:15 INFO  : Jtag cable 'Xilinx HW-FTDI-TEST FT2232H 1234-tulA' is selected.
+11:29:15 INFO  : 'jtag frequency' command is executed.
+11:29:15 INFO  : Context for 'APU' is selected.
+11:29:15 INFO  : System reset is completed.
+11:29:18 INFO  : 'after 3000' command is executed.
+11:29:18 INFO  : 'targets -set -filter {jtag_cable_name =~ "Xilinx HW-FTDI-TEST FT2232H 1234-tulA" && level==0 && jtag_device_ctx=="jsn-HW-FTDI-TEST FT2232H-1234-tulA-23727093-0"}' command is executed.
+11:29:21 INFO  : Device configured successfully with "C:/Users/dries/speed_sensor/speed_sensor_test/_ide/bitstream/design_1_wrapper.bit"
+11:29:21 INFO  : Context for 'APU' is selected.
+11:29:21 INFO  : Hardware design and registers information is loaded from 'C:/Users/dries/speed_sensor/design_1_wrapper/export/design_1_wrapper/hw/design_1_wrapper.xsa'.
+11:29:21 INFO  : 'configparams force-mem-access 1' command is executed.
+11:29:21 INFO  : Context for 'APU' is selected.
+11:29:21 INFO  : Sourcing of 'C:/Users/dries/speed_sensor/speed_sensor_test/_ide/psinit/ps7_init.tcl' is done.
+11:29:21 INFO  : 'ps7_init' command is executed.
+11:29:21 INFO  : 'ps7_post_config' command is executed.
+11:29:21 INFO  : Context for processor 'ps7_cortexa9_0' is selected.
+11:29:21 INFO  : The application 'C:/Users/dries/speed_sensor/speed_sensor_test/Debug/speed_sensor_test.elf' is downloaded to processor 'ps7_cortexa9_0'.
+11:29:21 INFO  : 'configparams force-mem-access 0' command is executed.
+11:29:21 INFO  : ----------------XSDB Script----------------
+connect -url tcp:127.0.0.1:3121
+targets -set -nocase -filter {name =~"APU*"}
+rst -system
+after 3000
+targets -set -filter {jtag_cable_name =~ "Xilinx HW-FTDI-TEST FT2232H 1234-tulA" && level==0 && jtag_device_ctx=="jsn-HW-FTDI-TEST FT2232H-1234-tulA-23727093-0"}
+fpga -file C:/Users/dries/speed_sensor/speed_sensor_test/_ide/bitstream/design_1_wrapper.bit
+targets -set -nocase -filter {name =~"APU*"}
+loadhw -hw C:/Users/dries/speed_sensor/design_1_wrapper/export/design_1_wrapper/hw/design_1_wrapper.xsa -mem-ranges [list {0x40000000 0xbfffffff}] -regs
+configparams force-mem-access 1
+targets -set -nocase -filter {name =~"APU*"}
+source C:/Users/dries/speed_sensor/speed_sensor_test/_ide/psinit/ps7_init.tcl
+ps7_init
+ps7_post_config
+targets -set -nocase -filter {name =~ "*A9*#0"}
+dow C:/Users/dries/speed_sensor/speed_sensor_test/Debug/speed_sensor_test.elf
+configparams force-mem-access 0
+----------------End of Script----------------
+
+11:29:22 INFO  : Context for processor 'ps7_cortexa9_0' is selected.
+11:29:22 INFO  : 'con' command is executed.
+11:29:22 INFO  : ----------------XSDB Script (After Launch)----------------
+targets -set -nocase -filter {name =~ "*A9*#0"}
+con
+----------------End of Script----------------
+
+11:29:22 INFO  : Launch script is exported to file 'C:\Users\dries\speed_sensor\speed_sensor_test_system\_ide\scripts\debugger_speed_sensor_test-default.tcl'
+11:30:34 INFO  : Checking for BSP changes to sync application flags for project 'speed_sensor_test'...
+11:30:40 INFO  : Disconnected from the channel tcfchan#5.
+11:30:41 INFO  : Connected to target on host '127.0.0.1' and port '3121'.
+11:30:41 INFO  : Jtag cable 'Xilinx HW-FTDI-TEST FT2232H 1234-tulA' is selected.
+11:30:41 INFO  : 'jtag frequency' command is executed.
+11:30:41 INFO  : Context for 'APU' is selected.
+11:30:41 INFO  : System reset is completed.
+11:30:44 INFO  : 'after 3000' command is executed.
+11:30:44 INFO  : 'targets -set -filter {jtag_cable_name =~ "Xilinx HW-FTDI-TEST FT2232H 1234-tulA" && level==0 && jtag_device_ctx=="jsn-HW-FTDI-TEST FT2232H-1234-tulA-23727093-0"}' command is executed.
+11:30:47 INFO  : Device configured successfully with "C:/Users/dries/speed_sensor/speed_sensor_test/_ide/bitstream/design_1_wrapper.bit"
+11:30:47 INFO  : Context for 'APU' is selected.
+11:30:47 INFO  : Hardware design and registers information is loaded from 'C:/Users/dries/speed_sensor/design_1_wrapper/export/design_1_wrapper/hw/design_1_wrapper.xsa'.
+11:30:47 INFO  : 'configparams force-mem-access 1' command is executed.
+11:30:47 INFO  : Context for 'APU' is selected.
+11:30:47 INFO  : Sourcing of 'C:/Users/dries/speed_sensor/speed_sensor_test/_ide/psinit/ps7_init.tcl' is done.
+11:30:47 INFO  : 'ps7_init' command is executed.
+11:30:47 INFO  : 'ps7_post_config' command is executed.
+11:30:47 INFO  : Context for processor 'ps7_cortexa9_0' is selected.
+11:30:47 INFO  : The application 'C:/Users/dries/speed_sensor/speed_sensor_test/Debug/speed_sensor_test.elf' is downloaded to processor 'ps7_cortexa9_0'.
+11:30:47 INFO  : 'configparams force-mem-access 0' command is executed.
+11:30:47 INFO  : ----------------XSDB Script----------------
+connect -url tcp:127.0.0.1:3121
+targets -set -nocase -filter {name =~"APU*"}
+rst -system
+after 3000
+targets -set -filter {jtag_cable_name =~ "Xilinx HW-FTDI-TEST FT2232H 1234-tulA" && level==0 && jtag_device_ctx=="jsn-HW-FTDI-TEST FT2232H-1234-tulA-23727093-0"}
+fpga -file C:/Users/dries/speed_sensor/speed_sensor_test/_ide/bitstream/design_1_wrapper.bit
+targets -set -nocase -filter {name =~"APU*"}
+loadhw -hw C:/Users/dries/speed_sensor/design_1_wrapper/export/design_1_wrapper/hw/design_1_wrapper.xsa -mem-ranges [list {0x40000000 0xbfffffff}] -regs
+configparams force-mem-access 1
+targets -set -nocase -filter {name =~"APU*"}
+source C:/Users/dries/speed_sensor/speed_sensor_test/_ide/psinit/ps7_init.tcl
+ps7_init
+ps7_post_config
+targets -set -nocase -filter {name =~ "*A9*#0"}
+dow C:/Users/dries/speed_sensor/speed_sensor_test/Debug/speed_sensor_test.elf
+configparams force-mem-access 0
+----------------End of Script----------------
+
+11:30:47 INFO  : Context for processor 'ps7_cortexa9_0' is selected.
+11:30:47 INFO  : 'con' command is executed.
+11:30:47 INFO  : ----------------XSDB Script (After Launch)----------------
+targets -set -nocase -filter {name =~ "*A9*#0"}
+con
+----------------End of Script----------------
+
+11:30:47 INFO  : Launch script is exported to file 'C:\Users\dries\speed_sensor\speed_sensor_test_system\_ide\scripts\debugger_speed_sensor_test-default.tcl'
+12:31:25 INFO  : Disconnected from the channel tcfchan#6.
+09:26:47 DEBUG : Logs will be stored at 'C:/Users/dries/speed_sensor/IDE.log'.
+09:26:48 INFO  : Launching XSCT server: xsct.bat -n  -interactive C:\Users\dries\speed_sensor\temp_xsdb_launch_script.tcl
+09:26:52 INFO  : XSCT server has started successfully.
+09:26:52 INFO  : plnx-install-location is set to ''
+09:26:52 INFO  : Successfully done setting XSCT server connection channel  
+09:26:52 INFO  : Successfully done setting workspace for the tool. 
+09:26:52 INFO  : Platform repository initialization has completed.
+09:26:53 INFO  : Registering command handlers for Vitis TCF services
+09:26:55 INFO  : Successfully done query RDI_DATADIR 
+23:19:10 DEBUG : Logs will be stored at 'C:/Users/dries/speed_sensor/IDE.log'.
+23:19:10 INFO  : Launching XSCT server: xsct.bat -n  -interactive C:\Users\dries\speed_sensor\temp_xsdb_launch_script.tcl
+23:19:15 INFO  : XSCT server has started successfully.
+23:19:15 INFO  : plnx-install-location is set to ''
+23:19:15 INFO  : Successfully done setting XSCT server connection channel  
+23:19:15 INFO  : Successfully done setting workspace for the tool. 
+23:19:16 INFO  : Registering command handlers for Vitis TCF services
+23:19:16 INFO  : Platform repository initialization has completed.
+23:19:21 INFO  : Successfully done query RDI_DATADIR 
+23:28:10 DEBUG : Logs will be stored at 'C:/Users/dries/speed_sensor/IDE.log'.
+23:28:11 INFO  : Launching XSCT server: xsct.bat -n  -interactive C:\Users\dries\speed_sensor\temp_xsdb_launch_script.tcl
+23:28:14 INFO  : XSCT server has started successfully.
+23:28:14 INFO  : plnx-install-location is set to ''
+23:28:14 INFO  : Successfully done setting XSCT server connection channel  
+23:28:14 INFO  : Successfully done setting workspace for the tool. 
+23:28:15 INFO  : Platform repository initialization has completed.
+23:28:15 INFO  : Successfully done query RDI_DATADIR 
+23:28:15 INFO  : Registering command handlers for Vitis TCF services
+23:29:12 INFO  : Result from executing command 'getProjects': design_1_wrapper
+23:29:12 INFO  : Result from executing command 'getPlatforms': design_1_wrapper|C:/Users/dries/speed_sensor/design_1_wrapper/export/design_1_wrapper/design_1_wrapper.xpfm
+23:29:13 INFO  : Checking for BSP changes to sync application flags for project 'speed_sensor_test'...
+23:30:19 INFO  : Connected to target on host '127.0.0.1' and port '3121'.
+23:30:19 INFO  : Jtag cable 'Xilinx HW-FTDI-TEST FT2232H 1234-tulA' is selected.
+23:30:19 INFO  : 'jtag frequency' command is executed.
+23:30:19 INFO  : Context for 'APU' is selected.
+23:30:19 INFO  : System reset is completed.
+23:30:22 INFO  : 'after 3000' command is executed.
+23:30:22 INFO  : 'targets -set -filter {jtag_cable_name =~ "Xilinx HW-FTDI-TEST FT2232H 1234-tulA" && level==0 && jtag_device_ctx=="jsn-HW-FTDI-TEST FT2232H-1234-tulA-23727093-0"}' command is executed.
+23:30:24 INFO  : Device configured successfully with "C:/Users/dries/speed_sensor/speed_sensor_test/_ide/bitstream/design_1_wrapper.bit"
+23:30:24 INFO  : Context for 'APU' is selected.
+23:30:24 INFO  : Hardware design and registers information is loaded from 'C:/Users/dries/speed_sensor/design_1_wrapper/export/design_1_wrapper/hw/design_1_wrapper.xsa'.
+23:30:24 INFO  : 'configparams force-mem-access 1' command is executed.
+23:30:24 INFO  : Context for 'APU' is selected.
+23:30:24 INFO  : Sourcing of 'C:/Users/dries/speed_sensor/speed_sensor_test/_ide/psinit/ps7_init.tcl' is done.
+23:30:25 INFO  : 'ps7_init' command is executed.
+23:30:25 INFO  : 'ps7_post_config' command is executed.
+23:30:25 INFO  : Context for processor 'ps7_cortexa9_0' is selected.
+23:30:25 INFO  : The application 'C:/Users/dries/speed_sensor/speed_sensor_test/Debug/speed_sensor_test.elf' is downloaded to processor 'ps7_cortexa9_0'.
+23:30:25 INFO  : 'configparams force-mem-access 0' command is executed.
+23:30:25 INFO  : ----------------XSDB Script----------------
+connect -url tcp:127.0.0.1:3121
+targets -set -nocase -filter {name =~"APU*"}
+rst -system
+after 3000
+targets -set -filter {jtag_cable_name =~ "Xilinx HW-FTDI-TEST FT2232H 1234-tulA" && level==0 && jtag_device_ctx=="jsn-HW-FTDI-TEST FT2232H-1234-tulA-23727093-0"}
+fpga -file C:/Users/dries/speed_sensor/speed_sensor_test/_ide/bitstream/design_1_wrapper.bit
+targets -set -nocase -filter {name =~"APU*"}
+loadhw -hw C:/Users/dries/speed_sensor/design_1_wrapper/export/design_1_wrapper/hw/design_1_wrapper.xsa -mem-ranges [list {0x40000000 0xbfffffff}] -regs
+configparams force-mem-access 1
+targets -set -nocase -filter {name =~"APU*"}
+source C:/Users/dries/speed_sensor/speed_sensor_test/_ide/psinit/ps7_init.tcl
+ps7_init
+ps7_post_config
+targets -set -nocase -filter {name =~ "*A9*#0"}
+dow C:/Users/dries/speed_sensor/speed_sensor_test/Debug/speed_sensor_test.elf
+configparams force-mem-access 0
+----------------End of Script----------------
+
+23:30:25 INFO  : Context for processor 'ps7_cortexa9_0' is selected.
+23:30:25 INFO  : 'con' command is executed.
+23:30:25 INFO  : ----------------XSDB Script (After Launch)----------------
+targets -set -nocase -filter {name =~ "*A9*#0"}
+con
+----------------End of Script----------------
+
+23:30:25 INFO  : Launch script is exported to file 'C:\Users\dries\speed_sensor\speed_sensor_test_system\_ide\scripts\debugger_speed_sensor_test-default.tcl'
+23:30:55 INFO  : Disconnected from the channel tcfchan#2.
+23:30:56 INFO  : Connected to target on host '127.0.0.1' and port '3121'.
+23:30:56 INFO  : Jtag cable 'Xilinx HW-FTDI-TEST FT2232H 1234-tulA' is selected.
+23:30:56 INFO  : 'jtag frequency' command is executed.
+23:30:56 INFO  : Context for 'APU' is selected.
+23:30:56 INFO  : System reset is completed.
+23:30:59 INFO  : 'after 3000' command is executed.
+23:30:59 INFO  : 'targets -set -filter {jtag_cable_name =~ "Xilinx HW-FTDI-TEST FT2232H 1234-tulA" && level==0 && jtag_device_ctx=="jsn-HW-FTDI-TEST FT2232H-1234-tulA-23727093-0"}' command is executed.
+23:31:01 INFO  : Device configured successfully with "C:/Users/dries/speed_sensor/speed_sensor_test/_ide/bitstream/design_1_wrapper.bit"
+23:31:01 INFO  : Context for 'APU' is selected.
+23:31:01 INFO  : Hardware design and registers information is loaded from 'C:/Users/dries/speed_sensor/design_1_wrapper/export/design_1_wrapper/hw/design_1_wrapper.xsa'.
+23:31:01 INFO  : 'configparams force-mem-access 1' command is executed.
+23:31:01 INFO  : Context for 'APU' is selected.
+23:31:01 INFO  : Sourcing of 'C:/Users/dries/speed_sensor/speed_sensor_test/_ide/psinit/ps7_init.tcl' is done.
+23:31:02 INFO  : 'ps7_init' command is executed.
+23:31:02 INFO  : 'ps7_post_config' command is executed.
+23:31:02 INFO  : Context for processor 'ps7_cortexa9_0' is selected.
+23:31:02 INFO  : The application 'C:/Users/dries/speed_sensor/speed_sensor_test/Debug/speed_sensor_test.elf' is downloaded to processor 'ps7_cortexa9_0'.
+23:31:02 INFO  : 'configparams force-mem-access 0' command is executed.
+23:31:02 INFO  : ----------------XSDB Script----------------
+connect -url tcp:127.0.0.1:3121
+targets -set -nocase -filter {name =~"APU*"}
+rst -system
+after 3000
+targets -set -filter {jtag_cable_name =~ "Xilinx HW-FTDI-TEST FT2232H 1234-tulA" && level==0 && jtag_device_ctx=="jsn-HW-FTDI-TEST FT2232H-1234-tulA-23727093-0"}
+fpga -file C:/Users/dries/speed_sensor/speed_sensor_test/_ide/bitstream/design_1_wrapper.bit
+targets -set -nocase -filter {name =~"APU*"}
+loadhw -hw C:/Users/dries/speed_sensor/design_1_wrapper/export/design_1_wrapper/hw/design_1_wrapper.xsa -mem-ranges [list {0x40000000 0xbfffffff}] -regs
+configparams force-mem-access 1
+targets -set -nocase -filter {name =~"APU*"}
+source C:/Users/dries/speed_sensor/speed_sensor_test/_ide/psinit/ps7_init.tcl
+ps7_init
+ps7_post_config
+targets -set -nocase -filter {name =~ "*A9*#0"}
+dow C:/Users/dries/speed_sensor/speed_sensor_test/Debug/speed_sensor_test.elf
+configparams force-mem-access 0
+----------------End of Script----------------
+
+23:31:02 INFO  : Context for processor 'ps7_cortexa9_0' is selected.
+23:31:02 INFO  : 'con' command is executed.
+23:31:02 INFO  : ----------------XSDB Script (After Launch)----------------
+targets -set -nocase -filter {name =~ "*A9*#0"}
+con
+----------------End of Script----------------
+
+23:31:02 INFO  : Launch script is exported to file 'C:\Users\dries\speed_sensor\speed_sensor_test_system\_ide\scripts\debugger_speed_sensor_test-default.tcl'
+23:32:22 INFO  : Disconnected from the channel tcfchan#3.
+23:32:23 INFO  : Connected to target on host '127.0.0.1' and port '3121'.
+23:32:23 INFO  : Jtag cable 'Xilinx HW-FTDI-TEST FT2232H 1234-tulA' is selected.
+23:32:23 INFO  : 'jtag frequency' command is executed.
+23:32:23 INFO  : Context for 'APU' is selected.
+23:32:23 INFO  : System reset is completed.
+23:32:26 INFO  : 'after 3000' command is executed.
+23:32:26 INFO  : 'targets -set -filter {jtag_cable_name =~ "Xilinx HW-FTDI-TEST FT2232H 1234-tulA" && level==0 && jtag_device_ctx=="jsn-HW-FTDI-TEST FT2232H-1234-tulA-23727093-0"}' command is executed.
+23:32:29 INFO  : Device configured successfully with "C:/Users/dries/speed_sensor/speed_sensor_test/_ide/bitstream/design_1_wrapper.bit"
+23:32:29 INFO  : Context for 'APU' is selected.
+23:32:29 INFO  : Hardware design and registers information is loaded from 'C:/Users/dries/speed_sensor/design_1_wrapper/export/design_1_wrapper/hw/design_1_wrapper.xsa'.
+23:32:29 INFO  : 'configparams force-mem-access 1' command is executed.
+23:32:29 INFO  : Context for 'APU' is selected.
+23:32:29 INFO  : Sourcing of 'C:/Users/dries/speed_sensor/speed_sensor_test/_ide/psinit/ps7_init.tcl' is done.
+23:32:29 INFO  : 'ps7_init' command is executed.
+23:32:29 INFO  : 'ps7_post_config' command is executed.
+23:32:29 INFO  : Context for processor 'ps7_cortexa9_0' is selected.
+23:32:29 INFO  : The application 'C:/Users/dries/speed_sensor/speed_sensor_test/Debug/speed_sensor_test.elf' is downloaded to processor 'ps7_cortexa9_0'.
+23:32:29 INFO  : 'configparams force-mem-access 0' command is executed.
+23:32:29 INFO  : ----------------XSDB Script----------------
+connect -url tcp:127.0.0.1:3121
+targets -set -nocase -filter {name =~"APU*"}
+rst -system
+after 3000
+targets -set -filter {jtag_cable_name =~ "Xilinx HW-FTDI-TEST FT2232H 1234-tulA" && level==0 && jtag_device_ctx=="jsn-HW-FTDI-TEST FT2232H-1234-tulA-23727093-0"}
+fpga -file C:/Users/dries/speed_sensor/speed_sensor_test/_ide/bitstream/design_1_wrapper.bit
+targets -set -nocase -filter {name =~"APU*"}
+loadhw -hw C:/Users/dries/speed_sensor/design_1_wrapper/export/design_1_wrapper/hw/design_1_wrapper.xsa -mem-ranges [list {0x40000000 0xbfffffff}] -regs
+configparams force-mem-access 1
+targets -set -nocase -filter {name =~"APU*"}
+source C:/Users/dries/speed_sensor/speed_sensor_test/_ide/psinit/ps7_init.tcl
+ps7_init
+ps7_post_config
+targets -set -nocase -filter {name =~ "*A9*#0"}
+dow C:/Users/dries/speed_sensor/speed_sensor_test/Debug/speed_sensor_test.elf
+configparams force-mem-access 0
+----------------End of Script----------------
+
+23:32:29 INFO  : Context for processor 'ps7_cortexa9_0' is selected.
+23:32:29 INFO  : 'con' command is executed.
+23:32:29 INFO  : ----------------XSDB Script (After Launch)----------------
+targets -set -nocase -filter {name =~ "*A9*#0"}
+con
+----------------End of Script----------------
+
+23:32:29 INFO  : Launch script is exported to file 'C:\Users\dries\speed_sensor\speed_sensor_test_system\_ide\scripts\debugger_speed_sensor_test-default.tcl'
+23:35:38 INFO  : Disconnected from the channel tcfchan#4.
+23:46:32 DEBUG : Logs will be stored at 'C:/Users/dries/speed_sensor/IDE.log'.
+23:46:32 INFO  : Launching XSCT server: xsct.bat -n  -interactive C:\Users\dries\speed_sensor\temp_xsdb_launch_script.tcl
+23:46:35 INFO  : XSCT server has started successfully.
+23:46:35 INFO  : plnx-install-location is set to ''
+23:46:35 INFO  : Successfully done setting XSCT server connection channel  
+23:46:35 INFO  : Successfully done setting workspace for the tool. 
+23:46:37 INFO  : Platform repository initialization has completed.
+23:46:37 INFO  : Successfully done query RDI_DATADIR 
+23:46:37 INFO  : Registering command handlers for Vitis TCF services
+23:47:23 INFO  : Result from executing command 'getProjects': design_1_wrapper
+23:47:23 INFO  : Result from executing command 'getPlatforms': design_1_wrapper|C:/Users/dries/speed_sensor/design_1_wrapper/export/design_1_wrapper/design_1_wrapper.xpfm
+23:47:24 INFO  : Checking for BSP changes to sync application flags for project 'speed_sensor_test'...
+23:47:32 INFO  : Connected to target on host '127.0.0.1' and port '3121'.
+23:47:32 INFO  : Jtag cable 'Xilinx HW-FTDI-TEST FT2232H 1234-tulA' is selected.
+23:47:32 INFO  : 'jtag frequency' command is executed.
+23:47:32 INFO  : Context for 'APU' is selected.
+23:47:32 INFO  : System reset is completed.
+23:47:35 INFO  : 'after 3000' command is executed.
+23:47:35 INFO  : 'targets -set -filter {jtag_cable_name =~ "Xilinx HW-FTDI-TEST FT2232H 1234-tulA" && level==0 && jtag_device_ctx=="jsn-HW-FTDI-TEST FT2232H-1234-tulA-23727093-0"}' command is executed.
+23:47:37 INFO  : Device configured successfully with "C:/Users/dries/speed_sensor/speed_sensor_test/_ide/bitstream/design_1_wrapper.bit"
+23:47:37 INFO  : Context for 'APU' is selected.
+23:47:38 INFO  : Hardware design and registers information is loaded from 'C:/Users/dries/speed_sensor/design_1_wrapper/export/design_1_wrapper/hw/design_1_wrapper.xsa'.
+23:47:38 INFO  : 'configparams force-mem-access 1' command is executed.
+23:47:38 INFO  : Context for 'APU' is selected.
+23:47:38 INFO  : Sourcing of 'C:/Users/dries/speed_sensor/speed_sensor_test/_ide/psinit/ps7_init.tcl' is done.
+23:47:38 INFO  : 'ps7_init' command is executed.
+23:47:38 INFO  : 'ps7_post_config' command is executed.
+23:47:38 INFO  : Context for processor 'ps7_cortexa9_0' is selected.
+23:47:38 INFO  : The application 'C:/Users/dries/speed_sensor/speed_sensor_test/Debug/speed_sensor_test.elf' is downloaded to processor 'ps7_cortexa9_0'.
+23:47:38 INFO  : 'configparams force-mem-access 0' command is executed.
+23:47:38 INFO  : ----------------XSDB Script----------------
+connect -url tcp:127.0.0.1:3121
+targets -set -nocase -filter {name =~"APU*"}
+rst -system
+after 3000
+targets -set -filter {jtag_cable_name =~ "Xilinx HW-FTDI-TEST FT2232H 1234-tulA" && level==0 && jtag_device_ctx=="jsn-HW-FTDI-TEST FT2232H-1234-tulA-23727093-0"}
+fpga -file C:/Users/dries/speed_sensor/speed_sensor_test/_ide/bitstream/design_1_wrapper.bit
+targets -set -nocase -filter {name =~"APU*"}
+loadhw -hw C:/Users/dries/speed_sensor/design_1_wrapper/export/design_1_wrapper/hw/design_1_wrapper.xsa -mem-ranges [list {0x40000000 0xbfffffff}] -regs
+configparams force-mem-access 1
+targets -set -nocase -filter {name =~"APU*"}
+source C:/Users/dries/speed_sensor/speed_sensor_test/_ide/psinit/ps7_init.tcl
+ps7_init
+ps7_post_config
+targets -set -nocase -filter {name =~ "*A9*#0"}
+dow C:/Users/dries/speed_sensor/speed_sensor_test/Debug/speed_sensor_test.elf
+configparams force-mem-access 0
+----------------End of Script----------------
+
+23:47:38 INFO  : Context for processor 'ps7_cortexa9_0' is selected.
+23:47:38 INFO  : 'con' command is executed.
+23:47:38 INFO  : ----------------XSDB Script (After Launch)----------------
+targets -set -nocase -filter {name =~ "*A9*#0"}
+con
+----------------End of Script----------------
+
+23:47:38 INFO  : Launch script is exported to file 'C:\Users\dries\speed_sensor\speed_sensor_test_system\_ide\scripts\debugger_speed_sensor_test-default.tcl'
+23:48:24 INFO  : Checking for BSP changes to sync application flags for project 'speed_sensor_test'...
+23:48:26 INFO  : Disconnected from the channel tcfchan#2.
+23:48:27 INFO  : Connected to target on host '127.0.0.1' and port '3121'.
+23:48:28 INFO  : Jtag cable 'Xilinx HW-FTDI-TEST FT2232H 1234-tulA' is selected.
+23:48:28 INFO  : 'jtag frequency' command is executed.
+23:48:28 INFO  : Context for 'APU' is selected.
+23:48:28 INFO  : System reset is completed.
+23:48:31 INFO  : 'after 3000' command is executed.
+23:48:31 INFO  : 'targets -set -filter {jtag_cable_name =~ "Xilinx HW-FTDI-TEST FT2232H 1234-tulA" && level==0 && jtag_device_ctx=="jsn-HW-FTDI-TEST FT2232H-1234-tulA-23727093-0"}' command is executed.
+23:48:34 INFO  : Device configured successfully with "C:/Users/dries/speed_sensor/speed_sensor_test/_ide/bitstream/design_1_wrapper.bit"
+23:48:34 INFO  : Context for 'APU' is selected.
+23:48:34 INFO  : Hardware design and registers information is loaded from 'C:/Users/dries/speed_sensor/design_1_wrapper/export/design_1_wrapper/hw/design_1_wrapper.xsa'.
+23:48:34 INFO  : 'configparams force-mem-access 1' command is executed.
+23:48:34 INFO  : Context for 'APU' is selected.
+23:48:34 INFO  : Sourcing of 'C:/Users/dries/speed_sensor/speed_sensor_test/_ide/psinit/ps7_init.tcl' is done.
+23:48:34 INFO  : 'ps7_init' command is executed.
+23:48:34 INFO  : 'ps7_post_config' command is executed.
+23:48:34 INFO  : Context for processor 'ps7_cortexa9_0' is selected.
+23:48:34 INFO  : The application 'C:/Users/dries/speed_sensor/speed_sensor_test/Debug/speed_sensor_test.elf' is downloaded to processor 'ps7_cortexa9_0'.
+23:48:34 INFO  : 'configparams force-mem-access 0' command is executed.
+23:48:34 INFO  : ----------------XSDB Script----------------
+connect -url tcp:127.0.0.1:3121
+targets -set -nocase -filter {name =~"APU*"}
+rst -system
+after 3000
+targets -set -filter {jtag_cable_name =~ "Xilinx HW-FTDI-TEST FT2232H 1234-tulA" && level==0 && jtag_device_ctx=="jsn-HW-FTDI-TEST FT2232H-1234-tulA-23727093-0"}
+fpga -file C:/Users/dries/speed_sensor/speed_sensor_test/_ide/bitstream/design_1_wrapper.bit
+targets -set -nocase -filter {name =~"APU*"}
+loadhw -hw C:/Users/dries/speed_sensor/design_1_wrapper/export/design_1_wrapper/hw/design_1_wrapper.xsa -mem-ranges [list {0x40000000 0xbfffffff}] -regs
+configparams force-mem-access 1
+targets -set -nocase -filter {name =~"APU*"}
+source C:/Users/dries/speed_sensor/speed_sensor_test/_ide/psinit/ps7_init.tcl
+ps7_init
+ps7_post_config
+targets -set -nocase -filter {name =~ "*A9*#0"}
+dow C:/Users/dries/speed_sensor/speed_sensor_test/Debug/speed_sensor_test.elf
+configparams force-mem-access 0
+----------------End of Script----------------
+
+23:48:34 INFO  : Context for processor 'ps7_cortexa9_0' is selected.
+23:48:34 INFO  : 'con' command is executed.
+23:48:34 INFO  : ----------------XSDB Script (After Launch)----------------
+targets -set -nocase -filter {name =~ "*A9*#0"}
+con
+----------------End of Script----------------
+
+23:48:34 INFO  : Launch script is exported to file 'C:\Users\dries\speed_sensor\speed_sensor_test_system\_ide\scripts\debugger_speed_sensor_test-default.tcl'
+23:48:48 INFO  : Checking for BSP changes to sync application flags for project 'speed_sensor_test'...
+23:49:20 INFO  : Disconnected from the channel tcfchan#3.
+23:49:21 INFO  : Connected to target on host '127.0.0.1' and port '3121'.
+23:49:30 INFO  : ----------------XSDB Script----------------
+connect -url tcp:127.0.0.1:3121
+----------------End of Script----------------
+
+23:49:30 ERROR : Could not find Jtag device on the board for connection 'Local'.
+
+
+Troubleshooting hints:
+1. Check whether board is connected to system properly.
+2. In case of zynq board, check whether Digilent/Xilinx cable switch settings are correct.
+3. If you are using Xilinx Platform Cable USB, ensure that status LED is green.
+23:49:34 INFO  : Connected to target on host '127.0.0.1' and port '3121'.
+23:49:34 INFO  : Jtag cable 'Xilinx HW-FTDI-TEST FT2232H 1234-tulA' is selected.
+23:49:34 INFO  : 'jtag frequency' command is executed.
+23:49:34 INFO  : Context for 'APU' is selected.
+23:49:34 INFO  : System reset is completed.
+23:49:37 INFO  : 'after 3000' command is executed.
+23:49:37 INFO  : 'targets -set -filter {jtag_cable_name =~ "Xilinx HW-FTDI-TEST FT2232H 1234-tulA" && level==0 && jtag_device_ctx=="jsn-HW-FTDI-TEST FT2232H-1234-tulA-23727093-0"}' command is executed.
+23:49:39 INFO  : Device configured successfully with "C:/Users/dries/speed_sensor/speed_sensor_test/_ide/bitstream/design_1_wrapper.bit"
+23:49:39 INFO  : Context for 'APU' is selected.
+23:49:39 INFO  : Hardware design and registers information is loaded from 'C:/Users/dries/speed_sensor/design_1_wrapper/export/design_1_wrapper/hw/design_1_wrapper.xsa'.
+23:49:39 INFO  : 'configparams force-mem-access 1' command is executed.
+23:49:39 INFO  : Context for 'APU' is selected.
+23:49:39 INFO  : Sourcing of 'C:/Users/dries/speed_sensor/speed_sensor_test/_ide/psinit/ps7_init.tcl' is done.
+23:49:40 INFO  : 'ps7_init' command is executed.
+23:49:40 INFO  : 'ps7_post_config' command is executed.
+23:49:40 INFO  : Context for processor 'ps7_cortexa9_0' is selected.
+23:49:40 INFO  : The application 'C:/Users/dries/speed_sensor/speed_sensor_test/Debug/speed_sensor_test.elf' is downloaded to processor 'ps7_cortexa9_0'.
+23:49:40 INFO  : 'configparams force-mem-access 0' command is executed.
+23:49:40 INFO  : ----------------XSDB Script----------------
+connect -url tcp:127.0.0.1:3121
+targets -set -nocase -filter {name =~"APU*"}
+rst -system
+after 3000
+targets -set -filter {jtag_cable_name =~ "Xilinx HW-FTDI-TEST FT2232H 1234-tulA" && level==0 && jtag_device_ctx=="jsn-HW-FTDI-TEST FT2232H-1234-tulA-23727093-0"}
+fpga -file C:/Users/dries/speed_sensor/speed_sensor_test/_ide/bitstream/design_1_wrapper.bit
+targets -set -nocase -filter {name =~"APU*"}
+loadhw -hw C:/Users/dries/speed_sensor/design_1_wrapper/export/design_1_wrapper/hw/design_1_wrapper.xsa -mem-ranges [list {0x40000000 0xbfffffff}] -regs
+configparams force-mem-access 1
+targets -set -nocase -filter {name =~"APU*"}
+source C:/Users/dries/speed_sensor/speed_sensor_test/_ide/psinit/ps7_init.tcl
+ps7_init
+ps7_post_config
+targets -set -nocase -filter {name =~ "*A9*#0"}
+dow C:/Users/dries/speed_sensor/speed_sensor_test/Debug/speed_sensor_test.elf
+configparams force-mem-access 0
+----------------End of Script----------------
+
+23:49:40 INFO  : Context for processor 'ps7_cortexa9_0' is selected.
+23:49:40 INFO  : 'con' command is executed.
+23:49:40 INFO  : ----------------XSDB Script (After Launch)----------------
+targets -set -nocase -filter {name =~ "*A9*#0"}
+con
+----------------End of Script----------------
+
+23:49:40 INFO  : Launch script is exported to file 'C:\Users\dries\speed_sensor\speed_sensor_test_system\_ide\scripts\debugger_speed_sensor_test-default.tcl'
+23:50:43 INFO  : Disconnected from the channel tcfchan#4.
+23:50:44 INFO  : Connected to target on host '127.0.0.1' and port '3121'.
+23:50:46 INFO  : Jtag cable 'Xilinx HW-FTDI-TEST FT2232H 1234-tulA' is selected.
+23:50:46 INFO  : 'jtag frequency' command is executed.
+23:50:46 INFO  : Context for 'APU' is selected.
+23:50:46 INFO  : System reset is completed.
+23:50:49 INFO  : 'after 3000' command is executed.
+23:50:49 INFO  : 'targets -set -filter {jtag_cable_name =~ "Xilinx HW-FTDI-TEST FT2232H 1234-tulA" && level==0 && jtag_device_ctx=="jsn-HW-FTDI-TEST FT2232H-1234-tulA-23727093-0"}' command is executed.
+23:50:51 INFO  : Device configured successfully with "C:/Users/dries/speed_sensor/speed_sensor_test/_ide/bitstream/design_1_wrapper.bit"
+23:50:52 INFO  : Context for 'APU' is selected.
+23:50:52 INFO  : Hardware design and registers information is loaded from 'C:/Users/dries/speed_sensor/design_1_wrapper/export/design_1_wrapper/hw/design_1_wrapper.xsa'.
+23:50:52 INFO  : 'configparams force-mem-access 1' command is executed.
+23:50:52 INFO  : Context for 'APU' is selected.
+23:50:52 INFO  : Sourcing of 'C:/Users/dries/speed_sensor/speed_sensor_test/_ide/psinit/ps7_init.tcl' is done.
+23:50:52 INFO  : 'ps7_init' command is executed.
+23:50:52 INFO  : 'ps7_post_config' command is executed.
+23:50:52 INFO  : Context for processor 'ps7_cortexa9_0' is selected.
+23:50:52 INFO  : The application 'C:/Users/dries/speed_sensor/speed_sensor_test/Debug/speed_sensor_test.elf' is downloaded to processor 'ps7_cortexa9_0'.
+23:50:52 INFO  : 'configparams force-mem-access 0' command is executed.
+23:50:52 INFO  : ----------------XSDB Script----------------
+connect -url tcp:127.0.0.1:3121
+targets -set -nocase -filter {name =~"APU*"}
+rst -system
+after 3000
+targets -set -filter {jtag_cable_name =~ "Xilinx HW-FTDI-TEST FT2232H 1234-tulA" && level==0 && jtag_device_ctx=="jsn-HW-FTDI-TEST FT2232H-1234-tulA-23727093-0"}
+fpga -file C:/Users/dries/speed_sensor/speed_sensor_test/_ide/bitstream/design_1_wrapper.bit
+targets -set -nocase -filter {name =~"APU*"}
+loadhw -hw C:/Users/dries/speed_sensor/design_1_wrapper/export/design_1_wrapper/hw/design_1_wrapper.xsa -mem-ranges [list {0x40000000 0xbfffffff}] -regs
+configparams force-mem-access 1
+targets -set -nocase -filter {name =~"APU*"}
+source C:/Users/dries/speed_sensor/speed_sensor_test/_ide/psinit/ps7_init.tcl
+ps7_init
+ps7_post_config
+targets -set -nocase -filter {name =~ "*A9*#0"}
+dow C:/Users/dries/speed_sensor/speed_sensor_test/Debug/speed_sensor_test.elf
+configparams force-mem-access 0
+----------------End of Script----------------
+
+23:50:52 INFO  : Context for processor 'ps7_cortexa9_0' is selected.
+23:50:52 INFO  : 'con' command is executed.
+23:50:52 INFO  : ----------------XSDB Script (After Launch)----------------
+targets -set -nocase -filter {name =~ "*A9*#0"}
+con
+----------------End of Script----------------
+
+23:50:52 INFO  : Launch script is exported to file 'C:\Users\dries\speed_sensor\speed_sensor_test_system\_ide\scripts\debugger_speed_sensor_test-default.tcl'

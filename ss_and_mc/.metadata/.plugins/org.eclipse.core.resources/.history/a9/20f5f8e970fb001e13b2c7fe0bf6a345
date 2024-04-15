@@ -1,0 +1,20 @@
+#define DEBOUNCE_DELAY_MS 50 // Example debounce delay in milliseconds
+
+int main() {
+    init_platform();
+    unsigned int value = 0, lastValue = 0;
+    print("Speed Sensor test \n\r");
+    SPEED_SENSOR_mWriteReg(XPAR_SPEED_SENSOR_0_S00_AXI_BASEADDR, SPEED_SENSOR_S00_AXI_SLV_REG1_OFFSET, 0b1111);
+
+    for (;;) {
+        sleep_A9(1); // sleep for 1 second
+        value = SPEED_SENSOR_mReadReg(XPAR_SPEED_SENSOR_0_S00_AXI_BASEADDR, SPEED_SENSOR_S00_AXI_SLV_REG2_OFFSET);
+        if (value != lastValue) {
+            printf("Pulses: [%d]\n\r", value);
+            lastValue = value;
+            usleep_A9(DEBOUNCE_DELAY_MS * 1000); // Simple debounce delay
+        }
+    }
+    cleanup_platform();
+    return 0;
+}

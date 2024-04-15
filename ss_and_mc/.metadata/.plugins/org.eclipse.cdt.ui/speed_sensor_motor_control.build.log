@@ -1,0 +1,7 @@
+23:44:34 **** Clean-only build of configuration Debug for project speed_sensor_motor_control ****
+make clean 
+rm -rf  ./src/helloworld.o ./src/platform.o  ./src/helloworld.d ./src/platform.d  speed_sensor_motor_control.elf.size  speed_sensor_motor_control.elf
+' '
+
+23:44:35 Build Finished (took 276ms)
+

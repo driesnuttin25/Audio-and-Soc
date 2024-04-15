@@ -1,0 +1,85 @@
+#include "xtmrctr.h"
+#include "xparameters.h"
+#include "xil_printf.h"
+#include "xuartps.h"
+
+#define PWM_PERIOD 100000000 // Example PWM period (adjust based on your requirements)
+#define UART_DEVICE_ID XPAR_XUARTPS_0_DEVICE_ID
+
+XUartPs Uart_Ps; // Instance of the UART Device
+XUartPs_Config *Config;
+
+int InitUart()
+{
+    int Status;
+    Config = XUartPs_LookupConfig(UART_DEVICE_ID);
+    if (NULL == Config) {
+        return XST_FAILURE;
+    }
+
+    Status = XUartPs_CfgInitialize(&Uart_Ps, Config, Config->BaseAddress);
+    if (Status != XST_SUCCESS) {
+        return XST_FAILURE;
+    }
+
+    XUartPs_SetBaudRate(&Uart_Ps, 115200);
+    return XST_SUCCESS;
+}
+
+void UpdatePwmDutyCycle(XTmrCtr *TimerCounterInst, u32 channel, u32 dutyCycle)
+{
+    XTmrCtr_SetPwmValue(TimerCounterInst, channel, (PWM_PERIOD * dutyCycle) / 100);
+}
+
+int main()
+{
+    XTmrCtr TimerCounterInst; // Timer instance
+    char Buffer[128];
+        int Status;
+        u32 DutyCycle0 = 25, DutyCycle1 = 75;
+
+        // Initialize UART and check status
+        Status = InitUart();
+        if (Status != XST_SUCCESS) {
+            xil_printf("UART initialization failed\r\n");
+            return XST_FAILURE;
+        }
+
+    // Initialize the timer counter
+    Status = XTmrCtr_Initialize(&TimerCounterInst, XPAR_TMRCTR_0_DEVICE_ID);
+    if (Status != XST_SUCCESS) {
+        xil_printf("Timer initialization failed\r\n");
+        return XST_FAILURE;
+    }
+
+    // Set up timer for generic waveform generation (simulated PWM)
+    XTmrCtr_SetOptions(&TimerCounterInst, 0, XTC_AUTO_RELOAD_OPTION | XTC_DOWN_COUNT_OPTION);
+    XTmrCtr_SetResetValue(&TimerCounterInst, 0, PWM_PERIOD - 1); // Full cycle
+    XTmrCtr_Start(&TimerCounterInst, 0);
+
+    XTmrCtr_SetOptions(&TimerCounterInst, 1, XTC_AUTO_RELOAD_OPTION | XTC_DOWN_COUNT_OPTION);
+    XTmrCtr_SetResetValue(&TimerCounterInst, 1, PWM_PERIOD - 1); // Full cycle
+    XTmrCtr_Start(&TimerCounterInst, 1);
+
+
+    xil_printf("PWM setup complete. Running...\r\n");
+
+    while (1) {
+            // Check if there is data on UART
+            if (XUartPs_IsReceiveData(Uart_Ps.Config.BaseAddress)) {
+                int BytesReceived = XUartPs_Recv(&Uart_Ps, (u8 *)Buffer, 128);
+                if (BytesReceived > 0) {
+                    // Assuming input is in the format "D0:45,D1:55\n"
+                    sscanf(Buffer, "D0:%ld,D1:%ld", &DutyCycle0, &DutyCycle1);
+
+                    // Update PWM duty cycles
+                    UpdatePwmDutyCycle(&TimerCounterInst, 0, DutyCycle0);
+                    UpdatePwmDutyCycle(&TimerCounterInst, 1, DutyCycle1);
+
+                    xil_printf("Updated D0 to %d%% and D1 to %d%%\r\n", DutyCycle0, DutyCycle1);
+                }
+            }
+        }
+
+    return XST_SUCCESS;
+}

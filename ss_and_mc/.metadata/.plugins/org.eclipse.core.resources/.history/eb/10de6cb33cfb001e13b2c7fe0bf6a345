@@ -1,0 +1,75 @@
+#include "xtmrctr.h"
+#include "xparameters.h"
+#include "xil_printf.h"
+#include "xgpiops.h" // Include XGpioPs for PS GPIO operations
+
+#define PWM_PERIOD 100000000    // PWM period (adjust based on your requirements)
+#define TIMER_DEVICE_ID XPAR_TMRCTR_0_DEVICE_ID
+#define GPIO_DEVICE_ID XPAR_XGPIOPS_0_DEVICE_ID
+
+#define GP0_PIN  54 // Adjust with actual pin number for GP0
+#define GP1_PIN  55 // Adjust with actual pin number for GP1
+
+// Function prototypes
+void SetDutyCycle(XTmrCtr *InstancePtr, u32 Channel, u32 DutyCyclePercentage);
+
+int main() {
+    XTmrCtr TimerCounterInst;  // Timer instance
+    XGpioPs Gpio;              // Instance for PS GPIO device
+    XGpioPs_Config *GpioConfig; // Pointer to the GPIO config data
+    int Status;
+
+    // Initialize the timer counter
+    Status = XTmrCtr_Initialize(&TimerCounterInst, TIMER_DEVICE_ID);
+    if (Status != XST_SUCCESS) {
+        xil_printf("Timer initialization failed\r\n");
+        return XST_FAILURE;
+    }
+
+    // Initializ                                                                       vv<< e the PS GPIO device
+    GpioConfig = XGpioPs_LookupConfig(GPIO_DEVICE_ID);
+    Status = XGpioPs_CfgInitialize(&Gpio, GpioConfig, GpioConfig->BaseAddr);
+    if (Status != XST_SUCCESS) {
+        xil_printf("GPIO initialization failed\r\n");
+        return XST_FAILURE;
+    }
+
+    // Set GP0 and GP1 direction to output
+    XGpioPs_SetDirectionPin(&Gpio, GP0_PIN, 1);
+    XGpioPs_SetOutputEnablePin(&Gpio, GP0_PIN, 1);
+    XGpioPs_SetDirectionPin(&Gpio, GP1_PIN, 1);
+    XGpioPs_SetOutputEnablePin(&Gpio, GP1_PIN, 1);
+
+    // Set GP0 and GP1 high
+    XGpioPs_WritePin(&Gpio, GP0_PIN, 1);
+    XGpioPs_WritePin(&Gpio, GP1_PIN, 1);
+
+    // Set up timer for auto reload and down count
+    XTmrCtr_SetOptions(&TimerCounterInst, 0, XTC_AUTO_RELOAD_OPTION | XTC_DOWN_COUNT_OPTION);
+    XTmrCtr_SetResetValue(&TimerCounterInst, 0, PWM_PERIOD - 1);
+    XTmrCtr_Start(&TimerCounterInst, 0);
+
+    xil_printf("Starting PWM code with GP0 and GP1 set high.\r\n");
+    while (1) {
+        // Set duty cycle to 100%
+        SetDutyCycle(&TimerCounterInst, 0, 100);
+        xil_printf("Duty Cycle set to 100%%\r\n");
+        sleep(5);  // sleep for 5 seconds
+
+        // Set duty cycle to 50%
+        SetDutyCycle(&TimerCounterInst, 0, 50);
+        xil_printf("Duty Cycle set to 50%%\r\n");
+        sleep(5);  // sleep for 5 seconds
+    }
+
+    // Should never reach here
+    XTmrCtr_Stop(&TimerCounterInst, 0);
+    return XST_SUCCESS;
+}
+
+// Function to set the duty cycle of PWM
+void SetDutyCycle(XTmrCtr *InstancePtr, u32 Channel, u32 DutyCyclePercentage) {
+    u32 HighTime = (PWM_PERIOD * DutyCyclePercentage) / 100;
+    XTmrCtr_SetResetValue(InstancePtr, Channel, PWM_PERIOD - 1);
+    XTmrCtr_SetResetValue(InstancePtr, Channel, HighTime - 1);
+}

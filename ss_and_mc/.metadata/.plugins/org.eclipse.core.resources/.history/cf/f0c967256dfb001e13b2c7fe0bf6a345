@@ -1,0 +1,65 @@
+#include "xparameters.h"
+#include "xtmrctr.h"
+#include "xil_printf.h"
+
+// The device ID and period should match your AXI Timer configuration
+#define TIMER_DEVICE_ID XPAR_AXI_TIMER_0_DEVICE_ID
+#define PWM_PERIOD 100000000 // Replace with the period for your PWM signal
+
+// Function prototypes
+void InitializePwm(XTmrCtr *TimerInstancePtr, u8 TmrCtrNumber, u32 PwmPeriod);
+
+int main(void) {
+    XTmrCtr TimerInstance;
+    int Status;
+
+    // Initialize the timer counter instance
+    Status = XTmrCtr_Initialize(&TimerInstance, TIMER_DEVICE_ID);
+    if (Status != XST_SUCCESS) {
+        xil_printf("Timer initialization failed\r\n");
+        return XST_FAILURE;
+    }
+
+    // Initialize the PWM
+    InitializePwm(&TimerInstance, 1, PWM_PERIOD);
+
+    xil_printf("PWM started on axi_timer_0 channel 1 (pwm0_1)\r\n");
+
+    // Main loop
+    while (1) {
+    	// Set duty cycle to 100%
+    	        SetDutyCycle(&TimerCounterInst, 0, 100);
+    	        xil_printf("Duty Cycle set to 100%%\r\n");
+    	        sleep(5);  // sleep for 5 seconds
+
+    	        // Set duty cycle to 50%
+    	        SetDutyCycle(&TimerCounterInst, 0, 50);
+    	        xil_printf("Duty Cycle set to 50%%\r\n");
+    	        sleep(5);  // sleep for 5 seconds
+    }
+
+    // Clean up and stop the timer
+    XTmrCtr_Stop(&TimerInstance, 1);
+    XTmrCtr_Release(&TimerInstance);
+
+    return XST_SUCCESS;
+}
+
+// Function to initialize and start PWM on the specified timer channel
+void InitializePwm(XTmrCtr *TimerInstancePtr, u8 TmrCtrNumber, u32 PwmPeriod) {
+    // Stop the timer before configuring
+    XTmrCtr_Stop(TimerInstancePtr, TmrCtrNumber);
+
+    // Set the options for PWM mode
+    XTmrCtr_SetOptions(TimerInstancePtr, TmrCtrNumber,
+        XTC_AUTO_RELOAD_OPTION | XTC_DOWN_COUNT_OPTION | XTC_PWM_ENABLE_OPTION);
+
+    // Set the PWM period
+    XTmrCtr_SetResetValue(TimerInstancePtr, TmrCtrNumber, PwmPeriod);
+
+    // Start the PWM output on the timer
+    XTmrCtr_Start(TimerInstancePtr, TmrCtrNumber);
+
+    // Display the PWM configuration
+    xil_printf("PWM configured on timer %d with a period of %lu\r\n", TmrCtrNumber, PwmPeriod);
+}

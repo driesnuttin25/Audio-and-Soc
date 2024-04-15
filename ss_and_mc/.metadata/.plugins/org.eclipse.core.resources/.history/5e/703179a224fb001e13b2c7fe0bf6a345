@@ -1,0 +1,51 @@
+#include "xtmrctr.h"
+#include "xparameters.h"
+#include "xil_printf.h"
+
+#define PWM_PERIOD 100000000    // PWM period (adjust based on your requirements)
+#define TIMER_DEVICE_ID XPAR_TMRCTR_0_DEVICE_ID
+
+// Function prototypes
+void SetDutyCycle(XTmrCtr *InstancePtr, u32 Channel, u32 DutyCyclePercentage);
+
+int main() {
+    XTmrCtr TimerCounterInst;  // Timer instance
+    int Status;
+    u32 DutyCycle;
+
+    // Initialize the timer counter
+    Status = XTmrCtr_Initialize(&TimerCounterInst, TIMER_DEVICE_ID);
+    if (Status != XST_SUCCESS) {
+        xil_printf("Timer initialization failed\r\n");
+        return XST_FAILURE;
+    }
+
+    // Set up timer for auto reload and down count
+    XTmrCtr_SetOptions(&TimerCounterInst, 0, XTC_AUTO_RELOAD_OPTION | XTC_DOWN_COUNT_OPTION);
+    XTmrCtr_SetResetValue(&TimerCounterInst, 0, PWM_PERIOD - 1);
+    XTmrCtr_Start(&TimerCounterInst, 0);
+
+    // Begin PWM switching between 100% and 50% duty cycles every 5 seconds
+    while (1) {
+        // Set duty cycle to 100%
+        SetDutyCycle(&TimerCounterInst, 0, 100);
+        xil_printf("Duty Cycle set to 100%%\r\n");
+        sleep(2);  // sleep for 2 seconds
+
+        // Set duty cycle to 50%
+        SetDutyCycle(&TimerCounterInst, 0, 50);
+        xil_printf("Duty Cycle set to 50%%\r\n");
+        sleep(2);  // sleep for 2 seconds
+    }
+
+    // Should never reach here
+    XTmrCtr_Stop(&TimerCounterInst, 0);
+    return XST_SUCCESS;
+}
+
+// Function to set the duty cycle of PWM
+void SetDutyCycle(XTmrCtr *InstancePtr, u32 Channel, u32 DutyCyclePercentage) {
+    u32 HighTime = (PWM_PERIOD * DutyCyclePercentage) / 100;
+    XTmrCtr_SetResetValue(InstancePtr, Channel, PWM_PERIOD - 1);
+    XTmrCtr_SetResetValue(InstancePtr, Channel, HighTime - 1);
+}

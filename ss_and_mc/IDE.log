@@ -1,0 +1,1377 @@
+09:28:24 DEBUG : Logs will be stored at 'C:/Users/dries/ss_and_mc/IDE.log'.
+09:28:26 INFO  : Launching XSCT server: xsct.bat -n  -interactive C:\Users\dries\ss_and_mc\temp_xsdb_launch_script.tcl
+09:28:26 INFO  : Platform repository initialization has completed.
+09:28:27 INFO  : Registering command handlers for Vitis TCF services
+09:28:28 INFO  : XSCT server has started successfully.
+09:28:28 INFO  : Successfully done setting XSCT server connection channel  
+09:28:28 INFO  : plnx-install-location is set to ''
+09:28:28 INFO  : Successfully done setting workspace for the tool. 
+09:28:28 INFO  : Successfully done query RDI_DATADIR 
+09:29:54 INFO  : Result from executing command 'getProjects': speed_sensor_motor_control_export
+09:29:54 INFO  : Result from executing command 'getPlatforms': 
+09:29:54 WARN  : An unexpected exception occurred in the module 'platform project logging'
+09:29:54 INFO  : Platform 'speed_sensor_motor_control_export' is added to custom repositories.
+09:30:02 INFO  : Platform 'speed_sensor_motor_control_export' is added to custom repositories.
+09:34:21 INFO  : Result from executing command 'getProjects': speed_sensor_motor_control_export
+09:34:21 INFO  : Result from executing command 'getPlatforms': speed_sensor_motor_control_export|C:/Users/dries/ss_and_mc/speed_sensor_motor_control_export/export/speed_sensor_motor_control_export/speed_sensor_motor_control_export.xpfm
+09:34:21 INFO  : Checking for BSP changes to sync application flags for project 'speed_sensor_motor_control'...
+09:35:01 INFO  : Checking for BSP changes to sync application flags for project 'speed_sensor_motor_control'...
+09:48:36 INFO  : Result from executing command 'getProjects': speed_sensor_motor_control_export
+09:48:36 INFO  : Result from executing command 'getPlatforms': speed_sensor_motor_control_export|C:/Users/dries/ss_and_mc/speed_sensor_motor_control_export/export/speed_sensor_motor_control_export/speed_sensor_motor_control_export.xpfm
+09:48:36 INFO  : Checking for BSP changes to sync application flags for project 'speed_sensor_motor_control'...
+09:55:46 INFO  : Result from executing command 'getProjects': speed_sensor_motor_control_export
+09:55:46 INFO  : Result from executing command 'getPlatforms': speed_sensor_motor_control_export|C:/Users/dries/ss_and_mc/speed_sensor_motor_control_export/export/speed_sensor_motor_control_export/speed_sensor_motor_control_export.xpfm
+09:56:02 INFO  : Checking for BSP changes to sync application flags for project 'speed_sensor_motor_control'...
+09:58:31 INFO  : Checking for BSP changes to sync application flags for project 'speed_sensor_motor_control'...
+09:58:50 INFO  : Checking for BSP changes to sync application flags for project 'speed_sensor_motor_control'...
+09:59:08 INFO  : Connected to target on host '127.0.0.1' and port '3121'.
+09:59:27 INFO  : ----------------XSDB Script----------------
+connect -url tcp:127.0.0.1:3121
+----------------End of Script----------------
+
+09:59:27 ERROR : Could not find ARM device on the board for connection 'Local'.
+Check if the target is in:
+1. Split JTAG - No operations are possible with ARM DAP.
+2. Non JTAG bootmode - Bootrom may need time to enable DAP.
+Please try again.
+
+
+Troubleshooting hints:
+1. Check whether board is connected to system properly.
+2. In case of zynq board, check whether Digilent/Xilinx cable switch settings are correct.
+3. If you are using Xilinx Platform Cable USB, ensure that status LED is green.
+10:00:24 INFO  : Connected to target on host '127.0.0.1' and port '3121'.
+10:00:24 INFO  : Jtag cable 'Xilinx HW-FTDI-TEST FT2232H 1234-tulA' is selected.
+10:00:24 INFO  : 'jtag frequency' command is executed.
+10:00:24 INFO  : Context for 'APU' is selected.
+10:00:24 INFO  : System reset is completed.
+10:00:27 INFO  : 'after 3000' command is executed.
+10:00:28 INFO  : 'targets -set -filter {jtag_cable_name =~ "Xilinx HW-FTDI-TEST FT2232H 1234-tulA" && level==0 && jtag_device_ctx=="jsn-HW-FTDI-TEST FT2232H-1234-tulA-23727093-0"}' command is executed.
+10:00:30 INFO  : Device configured successfully with "C:/Users/dries/ss_and_mc/speed_sensor_motor_control/_ide/bitstream/speed_sensor_motor_control_export.bit"
+10:00:30 INFO  : Context for 'APU' is selected.
+10:00:30 INFO  : Hardware design and registers information is loaded from 'C:/Users/dries/ss_and_mc/speed_sensor_motor_control_export/export/speed_sensor_motor_control_export/hw/speed_sensor_motor_control_export.xsa'.
+10:00:30 INFO  : 'configparams force-mem-access 1' command is executed.
+10:00:30 INFO  : Context for 'APU' is selected.
+10:00:30 INFO  : Sourcing of 'C:/Users/dries/ss_and_mc/speed_sensor_motor_control/_ide/psinit/ps7_init.tcl' is done.
+10:00:30 INFO  : 'ps7_init' command is executed.
+10:00:30 INFO  : 'ps7_post_config' command is executed.
+10:00:30 INFO  : Context for processor 'ps7_cortexa9_0' is selected.
+10:00:30 INFO  : The application 'C:/Users/dries/ss_and_mc/speed_sensor_motor_control/Debug/speed_sensor_motor_control.elf' is downloaded to processor 'ps7_cortexa9_0'.
+10:00:30 INFO  : 'configparams force-mem-access 0' command is executed.
+10:00:30 INFO  : ----------------XSDB Script----------------
+connect -url tcp:127.0.0.1:3121
+targets -set -nocase -filter {name =~"APU*"}
+rst -system
+after 3000
+targets -set -filter {jtag_cable_name =~ "Xilinx HW-FTDI-TEST FT2232H 1234-tulA" && level==0 && jtag_device_ctx=="jsn-HW-FTDI-TEST FT2232H-1234-tulA-23727093-0"}
+fpga -file C:/Users/dries/ss_and_mc/speed_sensor_motor_control/_ide/bitstream/speed_sensor_motor_control_export.bit
+targets -set -nocase -filter {name =~"APU*"}
+loadhw -hw C:/Users/dries/ss_and_mc/speed_sensor_motor_control_export/export/speed_sensor_motor_control_export/hw/speed_sensor_motor_control_export.xsa -mem-ranges [list {0x40000000 0xbfffffff}] -regs
+configparams force-mem-access 1
+targets -set -nocase -filter {name =~"APU*"}
+source C:/Users/dries/ss_and_mc/speed_sensor_motor_control/_ide/psinit/ps7_init.tcl
+ps7_init
+ps7_post_config
+targets -set -nocase -filter {name =~ "*A9*#0"}
+dow C:/Users/dries/ss_and_mc/speed_sensor_motor_control/Debug/speed_sensor_motor_control.elf
+configparams force-mem-access 0
+----------------End of Script----------------
+
+10:00:31 INFO  : Context for processor 'ps7_cortexa9_0' is selected.
+10:00:31 INFO  : 'con' command is executed.
+10:00:31 INFO  : ----------------XSDB Script (After Launch)----------------
+targets -set -nocase -filter {name =~ "*A9*#0"}
+con
+----------------End of Script----------------
+
+10:00:31 INFO  : Launch script is exported to file 'C:\Users\dries\ss_and_mc\speed_sensor_motor_control_system\_ide\scripts\debugger_speed_sensor_motor_control-default_1.tcl'
+10:01:04 INFO  : Disconnected from the channel tcfchan#4.
+10:01:05 INFO  : Connected to target on host '127.0.0.1' and port '3121'.
+10:01:07 INFO  : ----------------XSDB Script----------------
+connect -url tcp:127.0.0.1:3121
+----------------End of Script----------------
+
+10:01:07 ERROR : Could not find FPGA device on the board for connection 'Local'.
+
+
+Troubleshooting hints:
+1. Check whether board is connected to system properly.
+2. In case of zynq board, check whether Digilent/Xilinx cable switch settings are correct.
+3. If you are using Xilinx Platform Cable USB, ensure that status LED is green.
+10:01:16 INFO  : Connected to target on host '127.0.0.1' and port '3121'.
+10:01:16 INFO  : Jtag cable 'Xilinx HW-FTDI-TEST FT2232H 1234-tulA' is selected.
+10:01:16 INFO  : 'jtag frequency' command is executed.
+10:01:18 INFO  : Context for 'APU' is selected.
+10:01:18 INFO  : System reset is completed.
+10:01:21 INFO  : 'after 3000' command is executed.
+10:01:22 INFO  : 'targets -set -filter {jtag_cable_name =~ "Xilinx HW-FTDI-TEST FT2232H 1234-tulA" && level==0 && jtag_device_ctx=="jsn-HW-FTDI-TEST FT2232H-1234-tulA-23727093-0"}' command is executed.
+10:01:24 INFO  : Device configured successfully with "C:/Users/dries/ss_and_mc/speed_sensor_motor_control/_ide/bitstream/speed_sensor_motor_control_export.bit"
+10:01:24 INFO  : Context for 'APU' is selected.
+10:01:24 INFO  : Hardware design and registers information is loaded from 'C:/Users/dries/ss_and_mc/speed_sensor_motor_control_export/export/speed_sensor_motor_control_export/hw/speed_sensor_motor_control_export.xsa'.
+10:01:24 INFO  : 'configparams force-mem-access 1' command is executed.
+10:01:24 INFO  : Context for 'APU' is selected.
+10:01:24 INFO  : Sourcing of 'C:/Users/dries/ss_and_mc/speed_sensor_motor_control/_ide/psinit/ps7_init.tcl' is done.
+10:01:24 INFO  : 'ps7_init' command is executed.
+10:01:24 INFO  : 'ps7_post_config' command is executed.
+10:01:24 INFO  : Context for processor 'ps7_cortexa9_0' is selected.
+10:01:25 INFO  : The application 'C:/Users/dries/ss_and_mc/speed_sensor_motor_control/Debug/speed_sensor_motor_control.elf' is downloaded to processor 'ps7_cortexa9_0'.
+10:01:25 INFO  : 'configparams force-mem-access 0' command is executed.
+10:01:25 INFO  : ----------------XSDB Script----------------
+connect -url tcp:127.0.0.1:3121
+targets -set -nocase -filter {name =~"APU*"}
+rst -system
+after 3000
+targets -set -filter {jtag_cable_name =~ "Xilinx HW-FTDI-TEST FT2232H 1234-tulA" && level==0 && jtag_device_ctx=="jsn-HW-FTDI-TEST FT2232H-1234-tulA-23727093-0"}
+fpga -file C:/Users/dries/ss_and_mc/speed_sensor_motor_control/_ide/bitstream/speed_sensor_motor_control_export.bit
+targets -set -nocase -filter {name =~"APU*"}
+loadhw -hw C:/Users/dries/ss_and_mc/speed_sensor_motor_control_export/export/speed_sensor_motor_control_export/hw/speed_sensor_motor_control_export.xsa -mem-ranges [list {0x40000000 0xbfffffff}] -regs
+configparams force-mem-access 1
+targets -set -nocase -filter {name =~"APU*"}
+source C:/Users/dries/ss_and_mc/speed_sensor_motor_control/_ide/psinit/ps7_init.tcl
+ps7_init
+ps7_post_config
+targets -set -nocase -filter {name =~ "*A9*#0"}
+dow C:/Users/dries/ss_and_mc/speed_sensor_motor_control/Debug/speed_sensor_motor_control.elf
+configparams force-mem-access 0
+----------------End of Script----------------
+
+10:01:25 INFO  : Context for processor 'ps7_cortexa9_0' is selected.
+10:01:25 INFO  : 'con' command is executed.
+10:01:25 INFO  : ----------------XSDB Script (After Launch)----------------
+targets -set -nocase -filter {name =~ "*A9*#0"}
+con
+----------------End of Script----------------
+
+10:01:25 INFO  : Launch script is exported to file 'C:\Users\dries\ss_and_mc\speed_sensor_motor_control_system\_ide\scripts\debugger_speed_sensor_motor_control-default_3.tcl'
+10:01:57 INFO  : Disconnected from the channel tcfchan#5.
+10:01:58 INFO  : Connected to target on host '127.0.0.1' and port '3121'.
+10:01:58 INFO  : Jtag cable 'Xilinx HW-FTDI-TEST FT2232H 1234-tulA' is selected.
+10:01:58 ERROR : port closed
+10:01:58 INFO  : ----------------XSDB Script----------------
+connect -url tcp:127.0.0.1:3121
+----------------End of Script----------------
+
+10:01:58 ERROR : port closed
+10:02:07 INFO  : Connected to target on host '127.0.0.1' and port '3121'.
+10:02:07 INFO  : Jtag cable 'Xilinx HW-FTDI-TEST FT2232H 1234-tulA' is selected.
+10:02:07 INFO  : 'jtag frequency' command is executed.
+10:02:07 INFO  : Context for 'APU' is selected.
+10:02:07 INFO  : System reset is completed.
+10:02:10 INFO  : 'after 3000' command is executed.
+10:02:10 INFO  : 'targets -set -filter {jtag_cable_name =~ "Xilinx HW-FTDI-TEST FT2232H 1234-tulA" && level==0 && jtag_device_ctx=="jsn-HW-FTDI-TEST FT2232H-1234-tulA-23727093-0"}' command is executed.
+10:02:12 INFO  : Device configured successfully with "C:/Users/dries/ss_and_mc/speed_sensor_motor_control/_ide/bitstream/speed_sensor_motor_control_export.bit"
+10:02:12 INFO  : Context for 'APU' is selected.
+10:02:12 INFO  : Hardware design and registers information is loaded from 'C:/Users/dries/ss_and_mc/speed_sensor_motor_control_export/export/speed_sensor_motor_control_export/hw/speed_sensor_motor_control_export.xsa'.
+10:02:12 INFO  : 'configparams force-mem-access 1' command is executed.
+10:02:12 INFO  : Context for 'APU' is selected.
+10:02:12 INFO  : Sourcing of 'C:/Users/dries/ss_and_mc/speed_sensor_motor_control/_ide/psinit/ps7_init.tcl' is done.
+10:02:13 INFO  : 'ps7_init' command is executed.
+10:02:13 INFO  : 'ps7_post_config' command is executed.
+10:02:13 INFO  : Context for processor 'ps7_cortexa9_0' is selected.
+10:02:13 INFO  : The application 'C:/Users/dries/ss_and_mc/speed_sensor_motor_control/Debug/speed_sensor_motor_control.elf' is downloaded to processor 'ps7_cortexa9_0'.
+10:02:13 INFO  : 'configparams force-mem-access 0' command is executed.
+10:02:13 INFO  : ----------------XSDB Script----------------
+connect -url tcp:127.0.0.1:3121
+targets -set -nocase -filter {name =~"APU*"}
+rst -system
+after 3000
+targets -set -filter {jtag_cable_name =~ "Xilinx HW-FTDI-TEST FT2232H 1234-tulA" && level==0 && jtag_device_ctx=="jsn-HW-FTDI-TEST FT2232H-1234-tulA-23727093-0"}
+fpga -file C:/Users/dries/ss_and_mc/speed_sensor_motor_control/_ide/bitstream/speed_sensor_motor_control_export.bit
+targets -set -nocase -filter {name =~"APU*"}
+loadhw -hw C:/Users/dries/ss_and_mc/speed_sensor_motor_control_export/export/speed_sensor_motor_control_export/hw/speed_sensor_motor_control_export.xsa -mem-ranges [list {0x40000000 0xbfffffff}] -regs
+configparams force-mem-access 1
+targets -set -nocase -filter {name =~"APU*"}
+source C:/Users/dries/ss_and_mc/speed_sensor_motor_control/_ide/psinit/ps7_init.tcl
+ps7_init
+ps7_post_config
+targets -set -nocase -filter {name =~ "*A9*#0"}
+dow C:/Users/dries/ss_and_mc/speed_sensor_motor_control/Debug/speed_sensor_motor_control.elf
+configparams force-mem-access 0
+----------------End of Script----------------
+
+10:02:13 INFO  : Context for processor 'ps7_cortexa9_0' is selected.
+10:02:13 INFO  : 'con' command is executed.
+10:02:13 INFO  : ----------------XSDB Script (After Launch)----------------
+targets -set -nocase -filter {name =~ "*A9*#0"}
+con
+----------------End of Script----------------
+
+10:02:13 INFO  : Launch script is exported to file 'C:\Users\dries\ss_and_mc\speed_sensor_motor_control_system\_ide\scripts\debugger_speed_sensor_motor_control-default.tcl'
+10:04:17 INFO  : Disconnected from the channel tcfchan#6.
+10:04:18 INFO  : Connected to target on host '127.0.0.1' and port '3121'.
+10:04:27 INFO  : ----------------XSDB Script----------------
+connect -url tcp:127.0.0.1:3121
+----------------End of Script----------------
+
+10:04:27 ERROR : Could not find Jtag device on the board for connection 'Local'.
+
+
+Troubleshooting hints:
+1. Check whether board is connected to system properly.
+2. In case of zynq board, check whether Digilent/Xilinx cable switch settings are correct.
+3. If you are using Xilinx Platform Cable USB, ensure that status LED is green.
+10:04:35 INFO  : Connected to target on host '127.0.0.1' and port '3121'.
+10:04:35 INFO  : Jtag cable 'Xilinx HW-FTDI-TEST FT2232H 1234-tulA' is selected.
+10:04:35 INFO  : 'jtag frequency' command is executed.
+10:04:35 INFO  : Context for 'APU' is selected.
+10:04:35 INFO  : System reset is completed.
+10:04:38 INFO  : 'after 3000' command is executed.
+10:04:38 INFO  : 'targets -set -filter {jtag_cable_name =~ "Xilinx HW-FTDI-TEST FT2232H 1234-tulA" && level==0 && jtag_device_ctx=="jsn-HW-FTDI-TEST FT2232H-1234-tulA-23727093-0"}' command is executed.
+10:04:41 INFO  : Device configured successfully with "C:/Users/dries/ss_and_mc/speed_sensor_motor_control/_ide/bitstream/speed_sensor_motor_control_export.bit"
+10:04:41 INFO  : Context for 'APU' is selected.
+10:04:41 INFO  : Hardware design and registers information is loaded from 'C:/Users/dries/ss_and_mc/speed_sensor_motor_control_export/export/speed_sensor_motor_control_export/hw/speed_sensor_motor_control_export.xsa'.
+10:04:41 INFO  : 'configparams force-mem-access 1' command is executed.
+10:04:41 INFO  : Context for 'APU' is selected.
+10:04:41 INFO  : Sourcing of 'C:/Users/dries/ss_and_mc/speed_sensor_motor_control/_ide/psinit/ps7_init.tcl' is done.
+10:04:41 INFO  : 'ps7_init' command is executed.
+10:04:41 INFO  : 'ps7_post_config' command is executed.
+10:04:41 INFO  : Context for processor 'ps7_cortexa9_0' is selected.
+10:04:41 INFO  : The application 'C:/Users/dries/ss_and_mc/speed_sensor_motor_control/Debug/speed_sensor_motor_control.elf' is downloaded to processor 'ps7_cortexa9_0'.
+10:04:41 INFO  : 'configparams force-mem-access 0' command is executed.
+10:04:41 INFO  : ----------------XSDB Script----------------
+connect -url tcp:127.0.0.1:3121
+targets -set -nocase -filter {name =~"APU*"}
+rst -system
+after 3000
+targets -set -filter {jtag_cable_name =~ "Xilinx HW-FTDI-TEST FT2232H 1234-tulA" && level==0 && jtag_device_ctx=="jsn-HW-FTDI-TEST FT2232H-1234-tulA-23727093-0"}
+fpga -file C:/Users/dries/ss_and_mc/speed_sensor_motor_control/_ide/bitstream/speed_sensor_motor_control_export.bit
+targets -set -nocase -filter {name =~"APU*"}
+loadhw -hw C:/Users/dries/ss_and_mc/speed_sensor_motor_control_export/export/speed_sensor_motor_control_export/hw/speed_sensor_motor_control_export.xsa -mem-ranges [list {0x40000000 0xbfffffff}] -regs
+configparams force-mem-access 1
+targets -set -nocase -filter {name =~"APU*"}
+source C:/Users/dries/ss_and_mc/speed_sensor_motor_control/_ide/psinit/ps7_init.tcl
+ps7_init
+ps7_post_config
+targets -set -nocase -filter {name =~ "*A9*#0"}
+dow C:/Users/dries/ss_and_mc/speed_sensor_motor_control/Debug/speed_sensor_motor_control.elf
+configparams force-mem-access 0
+----------------End of Script----------------
+
+10:04:41 INFO  : Context for processor 'ps7_cortexa9_0' is selected.
+10:04:41 INFO  : 'con' command is executed.
+10:04:41 INFO  : ----------------XSDB Script (After Launch)----------------
+targets -set -nocase -filter {name =~ "*A9*#0"}
+con
+----------------End of Script----------------
+
+10:04:41 INFO  : Launch script is exported to file 'C:\Users\dries\ss_and_mc\speed_sensor_motor_control_system\_ide\scripts\debugger_speed_sensor_motor_control-default.tcl'
+10:05:23 INFO  : Checking for BSP changes to sync application flags for project 'speed_sensor_motor_control'...
+10:17:29 INFO  : Hardware specification for platform project 'speed_sensor_motor_control_export' is updated.
+10:18:25 INFO  : Checking for BSP changes to sync application flags for project 'speed_sensor_motor_control'...
+10:18:25 INFO  : Launching XSCT server: xsct.bat -n  -interactive C:\Users\dries\ss_and_mc\temp_xsdb_launch_script.tcl
+10:18:27 INFO  : XSCT server has started successfully.
+10:18:28 ERROR : Failed to call write_mss 
+Reason: Invalid workspace. set workspace using setws command
+10:18:28 ERROR : Failed to update application flags from BSP for 'speed_sensor_motor_control'. Reason: Failed to call write_mss 
+Reason: Invalid workspace. set workspace using setws command
+java.lang.RuntimeException: Failed to call write_mss 
+Reason: Invalid workspace. set workspace using setws command
+	at com.xilinx.sdk.xsdb.XsdbCommandUtils.handleResult(XsdbCommandUtils.java:389) ~[com.xilinx.sdk.xsdb_1.0.0.202310091710.jar:?]
+	at com.xilinx.sdk.xsdb.XsdbCommandUtils.executeAndRespond(XsdbCommandUtils.java:327) ~[com.xilinx.sdk.xsdb_1.0.0.202310091710.jar:?]
+	at com.xilinx.sdk.sw.SwPlatformUtils.createDefaultMss(SwPlatformUtils.java:72) ~[com.xilinx.sdk.sw_1.0.0.202310091710.jar:?]
+	at com.xilinx.sdx.sdk.core.util.BspCreationHelper.generateMssFile(BspCreationHelper.java:46) ~[com.xilinx.sdx.sdk.core_1.0.0.202310091710.jar:?]
+	at com.xilinx.sdx.sdk.core.util.BspCreationHelper.create(BspCreationHelper.java:38) ~[com.xilinx.sdx.sdk.core_1.0.0.202310091710.jar:?]
+	at com.xilinx.sdx.sdk.core.build.SdkMakefileGenerationListener.createSwPlatform(SdkMakefileGenerationListener.java:150) ~[com.xilinx.sdx.sdk.core_1.0.0.202310091710.jar:?]
+	at com.xilinx.sdx.sdk.core.build.SdkMakefileGenerationListener.syncAppFlags(SdkMakefileGenerationListener.java:82) [com.xilinx.sdx.sdk.core_1.0.0.202310091710.jar:?]
+	at com.xilinx.sdx.sdk.core.build.SdkMakefileGenerationListener.preMakefileGeneration(SdkMakefileGenerationListener.java:48) [com.xilinx.sdx.sdk.core_1.0.0.202310091710.jar:?]
+	at com.xilinx.sdk.managedbuilder.XilinxGnuMakefileGenerator.notifyPreMakefileGenerationListeners(XilinxGnuMakefileGenerator.java:91) [com.xilinx.sdk.managedbuilder_1.0.0.202310091710.jar:?]
+	at com.xilinx.sdk.managedbuilder.XilinxGnuMakefileGenerator.generateMakefiles(XilinxGnuMakefileGenerator.java:40) [com.xilinx.sdk.managedbuilder_1.0.0.202310091710.jar:?]
+	at org.eclipse.cdt.managedbuilder.internal.core.CommonBuilder.performMakefileGeneration(CommonBuilder.java:1008) [org.eclipse.cdt.managedbuilder.core_8.6.0.201802261533.jar:?]
+	at org.eclipse.cdt.managedbuilder.internal.core.CommonBuilder.performPrebuildGeneration(CommonBuilder.java:873) [org.eclipse.cdt.managedbuilder.core_8.6.0.201802261533.jar:?]
+	at org.eclipse.cdt.managedbuilder.internal.core.CommonBuilder.build(CommonBuilder.java:748) [org.eclipse.cdt.managedbuilder.core_8.6.0.201802261533.jar:?]
+	at org.eclipse.cdt.managedbuilder.internal.core.CommonBuilder.build(CommonBuilder.java:510) [org.eclipse.cdt.managedbuilder.core_8.6.0.201802261533.jar:?]
+	at org.eclipse.cdt.managedbuilder.internal.core.CommonBuilder.build(CommonBuilder.java:459) [org.eclipse.cdt.managedbuilder.core_8.6.0.201802261533.jar:?]
+	at org.eclipse.core.internal.events.BuildManager$2.run(BuildManager.java:832) [org.eclipse.core.resources_3.13.700.v20200209-1624.jar:?]
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:45) [org.eclipse.equinox.common_3.11.0.v20200206-0817.jar:?]
+	at org.eclipse.core.internal.events.BuildManager.basicBuild(BuildManager.java:220) [org.eclipse.core.resources_3.13.700.v20200209-1624.jar:?]
+	at org.eclipse.core.internal.events.BuildManager.basicBuild(BuildManager.java:263) [org.eclipse.core.resources_3.13.700.v20200209-1624.jar:?]
+	at org.eclipse.core.internal.events.BuildManager$1.run(BuildManager.java:316) [org.eclipse.core.resources_3.13.700.v20200209-1624.jar:?]
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:45) [org.eclipse.equinox.common_3.11.0.v20200206-0817.jar:?]
+	at org.eclipse.core.internal.events.BuildManager.basicBuild(BuildManager.java:319) [org.eclipse.core.resources_3.13.700.v20200209-1624.jar:?]
+	at org.eclipse.core.internal.events.BuildManager.basicBuildLoop(BuildManager.java:371) [org.eclipse.core.resources_3.13.700.v20200209-1624.jar:?]
+	at org.eclipse.core.internal.events.BuildManager.build(BuildManager.java:392) [org.eclipse.core.resources_3.13.700.v20200209-1624.jar:?]
+	at org.eclipse.core.internal.resources.Workspace.buildInternal(Workspace.java:515) [org.eclipse.core.resources_3.13.700.v20200209-1624.jar:?]
+	at org.eclipse.core.internal.resources.Workspace.build(Workspace.java:412) [org.eclipse.core.resources_3.13.700.v20200209-1624.jar:?]
+	at org.eclipse.ui.actions.BuildAction$1.runInWorkspace(BuildAction.java:291) [org.eclipse.ui.ide_3.17.0.v20200217-1511.jar:?]
+	at org.eclipse.core.internal.resources.InternalWorkspaceJob.run(InternalWorkspaceJob.java:42) [org.eclipse.core.resources_3.13.700.v20200209-1624.jar:?]
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63) [org.eclipse.core.jobs_3.10.700.v20200106-1020.jar:?]
+10:19:12 INFO  : Checking for BSP changes to sync application flags for project 'speed_sensor_motor_control'...
+10:19:12 ERROR : Failed to call write_mss 
+Reason: Invalid workspace. set workspace using setws command
+10:19:12 ERROR : Failed to update application flags from BSP for 'speed_sensor_motor_control'. Reason: Failed to call write_mss 
+Reason: Invalid workspace. set workspace using setws command
+java.lang.RuntimeException: Failed to call write_mss 
+Reason: Invalid workspace. set workspace using setws command
+	at com.xilinx.sdk.xsdb.XsdbCommandUtils.handleResult(XsdbCommandUtils.java:389) ~[com.xilinx.sdk.xsdb_1.0.0.202310091710.jar:?]
+	at com.xilinx.sdk.xsdb.XsdbCommandUtils.executeAndRespond(XsdbCommandUtils.java:327) ~[com.xilinx.sdk.xsdb_1.0.0.202310091710.jar:?]
+	at com.xilinx.sdk.sw.SwPlatformUtils.createDefaultMss(SwPlatformUtils.java:72) ~[com.xilinx.sdk.sw_1.0.0.202310091710.jar:?]
+	at com.xilinx.sdx.sdk.core.util.BspCreationHelper.generateMssFile(BspCreationHelper.java:46) ~[com.xilinx.sdx.sdk.core_1.0.0.202310091710.jar:?]
+	at com.xilinx.sdx.sdk.core.util.BspCreationHelper.create(BspCreationHelper.java:38) ~[com.xilinx.sdx.sdk.core_1.0.0.202310091710.jar:?]
+	at com.xilinx.sdx.sdk.core.build.SdkMakefileGenerationListener.createSwPlatform(SdkMakefileGenerationListener.java:150) ~[com.xilinx.sdx.sdk.core_1.0.0.202310091710.jar:?]
+	at com.xilinx.sdx.sdk.core.build.SdkMakefileGenerationListener.syncAppFlags(SdkMakefileGenerationListener.java:82) [com.xilinx.sdx.sdk.core_1.0.0.202310091710.jar:?]
+	at com.xilinx.sdx.sdk.core.build.SdkMakefileGenerationListener.preMakefileGeneration(SdkMakefileGenerationListener.java:48) [com.xilinx.sdx.sdk.core_1.0.0.202310091710.jar:?]
+	at com.xilinx.sdk.managedbuilder.XilinxGnuMakefileGenerator.notifyPreMakefileGenerationListeners(XilinxGnuMakefileGenerator.java:91) [com.xilinx.sdk.managedbuilder_1.0.0.202310091710.jar:?]
+	at com.xilinx.sdk.managedbuilder.XilinxGnuMakefileGenerator.generateMakefiles(XilinxGnuMakefileGenerator.java:40) [com.xilinx.sdk.managedbuilder_1.0.0.202310091710.jar:?]
+	at org.eclipse.cdt.managedbuilder.internal.core.CommonBuilder.performMakefileGeneration(CommonBuilder.java:1008) [org.eclipse.cdt.managedbuilder.core_8.6.0.201802261533.jar:?]
+	at org.eclipse.cdt.managedbuilder.internal.core.CommonBuilder.performPrebuildGeneration(CommonBuilder.java:873) [org.eclipse.cdt.managedbuilder.core_8.6.0.201802261533.jar:?]
+	at org.eclipse.cdt.managedbuilder.internal.core.CommonBuilder.build(CommonBuilder.java:748) [org.eclipse.cdt.managedbuilder.core_8.6.0.201802261533.jar:?]
+	at org.eclipse.cdt.managedbuilder.internal.core.CommonBuilder.build(CommonBuilder.java:510) [org.eclipse.cdt.managedbuilder.core_8.6.0.201802261533.jar:?]
+	at org.eclipse.cdt.managedbuilder.internal.core.CommonBuilder.build(CommonBuilder.java:459) [org.eclipse.cdt.managedbuilder.core_8.6.0.201802261533.jar:?]
+	at org.eclipse.core.internal.events.BuildManager$2.run(BuildManager.java:832) [org.eclipse.core.resources_3.13.700.v20200209-1624.jar:?]
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:45) [org.eclipse.equinox.common_3.11.0.v20200206-0817.jar:?]
+	at org.eclipse.core.internal.events.BuildManager.basicBuild(BuildManager.java:220) [org.eclipse.core.resources_3.13.700.v20200209-1624.jar:?]
+	at org.eclipse.core.internal.events.BuildManager.basicBuild(BuildManager.java:263) [org.eclipse.core.resources_3.13.700.v20200209-1624.jar:?]
+	at org.eclipse.core.internal.events.BuildManager$1.run(BuildManager.java:316) [org.eclipse.core.resources_3.13.700.v20200209-1624.jar:?]
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:45) [org.eclipse.equinox.common_3.11.0.v20200206-0817.jar:?]
+	at org.eclipse.core.internal.events.BuildManager.basicBuild(BuildManager.java:319) [org.eclipse.core.resources_3.13.700.v20200209-1624.jar:?]
+	at org.eclipse.core.internal.events.BuildManager.basicBuildLoop(BuildManager.java:371) [org.eclipse.core.resources_3.13.700.v20200209-1624.jar:?]
+	at org.eclipse.core.internal.events.BuildManager.build(BuildManager.java:392) [org.eclipse.core.resources_3.13.700.v20200209-1624.jar:?]
+	at org.eclipse.core.internal.resources.Workspace.buildInternal(Workspace.java:515) [org.eclipse.core.resources_3.13.700.v20200209-1624.jar:?]
+	at org.eclipse.core.internal.resources.Workspace.build(Workspace.java:412) [org.eclipse.core.resources_3.13.700.v20200209-1624.jar:?]
+	at org.eclipse.ui.actions.BuildAction$1.runInWorkspace(BuildAction.java:291) [org.eclipse.ui.ide_3.17.0.v20200217-1511.jar:?]
+	at org.eclipse.core.internal.resources.InternalWorkspaceJob.run(InternalWorkspaceJob.java:42) [org.eclipse.core.resources_3.13.700.v20200209-1624.jar:?]
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63) [org.eclipse.core.jobs_3.10.700.v20200106-1020.jar:?]
+10:19:58 INFO  : Checking for BSP changes to sync application flags for project 'speed_sensor_motor_control'...
+10:19:58 ERROR : Failed to call write_mss 
+Reason: Invalid workspace. set workspace using setws command
+10:19:58 ERROR : Failed to update application flags from BSP for 'speed_sensor_motor_control'. Reason: Failed to call write_mss 
+Reason: Invalid workspace. set workspace using setws command
+java.lang.RuntimeException: Failed to call write_mss 
+Reason: Invalid workspace. set workspace using setws command
+	at com.xilinx.sdk.xsdb.XsdbCommandUtils.handleResult(XsdbCommandUtils.java:389) ~[com.xilinx.sdk.xsdb_1.0.0.202310091710.jar:?]
+	at com.xilinx.sdk.xsdb.XsdbCommandUtils.executeAndRespond(XsdbCommandUtils.java:327) ~[com.xilinx.sdk.xsdb_1.0.0.202310091710.jar:?]
+	at com.xilinx.sdk.sw.SwPlatformUtils.createDefaultMss(SwPlatformUtils.java:72) ~[com.xilinx.sdk.sw_1.0.0.202310091710.jar:?]
+	at com.xilinx.sdx.sdk.core.util.BspCreationHelper.generateMssFile(BspCreationHelper.java:46) ~[com.xilinx.sdx.sdk.core_1.0.0.202310091710.jar:?]
+	at com.xilinx.sdx.sdk.core.util.BspCreationHelper.create(BspCreationHelper.java:38) ~[com.xilinx.sdx.sdk.core_1.0.0.202310091710.jar:?]
+	at com.xilinx.sdx.sdk.core.build.SdkMakefileGenerationListener.createSwPlatform(SdkMakefileGenerationListener.java:150) ~[com.xilinx.sdx.sdk.core_1.0.0.202310091710.jar:?]
+	at com.xilinx.sdx.sdk.core.build.SdkMakefileGenerationListener.syncAppFlags(SdkMakefileGenerationListener.java:82) [com.xilinx.sdx.sdk.core_1.0.0.202310091710.jar:?]
+	at com.xilinx.sdx.sdk.core.build.SdkMakefileGenerationListener.preMakefileGeneration(SdkMakefileGenerationListener.java:48) [com.xilinx.sdx.sdk.core_1.0.0.202310091710.jar:?]
+	at com.xilinx.sdk.managedbuilder.XilinxGnuMakefileGenerator.notifyPreMakefileGenerationListeners(XilinxGnuMakefileGenerator.java:91) [com.xilinx.sdk.managedbuilder_1.0.0.202310091710.jar:?]
+	at com.xilinx.sdk.managedbuilder.XilinxGnuMakefileGenerator.generateMakefiles(XilinxGnuMakefileGenerator.java:40) [com.xilinx.sdk.managedbuilder_1.0.0.202310091710.jar:?]
+	at org.eclipse.cdt.managedbuilder.internal.core.CommonBuilder.performMakefileGeneration(CommonBuilder.java:1008) [org.eclipse.cdt.managedbuilder.core_8.6.0.201802261533.jar:?]
+	at org.eclipse.cdt.managedbuilder.internal.core.CommonBuilder.performPrebuildGeneration(CommonBuilder.java:873) [org.eclipse.cdt.managedbuilder.core_8.6.0.201802261533.jar:?]
+	at org.eclipse.cdt.managedbuilder.internal.core.CommonBuilder.build(CommonBuilder.java:748) [org.eclipse.cdt.managedbuilder.core_8.6.0.201802261533.jar:?]
+	at org.eclipse.cdt.managedbuilder.internal.core.CommonBuilder.build(CommonBuilder.java:510) [org.eclipse.cdt.managedbuilder.core_8.6.0.201802261533.jar:?]
+	at org.eclipse.cdt.managedbuilder.internal.core.CommonBuilder.build(CommonBuilder.java:459) [org.eclipse.cdt.managedbuilder.core_8.6.0.201802261533.jar:?]
+	at org.eclipse.core.internal.events.BuildManager$2.run(BuildManager.java:832) [org.eclipse.core.resources_3.13.700.v20200209-1624.jar:?]
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:45) [org.eclipse.equinox.common_3.11.0.v20200206-0817.jar:?]
+	at org.eclipse.core.internal.events.BuildManager.basicBuild(BuildManager.java:220) [org.eclipse.core.resources_3.13.700.v20200209-1624.jar:?]
+	at org.eclipse.core.internal.events.BuildManager.basicBuild(BuildManager.java:263) [org.eclipse.core.resources_3.13.700.v20200209-1624.jar:?]
+	at org.eclipse.core.internal.events.BuildManager$1.run(BuildManager.java:316) [org.eclipse.core.resources_3.13.700.v20200209-1624.jar:?]
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:45) [org.eclipse.equinox.common_3.11.0.v20200206-0817.jar:?]
+	at org.eclipse.core.internal.events.BuildManager.basicBuild(BuildManager.java:319) [org.eclipse.core.resources_3.13.700.v20200209-1624.jar:?]
+	at org.eclipse.core.internal.events.BuildManager.basicBuildLoop(BuildManager.java:371) [org.eclipse.core.resources_3.13.700.v20200209-1624.jar:?]
+	at org.eclipse.core.internal.events.BuildManager.build(BuildManager.java:392) [org.eclipse.core.resources_3.13.700.v20200209-1624.jar:?]
+	at org.eclipse.core.internal.resources.Workspace.buildInternal(Workspace.java:515) [org.eclipse.core.resources_3.13.700.v20200209-1624.jar:?]
+	at org.eclipse.core.internal.resources.Workspace.build(Workspace.java:412) [org.eclipse.core.resources_3.13.700.v20200209-1624.jar:?]
+	at org.eclipse.ui.actions.BuildAction$1.runInWorkspace(BuildAction.java:291) [org.eclipse.ui.ide_3.17.0.v20200217-1511.jar:?]
+	at org.eclipse.core.internal.resources.InternalWorkspaceJob.run(InternalWorkspaceJob.java:42) [org.eclipse.core.resources_3.13.700.v20200209-1624.jar:?]
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63) [org.eclipse.core.jobs_3.10.700.v20200106-1020.jar:?]
+10:20:53 ERROR : Failed to update hardware specification for project 'speed_sensor_motor_control_export'.
+Reason: Failed to execute command 'platform config -updatehw {C:/Users/dries/ss_and_mc/speed_sensor_motor_control_export.xsa}'. Click on details for more information.
+10:21:24 INFO  : Hardware specification for platform project 'speed_sensor_motor_control_export' is updated.
+10:24:34 INFO  : Checking for BSP changes to sync application flags for project 'speed_sensor_motor_control'...
+10:24:34 WARN  : Failed to closehw "C:/Users/dries/ss_and_mc/speed_sensor_motor_control_export/export/speed_sensor_motor_control_export/hw/speed_sensor_motor_control_export.xsa"
+Reason: Cannot close hw design 'C:/Users/dries/ss_and_mc/speed_sensor_motor_control_export/export/speed_sensor_motor_control_export/hw/speed_sensor_motor_control_export.xsa'.
+Design is not opened in the current session.
+
+10:24:52 WARN  : channel "tcfchan#7" closed
+10:24:53 INFO  : The hardware specification used by project 'speed_sensor_motor_control' is out of sync with the platform. Resource files extracted from the hardware specification will be updated.
+10:24:53 INFO  : The file 'C:\Users\dries\ss_and_mc\speed_sensor_motor_control\_ide\bitstream\speed_sensor_motor_control_export.bit' stored in project is removed.
+10:24:53 INFO  : The updated bitstream files are copied from platform to folder 'C:\Users\dries\ss_and_mc\speed_sensor_motor_control\_ide\bitstream' in project 'speed_sensor_motor_control'.
+10:24:53 INFO  : The file 'C:\Users\dries\ss_and_mc\speed_sensor_motor_control\_ide\psinit\ps7_init.tcl' stored in project is removed.
+10:24:58 INFO  : The updated ps init files are copied from platform to folder 'C:\Users\dries\ss_and_mc\speed_sensor_motor_control\_ide\psinit' in project 'speed_sensor_motor_control'.
+10:24:58 INFO  : Connected to target on host '127.0.0.1' and port '3121'.
+10:24:59 INFO  : Jtag cable 'Xilinx HW-FTDI-TEST FT2232H 1234-tulA' is selected.
+10:24:59 INFO  : 'jtag frequency' command is executed.
+10:24:59 INFO  : Context for 'APU' is selected.
+10:24:59 INFO  : System reset is completed.
+10:25:02 INFO  : 'after 3000' command is executed.
+10:25:02 INFO  : 'targets -set -filter {jtag_cable_name =~ "Xilinx HW-FTDI-TEST FT2232H 1234-tulA" && level==0 && jtag_device_ctx=="jsn-HW-FTDI-TEST FT2232H-1234-tulA-23727093-0"}' command is executed.
+10:25:04 INFO  : Device configured successfully with "C:/Users/dries/ss_and_mc/speed_sensor_motor_control/_ide/bitstream/speed_sensor_motor_control_export.bit"
+10:25:04 INFO  : Context for 'APU' is selected.
+10:25:04 INFO  : Hardware design and registers information is loaded from 'C:/Users/dries/ss_and_mc/speed_sensor_motor_control_export/export/speed_sensor_motor_control_export/hw/speed_sensor_motor_control_export.xsa'.
+10:25:04 INFO  : 'configparams force-mem-access 1' command is executed.
+10:25:04 INFO  : Context for 'APU' is selected.
+10:25:04 INFO  : Sourcing of 'C:/Users/dries/ss_and_mc/speed_sensor_motor_control/_ide/psinit/ps7_init.tcl' is done.
+10:25:04 INFO  : 'ps7_init' command is executed.
+10:25:05 INFO  : 'ps7_post_config' command is executed.
+10:25:05 INFO  : Context for processor 'ps7_cortexa9_0' is selected.
+10:25:05 INFO  : The application 'C:/Users/dries/ss_and_mc/speed_sensor_motor_control/Debug/speed_sensor_motor_control.elf' is downloaded to processor 'ps7_cortexa9_0'.
+10:25:05 INFO  : 'configparams force-mem-access 0' command is executed.
+10:25:05 INFO  : ----------------XSDB Script----------------
+connect -url tcp:127.0.0.1:3121
+targets -set -nocase -filter {name =~"APU*"}
+rst -system
+after 3000
+targets -set -filter {jtag_cable_name =~ "Xilinx HW-FTDI-TEST FT2232H 1234-tulA" && level==0 && jtag_device_ctx=="jsn-HW-FTDI-TEST FT2232H-1234-tulA-23727093-0"}
+fpga -file C:/Users/dries/ss_and_mc/speed_sensor_motor_control/_ide/bitstream/speed_sensor_motor_control_export.bit
+targets -set -nocase -filter {name =~"APU*"}
+loadhw -hw C:/Users/dries/ss_and_mc/speed_sensor_motor_control_export/export/speed_sensor_motor_control_export/hw/speed_sensor_motor_control_export.xsa -mem-ranges [list {0x40000000 0xbfffffff}] -regs
+configparams force-mem-access 1
+targets -set -nocase -filter {name =~"APU*"}
+source C:/Users/dries/ss_and_mc/speed_sensor_motor_control/_ide/psinit/ps7_init.tcl
+ps7_init
+ps7_post_config
+targets -set -nocase -filter {name =~ "*A9*#0"}
+dow C:/Users/dries/ss_and_mc/speed_sensor_motor_control/Debug/speed_sensor_motor_control.elf
+configparams force-mem-access 0
+----------------End of Script----------------
+
+10:25:05 INFO  : Context for processor 'ps7_cortexa9_0' is selected.
+10:25:05 INFO  : 'con' command is executed.
+10:25:05 INFO  : ----------------XSDB Script (After Launch)----------------
+targets -set -nocase -filter {name =~ "*A9*#0"}
+con
+----------------End of Script----------------
+
+10:25:05 INFO  : Launch script is exported to file 'C:\Users\dries\ss_and_mc\speed_sensor_motor_control_system\_ide\scripts\debugger_speed_sensor_motor_control-default.tcl'
+10:25:23 INFO  : Disconnected from the channel tcfchan#6.
+10:25:24 INFO  : Connected to target on host '127.0.0.1' and port '3121'.
+10:25:25 INFO  : ----------------XSDB Script----------------
+connect -url tcp:127.0.0.1:3121
+----------------End of Script----------------
+
+10:25:25 ERROR : Could not find FPGA device on the board for connection 'Local'.
+
+
+Troubleshooting hints:
+1. Check whether board is connected to system properly.
+2. In case of zynq board, check whether Digilent/Xilinx cable switch settings are correct.
+3. If you are using Xilinx Platform Cable USB, ensure that status LED is green.
+10:25:28 INFO  : Connected to target on host '127.0.0.1' and port '3121'.
+10:25:28 INFO  : Jtag cable 'Xilinx HW-FTDI-TEST FT2232H 1234-tulA' is selected.
+10:25:28 INFO  : 'jtag frequency' command is executed.
+10:25:28 INFO  : Context for 'APU' is selected.
+10:25:28 INFO  : System reset is completed.
+10:25:31 INFO  : 'after 3000' command is executed.
+10:25:31 INFO  : 'targets -set -filter {jtag_cable_name =~ "Xilinx HW-FTDI-TEST FT2232H 1234-tulA" && level==0 && jtag_device_ctx=="jsn-HW-FTDI-TEST FT2232H-1234-tulA-23727093-0"}' command is executed.
+10:25:34 INFO  : Device configured successfully with "C:/Users/dries/ss_and_mc/speed_sensor_motor_control/_ide/bitstream/speed_sensor_motor_control_export.bit"
+10:25:34 INFO  : Context for 'APU' is selected.
+10:25:34 INFO  : Hardware design and registers information is loaded from 'C:/Users/dries/ss_and_mc/speed_sensor_motor_control_export/export/speed_sensor_motor_control_export/hw/speed_sensor_motor_control_export.xsa'.
+10:25:34 INFO  : 'configparams force-mem-access 1' command is executed.
+10:25:34 INFO  : Context for 'APU' is selected.
+10:25:34 INFO  : Sourcing of 'C:/Users/dries/ss_and_mc/speed_sensor_motor_control/_ide/psinit/ps7_init.tcl' is done.
+10:25:34 INFO  : 'ps7_init' command is executed.
+10:25:34 INFO  : 'ps7_post_config' command is executed.
+10:25:34 INFO  : Context for processor 'ps7_cortexa9_0' is selected.
+10:25:34 INFO  : The application 'C:/Users/dries/ss_and_mc/speed_sensor_motor_control/Debug/speed_sensor_motor_control.elf' is downloaded to processor 'ps7_cortexa9_0'.
+10:25:34 INFO  : 'configparams force-mem-access 0' command is executed.
+10:25:34 INFO  : ----------------XSDB Script----------------
+connect -url tcp:127.0.0.1:3121
+targets -set -nocase -filter {name =~"APU*"}
+rst -system
+after 3000
+targets -set -filter {jtag_cable_name =~ "Xilinx HW-FTDI-TEST FT2232H 1234-tulA" && level==0 && jtag_device_ctx=="jsn-HW-FTDI-TEST FT2232H-1234-tulA-23727093-0"}
+fpga -file C:/Users/dries/ss_and_mc/speed_sensor_motor_control/_ide/bitstream/speed_sensor_motor_control_export.bit
+targets -set -nocase -filter {name =~"APU*"}
+loadhw -hw C:/Users/dries/ss_and_mc/speed_sensor_motor_control_export/export/speed_sensor_motor_control_export/hw/speed_sensor_motor_control_export.xsa -mem-ranges [list {0x40000000 0xbfffffff}] -regs
+configparams force-mem-access 1
+targets -set -nocase -filter {name =~"APU*"}
+source C:/Users/dries/ss_and_mc/speed_sensor_motor_control/_ide/psinit/ps7_init.tcl
+ps7_init
+ps7_post_config
+targets -set -nocase -filter {name =~ "*A9*#0"}
+dow C:/Users/dries/ss_and_mc/speed_sensor_motor_control/Debug/speed_sensor_motor_control.elf
+configparams force-mem-access 0
+----------------End of Script----------------
+
+10:25:34 INFO  : Context for processor 'ps7_cortexa9_0' is selected.
+10:25:34 INFO  : 'con' command is executed.
+10:25:34 INFO  : ----------------XSDB Script (After Launch)----------------
+targets -set -nocase -filter {name =~ "*A9*#0"}
+con
+----------------End of Script----------------
+
+10:25:34 INFO  : Launch script is exported to file 'C:\Users\dries\ss_and_mc\speed_sensor_motor_control_system\_ide\scripts\debugger_speed_sensor_motor_control-default.tcl'
+10:26:19 INFO  : Disconnected from the channel tcfchan#7.
+10:26:20 INFO  : Connected to target on host '127.0.0.1' and port '3121'.
+10:26:20 INFO  : Jtag cable 'Xilinx HW-FTDI-TEST FT2232H 1234-tulA' is selected.
+10:26:20 INFO  : 'jtag frequency' command is executed.
+10:26:20 INFO  : Context for 'APU' is selected.
+10:26:20 INFO  : System reset is completed.
+10:26:23 INFO  : 'after 3000' command is executed.
+10:26:23 INFO  : 'targets -set -filter {jtag_cable_name =~ "Xilinx HW-FTDI-TEST FT2232H 1234-tulA" && level==0 && jtag_device_ctx=="jsn-HW-FTDI-TEST FT2232H-1234-tulA-23727093-0"}' command is executed.
+10:26:25 INFO  : Device configured successfully with "C:/Users/dries/ss_and_mc/speed_sensor_motor_control/_ide/bitstream/speed_sensor_motor_control_export.bit"
+10:26:25 INFO  : Context for 'APU' is selected.
+10:26:25 INFO  : Hardware design and registers information is loaded from 'C:/Users/dries/ss_and_mc/speed_sensor_motor_control_export/export/speed_sensor_motor_control_export/hw/speed_sensor_motor_control_export.xsa'.
+10:26:25 INFO  : 'configparams force-mem-access 1' command is executed.
+10:26:25 INFO  : Context for 'APU' is selected.
+10:26:25 INFO  : Sourcing of 'C:/Users/dries/ss_and_mc/speed_sensor_motor_control/_ide/psinit/ps7_init.tcl' is done.
+10:26:26 INFO  : 'ps7_init' command is executed.
+10:26:26 INFO  : 'ps7_post_config' command is executed.
+10:26:26 INFO  : Context for processor 'ps7_cortexa9_0' is selected.
+10:26:26 INFO  : The application 'C:/Users/dries/ss_and_mc/speed_sensor_motor_control/Debug/speed_sensor_motor_control.elf' is downloaded to processor 'ps7_cortexa9_0'.
+10:26:26 INFO  : 'configparams force-mem-access 0' command is executed.
+10:26:26 INFO  : ----------------XSDB Script----------------
+connect -url tcp:127.0.0.1:3121
+targets -set -nocase -filter {name =~"APU*"}
+rst -system
+after 3000
+targets -set -filter {jtag_cable_name =~ "Xilinx HW-FTDI-TEST FT2232H 1234-tulA" && level==0 && jtag_device_ctx=="jsn-HW-FTDI-TEST FT2232H-1234-tulA-23727093-0"}
+fpga -file C:/Users/dries/ss_and_mc/speed_sensor_motor_control/_ide/bitstream/speed_sensor_motor_control_export.bit
+targets -set -nocase -filter {name =~"APU*"}
+loadhw -hw C:/Users/dries/ss_and_mc/speed_sensor_motor_control_export/export/speed_sensor_motor_control_export/hw/speed_sensor_motor_control_export.xsa -mem-ranges [list {0x40000000 0xbfffffff}] -regs
+configparams force-mem-access 1
+targets -set -nocase -filter {name =~"APU*"}
+source C:/Users/dries/ss_and_mc/speed_sensor_motor_control/_ide/psinit/ps7_init.tcl
+ps7_init
+ps7_post_config
+targets -set -nocase -filter {name =~ "*A9*#0"}
+dow C:/Users/dries/ss_and_mc/speed_sensor_motor_control/Debug/speed_sensor_motor_control.elf
+configparams force-mem-access 0
+----------------End of Script----------------
+
+10:26:26 INFO  : Context for processor 'ps7_cortexa9_0' is selected.
+10:26:26 INFO  : 'con' command is executed.
+10:26:26 INFO  : ----------------XSDB Script (After Launch)----------------
+targets -set -nocase -filter {name =~ "*A9*#0"}
+con
+----------------End of Script----------------
+
+10:26:26 INFO  : Launch script is exported to file 'C:\Users\dries\ss_and_mc\speed_sensor_motor_control_system\_ide\scripts\debugger_speed_sensor_motor_control-default.tcl'
+10:26:50 INFO  : Disconnected from the channel tcfchan#8.
+10:26:51 INFO  : Connected to target on host '127.0.0.1' and port '3121'.
+10:27:00 INFO  : ----------------XSDB Script----------------
+connect -url tcp:127.0.0.1:3121
+----------------End of Script----------------
+
+10:27:00 ERROR : Could not find Jtag device on the board for connection 'Local'.
+
+
+Troubleshooting hints:
+1. Check whether board is connected to system properly.
+2. In case of zynq board, check whether Digilent/Xilinx cable switch settings are correct.
+3. If you are using Xilinx Platform Cable USB, ensure that status LED is green.
+10:27:03 INFO  : Connected to target on host '127.0.0.1' and port '3121'.
+10:27:04 INFO  : Jtag cable 'Xilinx HW-FTDI-TEST FT2232H 1234-tulA' is selected.
+10:27:04 INFO  : 'jtag frequency' command is executed.
+10:27:04 INFO  : Context for 'APU' is selected.
+10:27:04 INFO  : System reset is completed.
+10:27:07 INFO  : 'after 3000' command is executed.
+10:27:07 INFO  : 'targets -set -filter {jtag_cable_name =~ "Xilinx HW-FTDI-TEST FT2232H 1234-tulA" && level==0 && jtag_device_ctx=="jsn-HW-FTDI-TEST FT2232H-1234-tulA-23727093-0"}' command is executed.
+10:27:09 INFO  : Device configured successfully with "C:/Users/dries/ss_and_mc/speed_sensor_motor_control/_ide/bitstream/speed_sensor_motor_control_export.bit"
+10:27:09 INFO  : Context for 'APU' is selected.
+10:27:09 INFO  : Hardware design and registers information is loaded from 'C:/Users/dries/ss_and_mc/speed_sensor_motor_control_export/export/speed_sensor_motor_control_export/hw/speed_sensor_motor_control_export.xsa'.
+10:27:09 INFO  : 'configparams force-mem-access 1' command is executed.
+10:27:09 INFO  : Context for 'APU' is selected.
+10:27:09 INFO  : Sourcing of 'C:/Users/dries/ss_and_mc/speed_sensor_motor_control/_ide/psinit/ps7_init.tcl' is done.
+10:27:09 INFO  : 'ps7_init' command is executed.
+10:27:09 INFO  : 'ps7_post_config' command is executed.
+10:27:09 INFO  : Context for processor 'ps7_cortexa9_0' is selected.
+10:27:10 INFO  : The application 'C:/Users/dries/ss_and_mc/speed_sensor_motor_control/Debug/speed_sensor_motor_control.elf' is downloaded to processor 'ps7_cortexa9_0'.
+10:27:10 INFO  : 'configparams force-mem-access 0' command is executed.
+10:27:10 INFO  : ----------------XSDB Script----------------
+connect -url tcp:127.0.0.1:3121
+targets -set -nocase -filter {name =~"APU*"}
+rst -system
+after 3000
+targets -set -filter {jtag_cable_name =~ "Xilinx HW-FTDI-TEST FT2232H 1234-tulA" && level==0 && jtag_device_ctx=="jsn-HW-FTDI-TEST FT2232H-1234-tulA-23727093-0"}
+fpga -file C:/Users/dries/ss_and_mc/speed_sensor_motor_control/_ide/bitstream/speed_sensor_motor_control_export.bit
+targets -set -nocase -filter {name =~"APU*"}
+loadhw -hw C:/Users/dries/ss_and_mc/speed_sensor_motor_control_export/export/speed_sensor_motor_control_export/hw/speed_sensor_motor_control_export.xsa -mem-ranges [list {0x40000000 0xbfffffff}] -regs
+configparams force-mem-access 1
+targets -set -nocase -filter {name =~"APU*"}
+source C:/Users/dries/ss_and_mc/speed_sensor_motor_control/_ide/psinit/ps7_init.tcl
+ps7_init
+ps7_post_config
+targets -set -nocase -filter {name =~ "*A9*#0"}
+dow C:/Users/dries/ss_and_mc/speed_sensor_motor_control/Debug/speed_sensor_motor_control.elf
+configparams force-mem-access 0
+----------------End of Script----------------
+
+10:27:10 INFO  : Context for processor 'ps7_cortexa9_0' is selected.
+10:27:10 INFO  : 'con' command is executed.
+10:27:10 INFO  : ----------------XSDB Script (After Launch)----------------
+targets -set -nocase -filter {name =~ "*A9*#0"}
+con
+----------------End of Script----------------
+
+10:27:10 INFO  : Launch script is exported to file 'C:\Users\dries\ss_and_mc\speed_sensor_motor_control_system\_ide\scripts\debugger_speed_sensor_motor_control-default.tcl'
+11:16:28 INFO  : Checking for BSP changes to sync application flags for project 'speed_sensor_motor_control'...
+11:19:13 INFO  : Checking for BSP changes to sync application flags for project 'speed_sensor_motor_control'...
+11:19:37 INFO  : Disconnected from the channel tcfchan#9.
+11:19:38 INFO  : Connected to target on host '127.0.0.1' and port '3121'.
+11:19:38 INFO  : Jtag cable 'Xilinx HW-FTDI-TEST FT2232H 1234-tulA' is selected.
+11:19:38 INFO  : 'jtag frequency' command is executed.
+11:19:38 INFO  : Context for 'APU' is selected.
+11:19:38 INFO  : System reset is completed.
+11:19:41 INFO  : 'after 3000' command is executed.
+11:19:41 INFO  : 'targets -set -filter {jtag_cable_name =~ "Xilinx HW-FTDI-TEST FT2232H 1234-tulA" && level==0 && jtag_device_ctx=="jsn-HW-FTDI-TEST FT2232H-1234-tulA-23727093-0"}' command is executed.
+11:19:43 INFO  : Device configured successfully with "C:/Users/dries/ss_and_mc/speed_sensor_motor_control/_ide/bitstream/speed_sensor_motor_control_export.bit"
+11:19:43 INFO  : Context for 'APU' is selected.
+11:19:43 INFO  : Hardware design and registers information is loaded from 'C:/Users/dries/ss_and_mc/speed_sensor_motor_control_export/export/speed_sensor_motor_control_export/hw/speed_sensor_motor_control_export.xsa'.
+11:19:43 INFO  : 'configparams force-mem-access 1' command is executed.
+11:19:43 INFO  : Context for 'APU' is selected.
+11:19:43 INFO  : Sourcing of 'C:/Users/dries/ss_and_mc/speed_sensor_motor_control/_ide/psinit/ps7_init.tcl' is done.
+11:19:44 INFO  : 'ps7_init' command is executed.
+11:19:44 INFO  : 'ps7_post_config' command is executed.
+11:19:44 INFO  : Context for processor 'ps7_cortexa9_0' is selected.
+11:19:44 INFO  : The application 'C:/Users/dries/ss_and_mc/speed_sensor_motor_control/Debug/speed_sensor_motor_control.elf' is downloaded to processor 'ps7_cortexa9_0'.
+11:19:44 INFO  : 'configparams force-mem-access 0' command is executed.
+11:19:44 INFO  : ----------------XSDB Script----------------
+connect -url tcp:127.0.0.1:3121
+targets -set -nocase -filter {name =~"APU*"}
+rst -system
+after 3000
+targets -set -filter {jtag_cable_name =~ "Xilinx HW-FTDI-TEST FT2232H 1234-tulA" && level==0 && jtag_device_ctx=="jsn-HW-FTDI-TEST FT2232H-1234-tulA-23727093-0"}
+fpga -file C:/Users/dries/ss_and_mc/speed_sensor_motor_control/_ide/bitstream/speed_sensor_motor_control_export.bit
+targets -set -nocase -filter {name =~"APU*"}
+loadhw -hw C:/Users/dries/ss_and_mc/speed_sensor_motor_control_export/export/speed_sensor_motor_control_export/hw/speed_sensor_motor_control_export.xsa -mem-ranges [list {0x40000000 0xbfffffff}] -regs
+configparams force-mem-access 1
+targets -set -nocase -filter {name =~"APU*"}
+source C:/Users/dries/ss_and_mc/speed_sensor_motor_control/_ide/psinit/ps7_init.tcl
+ps7_init
+ps7_post_config
+targets -set -nocase -filter {name =~ "*A9*#0"}
+dow C:/Users/dries/ss_and_mc/speed_sensor_motor_control/Debug/speed_sensor_motor_control.elf
+configparams force-mem-access 0
+----------------End of Script----------------
+
+11:19:44 INFO  : Context for processor 'ps7_cortexa9_0' is selected.
+11:19:44 INFO  : 'con' command is executed.
+11:19:44 INFO  : ----------------XSDB Script (After Launch)----------------
+targets -set -nocase -filter {name =~ "*A9*#0"}
+con
+----------------End of Script----------------
+
+11:19:44 INFO  : Launch script is exported to file 'C:\Users\dries\ss_and_mc\speed_sensor_motor_control_system\_ide\scripts\debugger_speed_sensor_motor_control-default.tcl'
+11:35:48 INFO  : Disconnected from the channel tcfchan#10.
+13:37:03 DEBUG : Logs will be stored at 'C:/Users/dries/ss_and_mc/IDE.log'.
+13:37:04 INFO  : Launching XSCT server: xsct.bat -n  -interactive C:\Users\dries\ss_and_mc\temp_xsdb_launch_script.tcl
+13:37:08 INFO  : Registering command handlers for Vitis TCF services
+13:37:08 INFO  : Platform repository initialization has completed.
+13:37:09 INFO  : XSCT server has started successfully.
+13:37:09 INFO  : plnx-install-location is set to ''
+13:37:13 INFO  : Successfully done setting XSCT server connection channel  
+13:37:13 INFO  : Successfully done query RDI_DATADIR 
+13:37:13 INFO  : Successfully done setting workspace for the tool. 
+13:46:43 INFO  : Checking for BSP changes to sync application flags for project 'speed_sensor_motor_control'...
+13:47:38 INFO  : Checking for BSP changes to sync application flags for project 'speed_sensor_motor_control'...
+13:49:51 INFO  : Result from executing command 'getProjects': speed_sensor_motor_control_export
+13:49:51 INFO  : Result from executing command 'getPlatforms': speed_sensor_motor_control_export|C:/Users/dries/ss_and_mc/speed_sensor_motor_control_export/export/speed_sensor_motor_control_export/speed_sensor_motor_control_export.xpfm
+13:49:51 INFO  : Checking for BSP changes to sync application flags for project 'speed_sensor_motor_control'...
+13:50:26 INFO  : Checking for BSP changes to sync application flags for project 'speed_sensor_motor_control'...
+13:53:08 INFO  : Checking for BSP changes to sync application flags for project 'speed_sensor_motor_control'...
+13:54:17 INFO  : Checking for BSP changes to sync application flags for project 'speed_sensor_motor_control'...
+13:54:26 INFO  : Checking for BSP changes to sync application flags for project 'speed_sensor_motor_control'...
+13:59:14 INFO  : Checking for BSP changes to sync application flags for project 'speed_sensor_motor_control'...
+14:00:36 INFO  : Checking for BSP changes to sync application flags for project 'speed_sensor_motor_control'...
+14:32:28 INFO  : Checking for BSP changes to sync application flags for project 'speed_sensor_motor_control'...
+14:34:41 INFO  : Checking for BSP changes to sync application flags for project 'speed_sensor_motor_control'...
+14:43:41 INFO  : Checking for BSP changes to sync application flags for project 'speed_sensor_motor_control'...
+14:44:48 INFO  : Result from executing command 'getProjects': speed_sensor_motor_control_export
+14:44:48 INFO  : Result from executing command 'getPlatforms': speed_sensor_motor_control_export|C:/Users/dries/ss_and_mc/speed_sensor_motor_control_export/export/speed_sensor_motor_control_export/speed_sensor_motor_control_export.xpfm
+14:44:49 INFO  : Checking for BSP changes to sync application flags for project 'speed_sensor_motor_control'...
+15:13:51 INFO  : Checking for BSP changes to sync application flags for project 'speed_sensor_motor_control'...
+15:14:13 INFO  : Checking for BSP changes to sync application flags for project 'speed_sensor_motor_control'...
+15:17:48 INFO  : Checking for BSP changes to sync application flags for project 'speed_sensor_motor_control'...
+15:27:58 INFO  : Connected to target on host '127.0.0.1' and port '3121'.
+15:27:58 INFO  : Jtag cable 'Xilinx HW-FTDI-TEST FT2232H 1234-tulA' is selected.
+15:27:58 INFO  : 'jtag frequency' command is executed.
+15:27:58 INFO  : Context for 'APU' is selected.
+15:27:58 INFO  : System reset is completed.
+15:28:01 INFO  : 'after 3000' command is executed.
+15:28:01 INFO  : 'targets -set -filter {jtag_cable_name =~ "Xilinx HW-FTDI-TEST FT2232H 1234-tulA" && level==0 && jtag_device_ctx=="jsn-HW-FTDI-TEST FT2232H-1234-tulA-23727093-0"}' command is executed.
+15:28:04 INFO  : Device configured successfully with "C:/Users/dries/ss_and_mc/speed_sensor_motor_control/_ide/bitstream/speed_sensor_motor_control_export.bit"
+15:28:04 INFO  : Context for 'APU' is selected.
+15:28:04 INFO  : Hardware design and registers information is loaded from 'C:/Users/dries/ss_and_mc/speed_sensor_motor_control_export/export/speed_sensor_motor_control_export/hw/speed_sensor_motor_control_export.xsa'.
+15:28:04 INFO  : 'configparams force-mem-access 1' command is executed.
+15:28:04 INFO  : Context for 'APU' is selected.
+15:28:04 INFO  : Sourcing of 'C:/Users/dries/ss_and_mc/speed_sensor_motor_control/_ide/psinit/ps7_init.tcl' is done.
+15:28:04 INFO  : 'ps7_init' command is executed.
+15:28:04 INFO  : 'ps7_post_config' command is executed.
+15:28:04 INFO  : Context for processor 'ps7_cortexa9_0' is selected.
+15:28:04 INFO  : The application 'C:/Users/dries/ss_and_mc/speed_sensor_motor_control/Debug/speed_sensor_motor_control.elf' is downloaded to processor 'ps7_cortexa9_0'.
+15:28:04 INFO  : 'configparams force-mem-access 0' command is executed.
+15:28:04 INFO  : ----------------XSDB Script----------------
+connect -url tcp:127.0.0.1:3121
+targets -set -nocase -filter {name =~"APU*"}
+rst -system
+after 3000
+targets -set -filter {jtag_cable_name =~ "Xilinx HW-FTDI-TEST FT2232H 1234-tulA" && level==0 && jtag_device_ctx=="jsn-HW-FTDI-TEST FT2232H-1234-tulA-23727093-0"}
+fpga -file C:/Users/dries/ss_and_mc/speed_sensor_motor_control/_ide/bitstream/speed_sensor_motor_control_export.bit
+targets -set -nocase -filter {name =~"APU*"}
+loadhw -hw C:/Users/dries/ss_and_mc/speed_sensor_motor_control_export/export/speed_sensor_motor_control_export/hw/speed_sensor_motor_control_export.xsa -mem-ranges [list {0x40000000 0xbfffffff}] -regs
+configparams force-mem-access 1
+targets -set -nocase -filter {name =~"APU*"}
+source C:/Users/dries/ss_and_mc/speed_sensor_motor_control/_ide/psinit/ps7_init.tcl
+ps7_init
+ps7_post_config
+targets -set -nocase -filter {name =~ "*A9*#0"}
+dow C:/Users/dries/ss_and_mc/speed_sensor_motor_control/Debug/speed_sensor_motor_control.elf
+configparams force-mem-access 0
+----------------End of Script----------------
+
+15:28:05 INFO  : Context for processor 'ps7_cortexa9_0' is selected.
+15:28:05 INFO  : 'con' command is executed.
+15:28:05 INFO  : ----------------XSDB Script (After Launch)----------------
+targets -set -nocase -filter {name =~ "*A9*#0"}
+con
+----------------End of Script----------------
+
+15:28:05 INFO  : Launch script is exported to file 'C:\Users\dries\ss_and_mc\speed_sensor_motor_control_system\_ide\scripts\debugger_speed_sensor_motor_control-default.tcl'
+16:39:17 INFO  : Checking for BSP changes to sync application flags for project 'speed_sensor_motor_control'...
+16:39:24 INFO  : Disconnected from the channel tcfchan#3.
+16:39:25 INFO  : Connected to target on host '127.0.0.1' and port '3121'.
+16:39:34 INFO  : ----------------XSDB Script----------------
+connect -url tcp:127.0.0.1:3121
+----------------End of Script----------------
+
+16:39:34 ERROR : Could not find Jtag device on the board for connection 'Local'.
+
+
+Troubleshooting hints:
+1. Check whether board is connected to system properly.
+2. In case of zynq board, check whether Digilent/Xilinx cable switch settings are correct.
+3. If you are using Xilinx Platform Cable USB, ensure that status LED is green.
+16:39:39 INFO  : Connected to target on host '127.0.0.1' and port '3121'.
+16:39:39 INFO  : Jtag cable 'Xilinx HW-FTDI-TEST FT2232H 1234-tulA' is selected.
+16:39:39 INFO  : 'jtag frequency' command is executed.
+16:39:39 INFO  : Context for 'APU' is selected.
+16:39:39 INFO  : System reset is completed.
+16:39:42 INFO  : 'after 3000' command is executed.
+16:39:42 INFO  : 'targets -set -filter {jtag_cable_name =~ "Xilinx HW-FTDI-TEST FT2232H 1234-tulA" && level==0 && jtag_device_ctx=="jsn-HW-FTDI-TEST FT2232H-1234-tulA-23727093-0"}' command is executed.
+16:39:44 INFO  : Device configured successfully with "C:/Users/dries/ss_and_mc/speed_sensor_motor_control/_ide/bitstream/speed_sensor_motor_control_export.bit"
+16:39:44 INFO  : Context for 'APU' is selected.
+16:39:46 INFO  : Hardware design and registers information is loaded from 'C:/Users/dries/ss_and_mc/speed_sensor_motor_control_export/export/speed_sensor_motor_control_export/hw/speed_sensor_motor_control_export.xsa'.
+16:39:46 INFO  : 'configparams force-mem-access 1' command is executed.
+16:39:46 INFO  : Context for 'APU' is selected.
+16:39:46 INFO  : Sourcing of 'C:/Users/dries/ss_and_mc/speed_sensor_motor_control/_ide/psinit/ps7_init.tcl' is done.
+16:39:47 INFO  : 'ps7_init' command is executed.
+16:39:47 INFO  : 'ps7_post_config' command is executed.
+16:39:47 INFO  : Context for processor 'ps7_cortexa9_0' is selected.
+16:39:47 INFO  : The application 'C:/Users/dries/ss_and_mc/speed_sensor_motor_control/Debug/speed_sensor_motor_control.elf' is downloaded to processor 'ps7_cortexa9_0'.
+16:39:47 INFO  : 'configparams force-mem-access 0' command is executed.
+16:39:47 INFO  : ----------------XSDB Script----------------
+connect -url tcp:127.0.0.1:3121
+targets -set -nocase -filter {name =~"APU*"}
+rst -system
+after 3000
+targets -set -filter {jtag_cable_name =~ "Xilinx HW-FTDI-TEST FT2232H 1234-tulA" && level==0 && jtag_device_ctx=="jsn-HW-FTDI-TEST FT2232H-1234-tulA-23727093-0"}
+fpga -file C:/Users/dries/ss_and_mc/speed_sensor_motor_control/_ide/bitstream/speed_sensor_motor_control_export.bit
+targets -set -nocase -filter {name =~"APU*"}
+loadhw -hw C:/Users/dries/ss_and_mc/speed_sensor_motor_control_export/export/speed_sensor_motor_control_export/hw/speed_sensor_motor_control_export.xsa -mem-ranges [list {0x40000000 0xbfffffff}] -regs
+configparams force-mem-access 1
+targets -set -nocase -filter {name =~"APU*"}
+source C:/Users/dries/ss_and_mc/speed_sensor_motor_control/_ide/psinit/ps7_init.tcl
+ps7_init
+ps7_post_config
+targets -set -nocase -filter {name =~ "*A9*#0"}
+dow C:/Users/dries/ss_and_mc/speed_sensor_motor_control/Debug/speed_sensor_motor_control.elf
+configparams force-mem-access 0
+----------------End of Script----------------
+
+16:39:47 INFO  : Context for processor 'ps7_cortexa9_0' is selected.
+16:39:47 INFO  : 'con' command is executed.
+16:39:47 INFO  : ----------------XSDB Script (After Launch)----------------
+targets -set -nocase -filter {name =~ "*A9*#0"}
+con
+----------------End of Script----------------
+
+16:39:47 INFO  : Launch script is exported to file 'C:\Users\dries\ss_and_mc\speed_sensor_motor_control_system\_ide\scripts\debugger_speed_sensor_motor_control-default.tcl'
+16:40:28 INFO  : Disconnected from the channel tcfchan#4.
+16:40:29 INFO  : Connected to target on host '127.0.0.1' and port '3121'.
+16:40:38 INFO  : ----------------XSDB Script----------------
+connect -url tcp:127.0.0.1:3121
+----------------End of Script----------------
+
+16:40:38 ERROR : Could not find Jtag device on the board for connection 'Local'.
+
+
+Troubleshooting hints:
+1. Check whether board is connected to system properly.
+2. In case of zynq board, check whether Digilent/Xilinx cable switch settings are correct.
+3. If you are using Xilinx Platform Cable USB, ensure that status LED is green.
+16:40:41 INFO  : Connected to target on host '127.0.0.1' and port '3121'.
+16:40:42 INFO  : Jtag cable 'Xilinx HW-FTDI-TEST FT2232H 1234-tulA' is selected.
+16:40:42 INFO  : 'jtag frequency' command is executed.
+16:40:42 INFO  : Context for 'APU' is selected.
+16:40:42 INFO  : System reset is completed.
+16:40:45 INFO  : 'after 3000' command is executed.
+16:40:45 INFO  : 'targets -set -filter {jtag_cable_name =~ "Xilinx HW-FTDI-TEST FT2232H 1234-tulA" && level==0 && jtag_device_ctx=="jsn-HW-FTDI-TEST FT2232H-1234-tulA-23727093-0"}' command is executed.
+16:40:47 INFO  : Device configured successfully with "C:/Users/dries/ss_and_mc/speed_sensor_motor_control/_ide/bitstream/speed_sensor_motor_control_export.bit"
+16:40:47 INFO  : Context for 'APU' is selected.
+16:40:47 INFO  : Hardware design and registers information is loaded from 'C:/Users/dries/ss_and_mc/speed_sensor_motor_control_export/export/speed_sensor_motor_control_export/hw/speed_sensor_motor_control_export.xsa'.
+16:40:47 INFO  : 'configparams force-mem-access 1' command is executed.
+16:40:47 INFO  : Context for 'APU' is selected.
+16:40:47 INFO  : Sourcing of 'C:/Users/dries/ss_and_mc/speed_sensor_motor_control/_ide/psinit/ps7_init.tcl' is done.
+16:40:47 INFO  : 'ps7_init' command is executed.
+16:40:47 INFO  : 'ps7_post_config' command is executed.
+16:40:47 INFO  : Context for processor 'ps7_cortexa9_0' is selected.
+16:40:48 INFO  : The application 'C:/Users/dries/ss_and_mc/speed_sensor_motor_control/Debug/speed_sensor_motor_control.elf' is downloaded to processor 'ps7_cortexa9_0'.
+16:40:48 INFO  : 'configparams force-mem-access 0' command is executed.
+16:40:48 INFO  : ----------------XSDB Script----------------
+connect -url tcp:127.0.0.1:3121
+targets -set -nocase -filter {name =~"APU*"}
+rst -system
+after 3000
+targets -set -filter {jtag_cable_name =~ "Xilinx HW-FTDI-TEST FT2232H 1234-tulA" && level==0 && jtag_device_ctx=="jsn-HW-FTDI-TEST FT2232H-1234-tulA-23727093-0"}
+fpga -file C:/Users/dries/ss_and_mc/speed_sensor_motor_control/_ide/bitstream/speed_sensor_motor_control_export.bit
+targets -set -nocase -filter {name =~"APU*"}
+loadhw -hw C:/Users/dries/ss_and_mc/speed_sensor_motor_control_export/export/speed_sensor_motor_control_export/hw/speed_sensor_motor_control_export.xsa -mem-ranges [list {0x40000000 0xbfffffff}] -regs
+configparams force-mem-access 1
+targets -set -nocase -filter {name =~"APU*"}
+source C:/Users/dries/ss_and_mc/speed_sensor_motor_control/_ide/psinit/ps7_init.tcl
+ps7_init
+ps7_post_config
+targets -set -nocase -filter {name =~ "*A9*#0"}
+dow C:/Users/dries/ss_and_mc/speed_sensor_motor_control/Debug/speed_sensor_motor_control.elf
+configparams force-mem-access 0
+----------------End of Script----------------
+
+16:40:48 INFO  : Context for processor 'ps7_cortexa9_0' is selected.
+16:40:48 INFO  : 'con' command is executed.
+16:40:48 INFO  : ----------------XSDB Script (After Launch)----------------
+targets -set -nocase -filter {name =~ "*A9*#0"}
+con
+----------------End of Script----------------
+
+16:40:48 INFO  : Launch script is exported to file 'C:\Users\dries\ss_and_mc\speed_sensor_motor_control_system\_ide\scripts\debugger_speed_sensor_motor_control-default.tcl'
+16:41:14 INFO  : Disconnected from the channel tcfchan#5.
+16:41:15 INFO  : Connected to target on host '127.0.0.1' and port '3121'.
+16:41:15 INFO  : Jtag cable 'Xilinx HW-FTDI-TEST FT2232H 1234-tulA' is selected.
+16:41:15 INFO  : 'jtag frequency' command is executed.
+16:41:15 INFO  : Context for 'APU' is selected.
+16:41:15 INFO  : System reset is completed.
+16:41:18 INFO  : 'after 3000' command is executed.
+16:41:19 INFO  : 'targets -set -filter {jtag_cable_name =~ "Xilinx HW-FTDI-TEST FT2232H 1234-tulA" && level==0 && jtag_device_ctx=="jsn-HW-FTDI-TEST FT2232H-1234-tulA-23727093-0"}' command is executed.
+16:41:21 INFO  : Device configured successfully with "C:/Users/dries/ss_and_mc/speed_sensor_motor_control/_ide/bitstream/speed_sensor_motor_control_export.bit"
+16:41:21 INFO  : Context for 'APU' is selected.
+16:41:21 INFO  : Hardware design and registers information is loaded from 'C:/Users/dries/ss_and_mc/speed_sensor_motor_control_export/export/speed_sensor_motor_control_export/hw/speed_sensor_motor_control_export.xsa'.
+16:41:21 INFO  : 'configparams force-mem-access 1' command is executed.
+16:41:21 INFO  : Context for 'APU' is selected.
+16:41:21 INFO  : Sourcing of 'C:/Users/dries/ss_and_mc/speed_sensor_motor_control/_ide/psinit/ps7_init.tcl' is done.
+16:41:21 INFO  : 'ps7_init' command is executed.
+16:41:21 INFO  : 'ps7_post_config' command is executed.
+16:41:21 INFO  : Context for processor 'ps7_cortexa9_0' is selected.
+16:41:21 INFO  : The application 'C:/Users/dries/ss_and_mc/speed_sensor_motor_control/Debug/speed_sensor_motor_control.elf' is downloaded to processor 'ps7_cortexa9_0'.
+16:41:21 INFO  : 'configparams force-mem-access 0' command is executed.
+16:41:21 INFO  : ----------------XSDB Script----------------
+connect -url tcp:127.0.0.1:3121
+targets -set -nocase -filter {name =~"APU*"}
+rst -system
+after 3000
+targets -set -filter {jtag_cable_name =~ "Xilinx HW-FTDI-TEST FT2232H 1234-tulA" && level==0 && jtag_device_ctx=="jsn-HW-FTDI-TEST FT2232H-1234-tulA-23727093-0"}
+fpga -file C:/Users/dries/ss_and_mc/speed_sensor_motor_control/_ide/bitstream/speed_sensor_motor_control_export.bit
+targets -set -nocase -filter {name =~"APU*"}
+loadhw -hw C:/Users/dries/ss_and_mc/speed_sensor_motor_control_export/export/speed_sensor_motor_control_export/hw/speed_sensor_motor_control_export.xsa -mem-ranges [list {0x40000000 0xbfffffff}] -regs
+configparams force-mem-access 1
+targets -set -nocase -filter {name =~"APU*"}
+source C:/Users/dries/ss_and_mc/speed_sensor_motor_control/_ide/psinit/ps7_init.tcl
+ps7_init
+ps7_post_config
+targets -set -nocase -filter {name =~ "*A9*#0"}
+dow C:/Users/dries/ss_and_mc/speed_sensor_motor_control/Debug/speed_sensor_motor_control.elf
+configparams force-mem-access 0
+----------------End of Script----------------
+
+16:41:22 INFO  : Context for processor 'ps7_cortexa9_0' is selected.
+16:41:22 INFO  : 'con' command is executed.
+16:41:22 INFO  : ----------------XSDB Script (After Launch)----------------
+targets -set -nocase -filter {name =~ "*A9*#0"}
+con
+----------------End of Script----------------
+
+16:41:22 INFO  : Launch script is exported to file 'C:\Users\dries\ss_and_mc\speed_sensor_motor_control_system\_ide\scripts\debugger_speed_sensor_motor_control-default.tcl'
+17:14:13 INFO  : Checking for BSP changes to sync application flags for project 'speed_sensor_motor_control'...
+17:14:37 INFO  : Disconnected from the channel tcfchan#6.
+17:14:38 INFO  : Connected to target on host '127.0.0.1' and port '3121'.
+17:14:47 INFO  : ----------------XSDB Script----------------
+connect -url tcp:127.0.0.1:3121
+----------------End of Script----------------
+
+17:14:47 ERROR : Could not find FPGA device on the board for connection 'Local'.
+
+
+Troubleshooting hints:
+1. Check whether board is connected to system properly.
+2. In case of zynq board, check whether Digilent/Xilinx cable switch settings are correct.
+3. If you are using Xilinx Platform Cable USB, ensure that status LED is green.
+17:14:53 INFO  : Connected to target on host '127.0.0.1' and port '3121'.
+17:14:54 INFO  : Jtag cable 'Xilinx HW-FTDI-TEST FT2232H 1234-tulA' is selected.
+17:14:54 INFO  : 'jtag frequency' command is executed.
+17:14:54 INFO  : Context for 'APU' is selected.
+17:14:54 INFO  : System reset is completed.
+17:14:57 INFO  : 'after 3000' command is executed.
+17:14:57 INFO  : 'targets -set -filter {jtag_cable_name =~ "Xilinx HW-FTDI-TEST FT2232H 1234-tulA" && level==0 && jtag_device_ctx=="jsn-HW-FTDI-TEST FT2232H-1234-tulA-23727093-0"}' command is executed.
+17:14:59 INFO  : Device configured successfully with "C:/Users/dries/ss_and_mc/speed_sensor_motor_control/_ide/bitstream/speed_sensor_motor_control_export.bit"
+17:14:59 INFO  : Context for 'APU' is selected.
+17:14:59 INFO  : Hardware design and registers information is loaded from 'C:/Users/dries/ss_and_mc/speed_sensor_motor_control_export/export/speed_sensor_motor_control_export/hw/speed_sensor_motor_control_export.xsa'.
+17:14:59 INFO  : 'configparams force-mem-access 1' command is executed.
+17:14:59 INFO  : Context for 'APU' is selected.
+17:14:59 INFO  : Sourcing of 'C:/Users/dries/ss_and_mc/speed_sensor_motor_control/_ide/psinit/ps7_init.tcl' is done.
+17:14:59 INFO  : 'ps7_init' command is executed.
+17:14:59 INFO  : 'ps7_post_config' command is executed.
+17:14:59 INFO  : Context for processor 'ps7_cortexa9_0' is selected.
+17:15:00 INFO  : The application 'C:/Users/dries/ss_and_mc/speed_sensor_motor_control/Debug/speed_sensor_motor_control.elf' is downloaded to processor 'ps7_cortexa9_0'.
+17:15:00 INFO  : 'configparams force-mem-access 0' command is executed.
+17:15:00 INFO  : ----------------XSDB Script----------------
+connect -url tcp:127.0.0.1:3121
+targets -set -nocase -filter {name =~"APU*"}
+rst -system
+after 3000
+targets -set -filter {jtag_cable_name =~ "Xilinx HW-FTDI-TEST FT2232H 1234-tulA" && level==0 && jtag_device_ctx=="jsn-HW-FTDI-TEST FT2232H-1234-tulA-23727093-0"}
+fpga -file C:/Users/dries/ss_and_mc/speed_sensor_motor_control/_ide/bitstream/speed_sensor_motor_control_export.bit
+targets -set -nocase -filter {name =~"APU*"}
+loadhw -hw C:/Users/dries/ss_and_mc/speed_sensor_motor_control_export/export/speed_sensor_motor_control_export/hw/speed_sensor_motor_control_export.xsa -mem-ranges [list {0x40000000 0xbfffffff}] -regs
+configparams force-mem-access 1
+targets -set -nocase -filter {name =~"APU*"}
+source C:/Users/dries/ss_and_mc/speed_sensor_motor_control/_ide/psinit/ps7_init.tcl
+ps7_init
+ps7_post_config
+targets -set -nocase -filter {name =~ "*A9*#0"}
+dow C:/Users/dries/ss_and_mc/speed_sensor_motor_control/Debug/speed_sensor_motor_control.elf
+configparams force-mem-access 0
+----------------End of Script----------------
+
+17:15:00 INFO  : Context for processor 'ps7_cortexa9_0' is selected.
+17:15:00 INFO  : 'con' command is executed.
+17:15:00 INFO  : ----------------XSDB Script (After Launch)----------------
+targets -set -nocase -filter {name =~ "*A9*#0"}
+con
+----------------End of Script----------------
+
+17:15:00 INFO  : Launch script is exported to file 'C:\Users\dries\ss_and_mc\speed_sensor_motor_control_system\_ide\scripts\debugger_speed_sensor_motor_control-default.tcl'
+17:27:44 INFO  : Checking for BSP changes to sync application flags for project 'speed_sensor_motor_control'...
+17:27:52 INFO  : Disconnected from the channel tcfchan#7.
+17:27:53 INFO  : Connected to target on host '127.0.0.1' and port '3121'.
+17:27:53 INFO  : Jtag cable 'Xilinx HW-FTDI-TEST FT2232H 1234-tulA' is selected.
+17:27:53 INFO  : 'jtag frequency' command is executed.
+17:27:53 INFO  : Context for 'APU' is selected.
+17:27:53 INFO  : System reset is completed.
+17:27:56 INFO  : 'after 3000' command is executed.
+17:27:56 INFO  : 'targets -set -filter {jtag_cable_name =~ "Xilinx HW-FTDI-TEST FT2232H 1234-tulA" && level==0 && jtag_device_ctx=="jsn-HW-FTDI-TEST FT2232H-1234-tulA-23727093-0"}' command is executed.
+17:27:58 INFO  : Device configured successfully with "C:/Users/dries/ss_and_mc/speed_sensor_motor_control/_ide/bitstream/speed_sensor_motor_control_export.bit"
+17:27:59 INFO  : Context for 'APU' is selected.
+17:27:59 INFO  : Hardware design and registers information is loaded from 'C:/Users/dries/ss_and_mc/speed_sensor_motor_control_export/export/speed_sensor_motor_control_export/hw/speed_sensor_motor_control_export.xsa'.
+17:27:59 INFO  : 'configparams force-mem-access 1' command is executed.
+17:27:59 INFO  : Context for 'APU' is selected.
+17:27:59 INFO  : Sourcing of 'C:/Users/dries/ss_and_mc/speed_sensor_motor_control/_ide/psinit/ps7_init.tcl' is done.
+17:27:59 INFO  : 'ps7_init' command is executed.
+17:27:59 INFO  : 'ps7_post_config' command is executed.
+17:27:59 INFO  : Context for processor 'ps7_cortexa9_0' is selected.
+17:27:59 INFO  : The application 'C:/Users/dries/ss_and_mc/speed_sensor_motor_control/Debug/speed_sensor_motor_control.elf' is downloaded to processor 'ps7_cortexa9_0'.
+17:27:59 INFO  : 'configparams force-mem-access 0' command is executed.
+17:27:59 INFO  : ----------------XSDB Script----------------
+connect -url tcp:127.0.0.1:3121
+targets -set -nocase -filter {name =~"APU*"}
+rst -system
+after 3000
+targets -set -filter {jtag_cable_name =~ "Xilinx HW-FTDI-TEST FT2232H 1234-tulA" && level==0 && jtag_device_ctx=="jsn-HW-FTDI-TEST FT2232H-1234-tulA-23727093-0"}
+fpga -file C:/Users/dries/ss_and_mc/speed_sensor_motor_control/_ide/bitstream/speed_sensor_motor_control_export.bit
+targets -set -nocase -filter {name =~"APU*"}
+loadhw -hw C:/Users/dries/ss_and_mc/speed_sensor_motor_control_export/export/speed_sensor_motor_control_export/hw/speed_sensor_motor_control_export.xsa -mem-ranges [list {0x40000000 0xbfffffff}] -regs
+configparams force-mem-access 1
+targets -set -nocase -filter {name =~"APU*"}
+source C:/Users/dries/ss_and_mc/speed_sensor_motor_control/_ide/psinit/ps7_init.tcl
+ps7_init
+ps7_post_config
+targets -set -nocase -filter {name =~ "*A9*#0"}
+dow C:/Users/dries/ss_and_mc/speed_sensor_motor_control/Debug/speed_sensor_motor_control.elf
+configparams force-mem-access 0
+----------------End of Script----------------
+
+17:27:59 INFO  : Context for processor 'ps7_cortexa9_0' is selected.
+17:27:59 INFO  : 'con' command is executed.
+17:27:59 INFO  : ----------------XSDB Script (After Launch)----------------
+targets -set -nocase -filter {name =~ "*A9*#0"}
+con
+----------------End of Script----------------
+
+17:27:59 INFO  : Launch script is exported to file 'C:\Users\dries\ss_and_mc\speed_sensor_motor_control_system\_ide\scripts\debugger_speed_sensor_motor_control-default.tcl'
+19:38:16 INFO  : Checking for BSP changes to sync application flags for project 'speed_sensor_motor_control'...
+19:38:21 INFO  : Disconnected from the channel tcfchan#8.
+19:38:22 INFO  : Connected to target on host '127.0.0.1' and port '3121'.
+19:38:22 INFO  : Jtag cable 'Xilinx HW-FTDI-TEST FT2232H 1234-tulA' is selected.
+19:38:22 INFO  : 'jtag frequency' command is executed.
+19:38:22 INFO  : Context for 'APU' is selected.
+19:38:22 INFO  : System reset is completed.
+19:38:25 INFO  : 'after 3000' command is executed.
+19:38:25 INFO  : 'targets -set -filter {jtag_cable_name =~ "Xilinx HW-FTDI-TEST FT2232H 1234-tulA" && level==0 && jtag_device_ctx=="jsn-HW-FTDI-TEST FT2232H-1234-tulA-23727093-0"}' command is executed.
+19:38:28 INFO  : Device configured successfully with "C:/Users/dries/ss_and_mc/speed_sensor_motor_control/_ide/bitstream/speed_sensor_motor_control_export.bit"
+19:38:28 INFO  : Context for 'APU' is selected.
+19:38:28 INFO  : Hardware design and registers information is loaded from 'C:/Users/dries/ss_and_mc/speed_sensor_motor_control_export/export/speed_sensor_motor_control_export/hw/speed_sensor_motor_control_export.xsa'.
+19:38:28 INFO  : 'configparams force-mem-access 1' command is executed.
+19:38:28 INFO  : Context for 'APU' is selected.
+19:38:28 INFO  : Sourcing of 'C:/Users/dries/ss_and_mc/speed_sensor_motor_control/_ide/psinit/ps7_init.tcl' is done.
+19:38:28 INFO  : 'ps7_init' command is executed.
+19:38:28 INFO  : 'ps7_post_config' command is executed.
+19:38:28 INFO  : Context for processor 'ps7_cortexa9_0' is selected.
+19:38:28 INFO  : The application 'C:/Users/dries/ss_and_mc/speed_sensor_motor_control/Debug/speed_sensor_motor_control.elf' is downloaded to processor 'ps7_cortexa9_0'.
+19:38:28 INFO  : 'configparams force-mem-access 0' command is executed.
+19:38:28 INFO  : ----------------XSDB Script----------------
+connect -url tcp:127.0.0.1:3121
+targets -set -nocase -filter {name =~"APU*"}
+rst -system
+after 3000
+targets -set -filter {jtag_cable_name =~ "Xilinx HW-FTDI-TEST FT2232H 1234-tulA" && level==0 && jtag_device_ctx=="jsn-HW-FTDI-TEST FT2232H-1234-tulA-23727093-0"}
+fpga -file C:/Users/dries/ss_and_mc/speed_sensor_motor_control/_ide/bitstream/speed_sensor_motor_control_export.bit
+targets -set -nocase -filter {name =~"APU*"}
+loadhw -hw C:/Users/dries/ss_and_mc/speed_sensor_motor_control_export/export/speed_sensor_motor_control_export/hw/speed_sensor_motor_control_export.xsa -mem-ranges [list {0x40000000 0xbfffffff}] -regs
+configparams force-mem-access 1
+targets -set -nocase -filter {name =~"APU*"}
+source C:/Users/dries/ss_and_mc/speed_sensor_motor_control/_ide/psinit/ps7_init.tcl
+ps7_init
+ps7_post_config
+targets -set -nocase -filter {name =~ "*A9*#0"}
+dow C:/Users/dries/ss_and_mc/speed_sensor_motor_control/Debug/speed_sensor_motor_control.elf
+configparams force-mem-access 0
+----------------End of Script----------------
+
+19:38:28 INFO  : Context for processor 'ps7_cortexa9_0' is selected.
+19:38:28 INFO  : 'con' command is executed.
+19:38:28 INFO  : ----------------XSDB Script (After Launch)----------------
+targets -set -nocase -filter {name =~ "*A9*#0"}
+con
+----------------End of Script----------------
+
+19:38:28 INFO  : Launch script is exported to file 'C:\Users\dries\ss_and_mc\speed_sensor_motor_control_system\_ide\scripts\debugger_speed_sensor_motor_control-default.tcl'
+19:40:03 INFO  : Disconnected from the channel tcfchan#9.
+19:40:04 INFO  : Connected to target on host '127.0.0.1' and port '3121'.
+19:40:04 INFO  : Jtag cable 'Xilinx HW-FTDI-TEST FT2232H 1234-tulA' is selected.
+19:40:04 INFO  : 'jtag frequency' command is executed.
+19:40:04 INFO  : Context for 'APU' is selected.
+19:40:04 INFO  : System reset is completed.
+19:40:07 INFO  : 'after 3000' command is executed.
+19:40:07 INFO  : 'targets -set -filter {jtag_cable_name =~ "Xilinx HW-FTDI-TEST FT2232H 1234-tulA" && level==0 && jtag_device_ctx=="jsn-HW-FTDI-TEST FT2232H-1234-tulA-23727093-0"}' command is executed.
+19:40:09 INFO  : Device configured successfully with "C:/Users/dries/ss_and_mc/speed_sensor_motor_control/_ide/bitstream/speed_sensor_motor_control_export.bit"
+19:40:09 INFO  : Context for 'APU' is selected.
+19:40:09 INFO  : Hardware design and registers information is loaded from 'C:/Users/dries/ss_and_mc/speed_sensor_motor_control_export/export/speed_sensor_motor_control_export/hw/speed_sensor_motor_control_export.xsa'.
+19:40:09 INFO  : 'configparams force-mem-access 1' command is executed.
+19:40:09 INFO  : Context for 'APU' is selected.
+19:40:09 INFO  : Sourcing of 'C:/Users/dries/ss_and_mc/speed_sensor_motor_control/_ide/psinit/ps7_init.tcl' is done.
+19:40:10 INFO  : 'ps7_init' command is executed.
+19:40:10 INFO  : 'ps7_post_config' command is executed.
+19:40:10 INFO  : Context for processor 'ps7_cortexa9_0' is selected.
+19:40:10 INFO  : The application 'C:/Users/dries/ss_and_mc/speed_sensor_motor_control/Debug/speed_sensor_motor_control.elf' is downloaded to processor 'ps7_cortexa9_0'.
+19:40:10 INFO  : 'configparams force-mem-access 0' command is executed.
+19:40:10 INFO  : ----------------XSDB Script----------------
+connect -url tcp:127.0.0.1:3121
+targets -set -nocase -filter {name =~"APU*"}
+rst -system
+after 3000
+targets -set -filter {jtag_cable_name =~ "Xilinx HW-FTDI-TEST FT2232H 1234-tulA" && level==0 && jtag_device_ctx=="jsn-HW-FTDI-TEST FT2232H-1234-tulA-23727093-0"}
+fpga -file C:/Users/dries/ss_and_mc/speed_sensor_motor_control/_ide/bitstream/speed_sensor_motor_control_export.bit
+targets -set -nocase -filter {name =~"APU*"}
+loadhw -hw C:/Users/dries/ss_and_mc/speed_sensor_motor_control_export/export/speed_sensor_motor_control_export/hw/speed_sensor_motor_control_export.xsa -mem-ranges [list {0x40000000 0xbfffffff}] -regs
+configparams force-mem-access 1
+targets -set -nocase -filter {name =~"APU*"}
+source C:/Users/dries/ss_and_mc/speed_sensor_motor_control/_ide/psinit/ps7_init.tcl
+ps7_init
+ps7_post_config
+targets -set -nocase -filter {name =~ "*A9*#0"}
+dow C:/Users/dries/ss_and_mc/speed_sensor_motor_control/Debug/speed_sensor_motor_control.elf
+configparams force-mem-access 0
+----------------End of Script----------------
+
+19:40:10 INFO  : Context for processor 'ps7_cortexa9_0' is selected.
+19:40:10 INFO  : 'con' command is executed.
+19:40:10 INFO  : ----------------XSDB Script (After Launch)----------------
+targets -set -nocase -filter {name =~ "*A9*#0"}
+con
+----------------End of Script----------------
+
+19:40:10 INFO  : Launch script is exported to file 'C:\Users\dries\ss_and_mc\speed_sensor_motor_control_system\_ide\scripts\debugger_speed_sensor_motor_control-default.tcl'
+19:40:50 INFO  : Checking for BSP changes to sync application flags for project 'speed_sensor_motor_control'...
+19:40:55 INFO  : Disconnected from the channel tcfchan#10.
+19:40:56 INFO  : Connected to target on host '127.0.0.1' and port '3121'.
+19:40:56 INFO  : Jtag cable 'Xilinx HW-FTDI-TEST FT2232H 1234-tulA' is selected.
+19:40:56 INFO  : 'jtag frequency' command is executed.
+19:40:56 INFO  : Context for 'APU' is selected.
+19:40:56 INFO  : System reset is completed.
+19:40:59 INFO  : 'after 3000' command is executed.
+19:40:59 INFO  : 'targets -set -filter {jtag_cable_name =~ "Xilinx HW-FTDI-TEST FT2232H 1234-tulA" && level==0 && jtag_device_ctx=="jsn-HW-FTDI-TEST FT2232H-1234-tulA-23727093-0"}' command is executed.
+19:41:01 INFO  : Device configured successfully with "C:/Users/dries/ss_and_mc/speed_sensor_motor_control/_ide/bitstream/speed_sensor_motor_control_export.bit"
+19:41:01 INFO  : Context for 'APU' is selected.
+19:41:01 INFO  : Hardware design and registers information is loaded from 'C:/Users/dries/ss_and_mc/speed_sensor_motor_control_export/export/speed_sensor_motor_control_export/hw/speed_sensor_motor_control_export.xsa'.
+19:41:01 INFO  : 'configparams force-mem-access 1' command is executed.
+19:41:01 INFO  : Context for 'APU' is selected.
+19:41:01 INFO  : Sourcing of 'C:/Users/dries/ss_and_mc/speed_sensor_motor_control/_ide/psinit/ps7_init.tcl' is done.
+19:41:02 INFO  : 'ps7_init' command is executed.
+19:41:02 INFO  : 'ps7_post_config' command is executed.
+19:41:02 INFO  : Context for processor 'ps7_cortexa9_0' is selected.
+19:41:02 INFO  : The application 'C:/Users/dries/ss_and_mc/speed_sensor_motor_control/Debug/speed_sensor_motor_control.elf' is downloaded to processor 'ps7_cortexa9_0'.
+19:41:02 INFO  : 'configparams force-mem-access 0' command is executed.
+19:41:02 INFO  : ----------------XSDB Script----------------
+connect -url tcp:127.0.0.1:3121
+targets -set -nocase -filter {name =~"APU*"}
+rst -system
+after 3000
+targets -set -filter {jtag_cable_name =~ "Xilinx HW-FTDI-TEST FT2232H 1234-tulA" && level==0 && jtag_device_ctx=="jsn-HW-FTDI-TEST FT2232H-1234-tulA-23727093-0"}
+fpga -file C:/Users/dries/ss_and_mc/speed_sensor_motor_control/_ide/bitstream/speed_sensor_motor_control_export.bit
+targets -set -nocase -filter {name =~"APU*"}
+loadhw -hw C:/Users/dries/ss_and_mc/speed_sensor_motor_control_export/export/speed_sensor_motor_control_export/hw/speed_sensor_motor_control_export.xsa -mem-ranges [list {0x40000000 0xbfffffff}] -regs
+configparams force-mem-access 1
+targets -set -nocase -filter {name =~"APU*"}
+source C:/Users/dries/ss_and_mc/speed_sensor_motor_control/_ide/psinit/ps7_init.tcl
+ps7_init
+ps7_post_config
+targets -set -nocase -filter {name =~ "*A9*#0"}
+dow C:/Users/dries/ss_and_mc/speed_sensor_motor_control/Debug/speed_sensor_motor_control.elf
+configparams force-mem-access 0
+----------------End of Script----------------
+
+19:41:02 INFO  : Context for processor 'ps7_cortexa9_0' is selected.
+19:41:02 INFO  : 'con' command is executed.
+19:41:02 INFO  : ----------------XSDB Script (After Launch)----------------
+targets -set -nocase -filter {name =~ "*A9*#0"}
+con
+----------------End of Script----------------
+
+19:41:02 INFO  : Launch script is exported to file 'C:\Users\dries\ss_and_mc\speed_sensor_motor_control_system\_ide\scripts\debugger_speed_sensor_motor_control-default.tcl'
+23:14:00 INFO  : Checking for BSP changes to sync application flags for project 'speed_sensor_motor_control'...
+23:14:31 INFO  : Checking for BSP changes to sync application flags for project 'speed_sensor_motor_control'...
+23:15:34 INFO  : Checking for BSP changes to sync application flags for project 'speed_sensor_motor_control'...
+23:19:30 INFO  : Checking for BSP changes to sync application flags for project 'speed_sensor_motor_control'...
+23:19:52 INFO  : Disconnected from the channel tcfchan#11.
+23:19:53 INFO  : Connected to target on host '127.0.0.1' and port '3121'.
+23:19:53 INFO  : Jtag cable 'Xilinx HW-FTDI-TEST FT2232H 1234-tulA' is selected.
+23:19:53 INFO  : 'jtag frequency' command is executed.
+23:19:53 INFO  : Context for 'APU' is selected.
+23:19:53 INFO  : System reset is completed.
+23:19:56 INFO  : 'after 3000' command is executed.
+23:19:56 INFO  : 'targets -set -filter {jtag_cable_name =~ "Xilinx HW-FTDI-TEST FT2232H 1234-tulA" && level==0 && jtag_device_ctx=="jsn-HW-FTDI-TEST FT2232H-1234-tulA-23727093-0"}' command is executed.
+23:19:59 INFO  : Device configured successfully with "C:/Users/dries/ss_and_mc/speed_sensor_motor_control/_ide/bitstream/speed_sensor_motor_control_export.bit"
+23:19:59 INFO  : Context for 'APU' is selected.
+23:19:59 INFO  : Hardware design and registers information is loaded from 'C:/Users/dries/ss_and_mc/speed_sensor_motor_control_export/export/speed_sensor_motor_control_export/hw/speed_sensor_motor_control_export.xsa'.
+23:19:59 INFO  : 'configparams force-mem-access 1' command is executed.
+23:19:59 INFO  : Context for 'APU' is selected.
+23:19:59 INFO  : Sourcing of 'C:/Users/dries/ss_and_mc/speed_sensor_motor_control/_ide/psinit/ps7_init.tcl' is done.
+23:19:59 INFO  : 'ps7_init' command is executed.
+23:19:59 INFO  : 'ps7_post_config' command is executed.
+23:19:59 INFO  : Context for processor 'ps7_cortexa9_0' is selected.
+23:19:59 INFO  : The application 'C:/Users/dries/ss_and_mc/speed_sensor_motor_control/Debug/speed_sensor_motor_control.elf' is downloaded to processor 'ps7_cortexa9_0'.
+23:19:59 INFO  : 'configparams force-mem-access 0' command is executed.
+23:19:59 INFO  : ----------------XSDB Script----------------
+connect -url tcp:127.0.0.1:3121
+targets -set -nocase -filter {name =~"APU*"}
+rst -system
+after 3000
+targets -set -filter {jtag_cable_name =~ "Xilinx HW-FTDI-TEST FT2232H 1234-tulA" && level==0 && jtag_device_ctx=="jsn-HW-FTDI-TEST FT2232H-1234-tulA-23727093-0"}
+fpga -file C:/Users/dries/ss_and_mc/speed_sensor_motor_control/_ide/bitstream/speed_sensor_motor_control_export.bit
+targets -set -nocase -filter {name =~"APU*"}
+loadhw -hw C:/Users/dries/ss_and_mc/speed_sensor_motor_control_export/export/speed_sensor_motor_control_export/hw/speed_sensor_motor_control_export.xsa -mem-ranges [list {0x40000000 0xbfffffff}] -regs
+configparams force-mem-access 1
+targets -set -nocase -filter {name =~"APU*"}
+source C:/Users/dries/ss_and_mc/speed_sensor_motor_control/_ide/psinit/ps7_init.tcl
+ps7_init
+ps7_post_config
+targets -set -nocase -filter {name =~ "*A9*#0"}
+dow C:/Users/dries/ss_and_mc/speed_sensor_motor_control/Debug/speed_sensor_motor_control.elf
+configparams force-mem-access 0
+----------------End of Script----------------
+
+23:19:59 INFO  : Context for processor 'ps7_cortexa9_0' is selected.
+23:19:59 INFO  : 'con' command is executed.
+23:19:59 INFO  : ----------------XSDB Script (After Launch)----------------
+targets -set -nocase -filter {name =~ "*A9*#0"}
+con
+----------------End of Script----------------
+
+23:19:59 INFO  : Launch script is exported to file 'C:\Users\dries\ss_and_mc\speed_sensor_motor_control_system\_ide\scripts\debugger_speed_sensor_motor_control-default.tcl'
+23:21:06 INFO  : Disconnected from the channel tcfchan#12.
+23:21:07 INFO  : Connected to target on host '127.0.0.1' and port '3121'.
+23:21:16 INFO  : ----------------XSDB Script----------------
+connect -url tcp:127.0.0.1:3121
+----------------End of Script----------------
+
+23:21:16 ERROR : Could not find FPGA device on the board for connection 'Local'.
+
+
+Troubleshooting hints:
+1. Check whether board is connected to system properly.
+2. In case of zynq board, check whether Digilent/Xilinx cable switch settings are correct.
+3. If you are using Xilinx Platform Cable USB, ensure that status LED is green.
+23:21:19 INFO  : Connected to target on host '127.0.0.1' and port '3121'.
+23:21:19 INFO  : Jtag cable 'Xilinx HW-FTDI-TEST FT2232H 1234-tulA' is selected.
+23:21:19 INFO  : 'jtag frequency' command is executed.
+23:21:19 INFO  : Context for 'APU' is selected.
+23:21:19 INFO  : System reset is completed.
+23:21:22 INFO  : 'after 3000' command is executed.
+23:21:22 INFO  : 'targets -set -filter {jtag_cable_name =~ "Xilinx HW-FTDI-TEST FT2232H 1234-tulA" && level==0 && jtag_device_ctx=="jsn-HW-FTDI-TEST FT2232H-1234-tulA-23727093-0"}' command is executed.
+23:21:24 INFO  : Device configured successfully with "C:/Users/dries/ss_and_mc/speed_sensor_motor_control/_ide/bitstream/speed_sensor_motor_control_export.bit"
+23:21:24 INFO  : Context for 'APU' is selected.
+23:21:24 INFO  : Hardware design and registers information is loaded from 'C:/Users/dries/ss_and_mc/speed_sensor_motor_control_export/export/speed_sensor_motor_control_export/hw/speed_sensor_motor_control_export.xsa'.
+23:21:25 INFO  : 'configparams force-mem-access 1' command is executed.
+23:21:25 INFO  : Context for 'APU' is selected.
+23:21:25 INFO  : Sourcing of 'C:/Users/dries/ss_and_mc/speed_sensor_motor_control/_ide/psinit/ps7_init.tcl' is done.
+23:21:25 INFO  : 'ps7_init' command is executed.
+23:21:25 INFO  : 'ps7_post_config' command is executed.
+23:21:25 INFO  : Context for processor 'ps7_cortexa9_0' is selected.
+23:21:25 INFO  : The application 'C:/Users/dries/ss_and_mc/speed_sensor_motor_control/Debug/speed_sensor_motor_control.elf' is downloaded to processor 'ps7_cortexa9_0'.
+23:21:25 INFO  : 'configparams force-mem-access 0' command is executed.
+23:21:25 INFO  : ----------------XSDB Script----------------
+connect -url tcp:127.0.0.1:3121
+targets -set -nocase -filter {name =~"APU*"}
+rst -system
+after 3000
+targets -set -filter {jtag_cable_name =~ "Xilinx HW-FTDI-TEST FT2232H 1234-tulA" && level==0 && jtag_device_ctx=="jsn-HW-FTDI-TEST FT2232H-1234-tulA-23727093-0"}
+fpga -file C:/Users/dries/ss_and_mc/speed_sensor_motor_control/_ide/bitstream/speed_sensor_motor_control_export.bit
+targets -set -nocase -filter {name =~"APU*"}
+loadhw -hw C:/Users/dries/ss_and_mc/speed_sensor_motor_control_export/export/speed_sensor_motor_control_export/hw/speed_sensor_motor_control_export.xsa -mem-ranges [list {0x40000000 0xbfffffff}] -regs
+configparams force-mem-access 1
+targets -set -nocase -filter {name =~"APU*"}
+source C:/Users/dries/ss_and_mc/speed_sensor_motor_control/_ide/psinit/ps7_init.tcl
+ps7_init
+ps7_post_config
+targets -set -nocase -filter {name =~ "*A9*#0"}
+dow C:/Users/dries/ss_and_mc/speed_sensor_motor_control/Debug/speed_sensor_motor_control.elf
+configparams force-mem-access 0
+----------------End of Script----------------
+
+23:21:25 INFO  : Context for processor 'ps7_cortexa9_0' is selected.
+23:21:25 INFO  : 'con' command is executed.
+23:21:25 INFO  : ----------------XSDB Script (After Launch)----------------
+targets -set -nocase -filter {name =~ "*A9*#0"}
+con
+----------------End of Script----------------
+
+23:21:25 INFO  : Launch script is exported to file 'C:\Users\dries\ss_and_mc\speed_sensor_motor_control_system\_ide\scripts\debugger_speed_sensor_motor_control-default.tcl'
+23:24:41 INFO  : Disconnected from the channel tcfchan#13.
+23:24:42 INFO  : Connected to target on host '127.0.0.1' and port '3121'.
+23:24:51 INFO  : ----------------XSDB Script----------------
+connect -url tcp:127.0.0.1:3121
+----------------End of Script----------------
+
+23:24:51 ERROR : Could not find FPGA device on the board for connection 'Local'.
+
+
+Troubleshooting hints:
+1. Check whether board is connected to system properly.
+2. In case of zynq board, check whether Digilent/Xilinx cable switch settings are correct.
+3. If you are using Xilinx Platform Cable USB, ensure that status LED is green.
+23:24:54 INFO  : Connected to target on host '127.0.0.1' and port '3121'.
+23:24:54 INFO  : Jtag cable 'Xilinx HW-FTDI-TEST FT2232H 1234-tulA' is selected.
+23:24:54 INFO  : 'jtag frequency' command is executed.
+23:24:54 INFO  : Context for 'APU' is selected.
+23:24:54 INFO  : System reset is completed.
+23:24:57 INFO  : 'after 3000' command is executed.
+23:24:58 INFO  : 'targets -set -filter {jtag_cable_name =~ "Xilinx HW-FTDI-TEST FT2232H 1234-tulA" && level==0 && jtag_device_ctx=="jsn-HW-FTDI-TEST FT2232H-1234-tulA-23727093-0"}' command is executed.
+23:25:00 INFO  : Device configured successfully with "C:/Users/dries/ss_and_mc/speed_sensor_motor_control/_ide/bitstream/speed_sensor_motor_control_export.bit"
+23:25:00 INFO  : Context for 'APU' is selected.
+23:25:00 INFO  : Hardware design and registers information is loaded from 'C:/Users/dries/ss_and_mc/speed_sensor_motor_control_export/export/speed_sensor_motor_control_export/hw/speed_sensor_motor_control_export.xsa'.
+23:25:00 INFO  : 'configparams force-mem-access 1' command is executed.
+23:25:00 INFO  : Context for 'APU' is selected.
+23:25:00 INFO  : Sourcing of 'C:/Users/dries/ss_and_mc/speed_sensor_motor_control/_ide/psinit/ps7_init.tcl' is done.
+23:25:00 INFO  : 'ps7_init' command is executed.
+23:25:00 INFO  : 'ps7_post_config' command is executed.
+23:25:00 INFO  : Context for processor 'ps7_cortexa9_0' is selected.
+23:25:00 INFO  : The application 'C:/Users/dries/ss_and_mc/speed_sensor_motor_control/Debug/speed_sensor_motor_control.elf' is downloaded to processor 'ps7_cortexa9_0'.
+23:25:00 INFO  : 'configparams force-mem-access 0' command is executed.
+23:25:00 INFO  : ----------------XSDB Script----------------
+connect -url tcp:127.0.0.1:3121
+targets -set -nocase -filter {name =~"APU*"}
+rst -system
+after 3000
+targets -set -filter {jtag_cable_name =~ "Xilinx HW-FTDI-TEST FT2232H 1234-tulA" && level==0 && jtag_device_ctx=="jsn-HW-FTDI-TEST FT2232H-1234-tulA-23727093-0"}
+fpga -file C:/Users/dries/ss_and_mc/speed_sensor_motor_control/_ide/bitstream/speed_sensor_motor_control_export.bit
+targets -set -nocase -filter {name =~"APU*"}
+loadhw -hw C:/Users/dries/ss_and_mc/speed_sensor_motor_control_export/export/speed_sensor_motor_control_export/hw/speed_sensor_motor_control_export.xsa -mem-ranges [list {0x40000000 0xbfffffff}] -regs
+configparams force-mem-access 1
+targets -set -nocase -filter {name =~"APU*"}
+source C:/Users/dries/ss_and_mc/speed_sensor_motor_control/_ide/psinit/ps7_init.tcl
+ps7_init
+ps7_post_config
+targets -set -nocase -filter {name =~ "*A9*#0"}
+dow C:/Users/dries/ss_and_mc/speed_sensor_motor_control/Debug/speed_sensor_motor_control.elf
+configparams force-mem-access 0
+----------------End of Script----------------
+
+23:25:00 INFO  : Context for processor 'ps7_cortexa9_0' is selected.
+23:25:01 INFO  : 'con' command is executed.
+23:25:01 INFO  : ----------------XSDB Script (After Launch)----------------
+targets -set -nocase -filter {name =~ "*A9*#0"}
+con
+----------------End of Script----------------
+
+23:25:01 INFO  : Launch script is exported to file 'C:\Users\dries\ss_and_mc\speed_sensor_motor_control_system\_ide\scripts\debugger_speed_sensor_motor_control-default.tcl'
+23:32:16 INFO  : Disconnected from the channel tcfchan#14.
+23:35:47 INFO  : Connected to target on host '127.0.0.1' and port '3121'.
+23:35:47 INFO  : Jtag cable 'Xilinx HW-FTDI-TEST FT2232H 1234-tulA' is selected.
+23:35:47 INFO  : 'jtag frequency' command is executed.
+23:35:47 INFO  : Context for 'APU' is selected.
+23:35:48 INFO  : System reset is completed.
+23:35:51 INFO  : 'after 3000' command is executed.
+23:35:51 INFO  : 'targets -set -filter {jtag_cable_name =~ "Xilinx HW-FTDI-TEST FT2232H 1234-tulA" && level==0 && jtag_device_ctx=="jsn-HW-FTDI-TEST FT2232H-1234-tulA-23727093-0"}' command is executed.
+23:35:53 INFO  : Device configured successfully with "C:/Users/dries/ss_and_mc/speed_sensor_motor_control/_ide/bitstream/speed_sensor_motor_control_export.bit"
+23:35:53 INFO  : Context for 'APU' is selected.
+23:35:53 INFO  : Hardware design and registers information is loaded from 'C:/Users/dries/ss_and_mc/speed_sensor_motor_control_export/export/speed_sensor_motor_control_export/hw/speed_sensor_motor_control_export.xsa'.
+23:35:53 INFO  : 'configparams force-mem-access 1' command is executed.
+23:35:53 INFO  : Context for 'APU' is selected.
+23:35:53 INFO  : Sourcing of 'C:/Users/dries/ss_and_mc/speed_sensor_motor_control/_ide/psinit/ps7_init.tcl' is done.
+23:35:53 INFO  : 'ps7_init' command is executed.
+23:35:53 INFO  : 'ps7_post_config' command is executed.
+23:35:53 INFO  : Context for processor 'ps7_cortexa9_0' is selected.
+23:35:54 INFO  : The application 'C:/Users/dries/ss_and_mc/speed_sensor_motor_control/Debug/speed_sensor_motor_control.elf' is downloaded to processor 'ps7_cortexa9_0'.
+23:35:54 INFO  : 'configparams force-mem-access 0' command is executed.
+23:35:54 INFO  : ----------------XSDB Script----------------
+connect -url tcp:127.0.0.1:3121
+targets -set -nocase -filter {name =~"APU*"}
+rst -system
+after 3000
+targets -set -filter {jtag_cable_name =~ "Xilinx HW-FTDI-TEST FT2232H 1234-tulA" && level==0 && jtag_device_ctx=="jsn-HW-FTDI-TEST FT2232H-1234-tulA-23727093-0"}
+fpga -file C:/Users/dries/ss_and_mc/speed_sensor_motor_control/_ide/bitstream/speed_sensor_motor_control_export.bit
+targets -set -nocase -filter {name =~"APU*"}
+loadhw -hw C:/Users/dries/ss_and_mc/speed_sensor_motor_control_export/export/speed_sensor_motor_control_export/hw/speed_sensor_motor_control_export.xsa -mem-ranges [list {0x40000000 0xbfffffff}] -regs
+configparams force-mem-access 1
+targets -set -nocase -filter {name =~"APU*"}
+source C:/Users/dries/ss_and_mc/speed_sensor_motor_control/_ide/psinit/ps7_init.tcl
+ps7_init
+ps7_post_config
+targets -set -nocase -filter {name =~ "*A9*#0"}
+dow C:/Users/dries/ss_and_mc/speed_sensor_motor_control/Debug/speed_sensor_motor_control.elf
+configparams force-mem-access 0
+----------------End of Script----------------
+
+23:35:54 INFO  : Context for processor 'ps7_cortexa9_0' is selected.
+23:35:54 INFO  : 'con' command is executed.
+23:35:54 INFO  : ----------------XSDB Script (After Launch)----------------
+targets -set -nocase -filter {name =~ "*A9*#0"}
+con
+----------------End of Script----------------
+
+23:35:54 INFO  : Launch script is exported to file 'C:\Users\dries\ss_and_mc\speed_sensor_motor_control_system\_ide\scripts\debugger_speed_sensor_motor_control-default.tcl'
+23:42:38 INFO  : Disconnected from the channel tcfchan#15.
+23:42:39 ERROR : Hardaware specification file used in the launch configuration 'Debugger_speed_sensor_motor_control-Default' doesn't exist at the location 'C:/Users/dries/ss_and_mc/speed_sensor_motor_control_export/export/speed_sensor_motor_control_export/hw/speed_sensor_motor_control_export.xsa'.
+23:44:01 INFO  : Checking for BSP changes to sync application flags for project 'speed_sensor_motor_control'...
+23:44:01 INFO  : Result from executing command 'getProjects': RemoteSystemsTempFiles;speed_sensor_motor_control;speed_sensor_motor_control_export;speed_sensor_motor_control_system
+23:44:01 WARN  : Failed to closehw "C:/Users/dries/ss_and_mc/speed_sensor_motor_control_export/export/speed_sensor_motor_control_export/hw/speed_sensor_motor_control_export.xsa"
+Reason: C:/Users/dries/ss_and_mc/speed_sensor_motor_control_export/export/speed_sensor_motor_control_export/hw/speed_sensor_motor_control_export.xsa is not available in the current workspace
+use 'getprojects' command to see list of available projects in current workspace
+23:44:01 INFO  : Result from executing command 'getProjects': RemoteSystemsTempFiles;speed_sensor_motor_control;speed_sensor_motor_control_export;speed_sensor_motor_control_system
+23:44:01 ERROR : Failed to openhw "C:/Users/dries/ss_and_mc/speed_sensor_motor_control_export/export/speed_sensor_motor_control_export/hw/speed_sensor_motor_control_export.xsa"
+Reason: C:/Users/dries/ss_and_mc/speed_sensor_motor_control_export/export/speed_sensor_motor_control_export/hw/speed_sensor_motor_control_export.xsa is not available in the current workspace
+use 'getprojects' command to see list of available projects in current workspace
+23:44:01 ERROR : Failed to update application flags from BSP for 'speed_sensor_motor_control'. Reason: null
+java.lang.NullPointerException: null
+	at com.xilinx.sdx.sw.internal.SDxSwPlatform.<init>(SDxSwPlatform.java:305) ~[com.xilinx.sdx.sw_1.0.0.202310091710.jar:?]
+	at com.xilinx.sdx.sw.internal.SDxSwPlatform.create(SDxSwPlatform.java:214) ~[com.xilinx.sdx.sw_1.0.0.202310091710.jar:?]
+	at com.xilinx.sdx.sdk.core.util.SdkPlatformHelper.getSwPlatform(SdkPlatformHelper.java:64) ~[com.xilinx.sdx.sdk.core_1.0.0.202310091710.jar:?]
+	at com.xilinx.sdx.sdk.core.build.SdkMakefileGenerationListener.getSwPlatform(SdkMakefileGenerationListener.java:160) ~[com.xilinx.sdx.sdk.core_1.0.0.202310091710.jar:?]
+	at com.xilinx.sdx.sdk.core.build.SdkMakefileGenerationListener.syncAppFlags(SdkMakefileGenerationListener.java:78) [com.xilinx.sdx.sdk.core_1.0.0.202310091710.jar:?]
+	at com.xilinx.sdx.sdk.core.build.SdkMakefileGenerationListener.preMakefileGeneration(SdkMakefileGenerationListener.java:48) [com.xilinx.sdx.sdk.core_1.0.0.202310091710.jar:?]
+	at com.xilinx.sdk.managedbuilder.XilinxGnuMakefileGenerator.notifyPreMakefileGenerationListeners(XilinxGnuMakefileGenerator.java:91) [com.xilinx.sdk.managedbuilder_1.0.0.202310091710.jar:?]
+	at com.xilinx.sdk.managedbuilder.XilinxGnuMakefileGenerator.generateMakefiles(XilinxGnuMakefileGenerator.java:40) [com.xilinx.sdk.managedbuilder_1.0.0.202310091710.jar:?]
+	at org.eclipse.cdt.managedbuilder.internal.core.CommonBuilder.performMakefileGeneration(CommonBuilder.java:1008) [org.eclipse.cdt.managedbuilder.core_8.6.0.201802261533.jar:?]
+	at org.eclipse.cdt.managedbuilder.internal.core.CommonBuilder.performPrebuildGeneration(CommonBuilder.java:873) [org.eclipse.cdt.managedbuilder.core_8.6.0.201802261533.jar:?]
+	at org.eclipse.cdt.managedbuilder.internal.core.CommonBuilder.build(CommonBuilder.java:748) [org.eclipse.cdt.managedbuilder.core_8.6.0.201802261533.jar:?]
+	at org.eclipse.cdt.managedbuilder.internal.core.CommonBuilder.build(CommonBuilder.java:510) [org.eclipse.cdt.managedbuilder.core_8.6.0.201802261533.jar:?]
+	at org.eclipse.cdt.managedbuilder.internal.core.CommonBuilder.build(CommonBuilder.java:459) [org.eclipse.cdt.managedbuilder.core_8.6.0.201802261533.jar:?]
+	at org.eclipse.core.internal.events.BuildManager$2.run(BuildManager.java:832) [org.eclipse.core.resources_3.13.700.v20200209-1624.jar:?]
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:45) [org.eclipse.equinox.common_3.11.0.v20200206-0817.jar:?]
+	at org.eclipse.core.internal.events.BuildManager.basicBuild(BuildManager.java:220) [org.eclipse.core.resources_3.13.700.v20200209-1624.jar:?]
+	at org.eclipse.core.internal.events.BuildManager.basicBuild(BuildManager.java:263) [org.eclipse.core.resources_3.13.700.v20200209-1624.jar:?]
+	at org.eclipse.core.internal.events.BuildManager$1.run(BuildManager.java:316) [org.eclipse.core.resources_3.13.700.v20200209-1624.jar:?]
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:45) [org.eclipse.equinox.common_3.11.0.v20200206-0817.jar:?]
+	at org.eclipse.core.internal.events.BuildManager.basicBuild(BuildManager.java:319) [org.eclipse.core.resources_3.13.700.v20200209-1624.jar:?]
+	at org.eclipse.core.internal.events.BuildManager.basicBuildLoop(BuildManager.java:371) [org.eclipse.core.resources_3.13.700.v20200209-1624.jar:?]
+	at org.eclipse.core.internal.events.BuildManager.build(BuildManager.java:392) [org.eclipse.core.resources_3.13.700.v20200209-1624.jar:?]
+	at org.eclipse.core.internal.resources.Workspace.buildInternal(Workspace.java:515) [org.eclipse.core.resources_3.13.700.v20200209-1624.jar:?]
+	at org.eclipse.core.internal.resources.Workspace.build(Workspace.java:412) [org.eclipse.core.resources_3.13.700.v20200209-1624.jar:?]
+	at org.eclipse.ui.actions.BuildAction$1.runInWorkspace(BuildAction.java:291) [org.eclipse.ui.ide_3.17.0.v20200217-1511.jar:?]
+	at org.eclipse.core.internal.resources.InternalWorkspaceJob.run(InternalWorkspaceJob.java:42) [org.eclipse.core.resources_3.13.700.v20200209-1624.jar:?]
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63) [org.eclipse.core.jobs_3.10.700.v20200106-1020.jar:?]
+23:44:37 INFO  : Result from executing command 'removePlatformRepo': 
+23:45:00 INFO  : Checking for BSP changes to sync application flags for project 'speed_sensor_motor_control'...
+23:45:00 ERROR : Failed to get platform details for the project 'speed_sensor_motor_control'. Cannot sync application flags.

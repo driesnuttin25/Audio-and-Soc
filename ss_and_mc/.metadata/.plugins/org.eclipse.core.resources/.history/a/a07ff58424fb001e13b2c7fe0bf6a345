@@ -1,0 +1,37 @@
+#include "xtmrctr.h"
+#include "xparameters.h"
+#include "xil_printf.h"
+
+#define PWM_PERIOD 100000000    // Example PWM period (adjust based on your requirements)
+
+int main() {
+    XTmrCtr TimerCounterInst;  // Timer instance
+    int Status;
+
+    // Initialize the timer counter
+    Status = XTmrCtr_Initialize(&TimerCounterInst, XPAR_TMRCTR_0_DEVICE_ID);
+    if (Status != XST_SUCCESS) {
+        xil_printf("Timer initialization failed\r\n");
+        return XST_FAILURE;
+    }
+
+    // Set up timer for auto reload and down count
+    XTmrCtr_SetOptions(&TimerCounterInst, 0, XTC_AUTO_RELOAD_OPTION | XTC_DOWN_COUNT_OPTION);
+
+    // Set the reset value for the PWM period
+    XTmrCtr_SetResetValue(&TimerCounterInst, 0, PWM_PERIOD - 1);
+
+    // Start the timer to begin PWM output
+    XTmrCtr_Start(&TimerCounterInst, 0);
+
+    xil_printf("PWM enabled. Timer started with auto-reload.\r\n");
+
+    // Insert your method to wait or loop here, depending on application needs
+
+    // To stop the PWM (Disable)
+    XTmrCtr_Stop(&TimerCounterInst, 0);
+
+    xil_printf("PWM disabled. Timer stopped.\r\n");
+
+    return XST_SUCCESS;
+}
