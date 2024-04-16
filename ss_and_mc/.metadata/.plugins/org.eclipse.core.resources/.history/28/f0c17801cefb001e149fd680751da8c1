@@ -1,0 +1,35 @@
+#include "xparameters.h"
+#include "xtmrctr.h"
+#include "xscugic.h"
+#include "xil_exception.h"
+#include "xil_printf.h"
+
+#define SCUGIC_DEVICE_ID 	XPAR_SCUGIC_SINGLE_DEVICE_ID
+#define AXI_TIMER_DEVICE_ID XPAR_AXI_TIMER_0_DEVICE_ID
+#define AXI_TIMER_IRPT_INTR XPAR_FABRIC_AXI_TIMER_0_INTERRUPT_INTR
+
+XTmrCtr	xTmrCtr_Inst;
+XScuGic xScuGic_Inst;
+
+#define AXI_TIMER_CHANNEL_1	0
+#define AXI_TIMER_CHANNEL_2	1
+
+#define AXI_TIMER_PWM_TEST_SW	1
+
+#define AXI_TIMER_PERIOD_US	10000
+
+#define AXI_TIMER_PWM_HIGH_TIME_US	5000
+
+void xTmrCtr_Int_Handler(void *CallBackRef, u8 TmrCtrNumber)
+{
+	xil_printf("AXI Timer Int! Channel: %d\n", TmrCtrNumber+1);
+
+
+}
+
+u32 xTmr_US_To_RegValue(u32 US)
+{
+	u32 Value;
+	value = 50*us;
+	return 0xFFFFFFFF - Value;
+}

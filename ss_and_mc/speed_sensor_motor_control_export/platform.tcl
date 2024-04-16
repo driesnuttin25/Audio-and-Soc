@@ -32,3 +32,11 @@ platform config -updatehw {C:/Users/dries/ss_and_mc/speed_sensor_motor_control_e
 platform generate -domains standalone_ps7_cortexa9_0,zynq_fsbl 
 platform generate -domains standalone_ps7_cortexa9_0,zynq_fsbl 
 platform clean
+platform clean
+platform active {speed_sensor_motor_control_export}
+platform config -updatehw {C:/Users/dries/ss_and_mc/speed_sensor_motor_control_export.xsa}
+platform clean
+platform generate
+platform clean
+platform generate
+platform generate -domains standalone_ps7_cortexa9_0,zynq_fsbl 

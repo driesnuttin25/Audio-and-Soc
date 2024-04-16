@@ -1,0 +1,72 @@
+#include "xparameters.h"
+#include "xtmrctr.h"
+#include "xscugic.h"
+#include "xil_exception.h"
+#include "xil_printf.h"
+
+#define SCUGIC_DEVICE_ID 	XPAR_SCUGIC_SINGLE_DEVICE_ID
+#define AXI_TIMER_DEVICE_ID XPAR_AXI_TIMER_0_DEVICE_ID
+#define AXI_TIMER_IRPT_INTR XPAR_FABRIC_AXI_TIMER_0_INTERRUPT_INTR
+
+XTmrCtr	xTmrCtr_Inst;
+XScuGic xScuGic_Inst;
+
+#define AXI_TIMER_CHANNEL_1	0
+#define AXI_TIMER_CHANNEL_2	1
+
+#define AXI_TIMER_PWM_TEST_SW	1
+
+#define AXI_TIMER_PERIOD_US	10000
+
+#define AXI_TIMER_PWM_HIGH_TIME_US	5000
+
+void xTmrCtr_Int_Handler(void *CallBackRef, u8 TmrCtrNumber)
+{
+	xil_printf("AXI Timer Int! Channel: %d\n", TmrCtrNumber+1);
+
+}
+
+u32 xTmr_US_To_RegValue(u32 US)
+{
+	u32 Value;
+	value = 50*us;
+	return 0xFFFFFFFF - Value;
+}
+
+u32 xTmr_US_To_NS(u32 US)
+{
+	return US*1000;
+}
+
+
+int xTmrCtr_Init(XTmrCtr *xTmrCtr_Ptr, u32 DeviceId)
+{
+	int Status, DutyCycle;
+
+	Status = XTmrCtr_Initialize(xTmrCtr_Ptr, DeviceId);
+	if(Status != XST_SUCCESS)
+		{
+		return XST_FAILURE;
+		}
+
+		Status = XTmrCtr_SelfTest(xTmrCtr_Ptr, 2-1);
+		if(Status != XST_SUCCESS)
+			{
+			return XST_FAILURE;
+			}
+
+
+		XTmrCtr_SetHandler(xTmrCtr_Ptr,xTmrCtr_Int_Handler,xTmrCtr_Ptr);
+
+		XTmrCtr_SetResetValue(xTmrCtr_Ptr,AXI_TIMER_CHANNEL_1,xTmr_US_To_RegValue (AXI_TIMER_PERIOD_US));
+
+		XTmrCtr_SetResetValue(xTmrCtr_Ptr, AXI_TIMER_CHANNEL_2,xTmr_US_To_RegValue (AXI_TIMER_PERIOD_US));
+
+		XTmrCtr_SetOptions(xTmrCtr_Ptr, AXI_TIMER_CHANNEL_1, XTC_INT_MODE_OPTION | XTC_AUTO_RELOAD_OPTION); XTmrCtr_SetOptions(xTmrCtr_Ptr, AXI_TIMER_CHANNEL_2, XTC_INT_MODE_OPTION | XTC_AUTO_RELOAD_OPTION);
+
+			#if AXI_TIMER_PWM_TEST_SW
+			DutyCycle = XTmrCtr_PwmConfigure(xTmrCtr_Ptr, xTmr_US_To_NS (AXI_TIMER_PERIOD_US),xTmr_US_To_NS (AXI_TIMER_PWM_HIGH_TIME_US));
+			xil_printf("AXI Timer PWM DutyCycle: %d%!\n",DutyCycle);
+			#endif
+			return XST_SUCCESS;
+}
