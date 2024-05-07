@@ -23,3 +23,13 @@ platform generate
 platform active {design_1_wrapper}
 platform config -updatehw {C:/Users/dries/IMU/design_1_wrapper.xsa}
 platform generate -domains 
+platform active {design_1_wrapper}
+platform config -updatehw {C:/Users/dries/IMU/design_1_wrapper.xsa}
+platform generate -domains 
+platform active {design_1_wrapper}
+platform config -updatehw {C:/Users/dries/IMU/design_1_wrapper.xsa}
+platform generate -domains 
+platform config -updatehw {C:/Users/dries/IMU/design_1_wrapper.xsa}
+platform active {design_1_wrapper}
+platform config -updatehw {C:/Users/dries/IMU/design_1_wrapper.xsa}
+platform generate -domains 

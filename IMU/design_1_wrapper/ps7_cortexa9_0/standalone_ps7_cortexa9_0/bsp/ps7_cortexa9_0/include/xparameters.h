@@ -301,6 +301,28 @@
 
 /******************************************************************/
 
+/* Definitions for driver IICPS */
+#define XPAR_XIICPS_NUM_INSTANCES 1
+
+/* Definitions for peripheral PS7_I2C_0 */
+#define XPAR_PS7_I2C_0_DEVICE_ID 0
+#define XPAR_PS7_I2C_0_BASEADDR 0xE0004000
+#define XPAR_PS7_I2C_0_HIGHADDR 0xE0004FFF
+#define XPAR_PS7_I2C_0_I2C_CLK_FREQ_HZ 108333336
+
+
+/******************************************************************/
+
+/* Canonical definitions for peripheral PS7_I2C_0 */
+#define XPAR_XIICPS_0_DEVICE_ID XPAR_PS7_I2C_0_DEVICE_ID
+#define XPAR_XIICPS_0_BASEADDR 0xE0004000
+#define XPAR_XIICPS_0_HIGHADDR 0xE0004FFF
+#define XPAR_XIICPS_0_I2C_CLK_FREQ_HZ 108333336
+
+
+/******************************************************************/
+
+/* Definition for input Clock */
 /* Definitions for driver QSPIPS */
 #define XPAR_XQSPIPS_NUM_INSTANCES 1
 

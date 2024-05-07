@@ -14,7 +14,7 @@ ECHO is off.
     ** Copyright 2022-2023 Advanced Micro Devices, Inc. All Rights Reserved.
 
 source design_1_wrapper.tcl -notrace
-create_project: Time (s): cpu = 00:00:04 ; elapsed = 00:00:05 . Memory (MB): peak = 461.582 ; gain = 184.066
+create_project: Time (s): cpu = 00:00:03 ; elapsed = 00:00:05 . Memory (MB): peak = 463.496 ; gain = 186.023
 INFO: [IP_Flow 19-234] Refreshing IP repositories
 INFO: [IP_Flow 19-1704] No user IP repositories specified
 INFO: [IP_Flow 19-2313] Loaded Vivado IP repository 'C:/Xilinx/Vivado/2023.2/data/ip'.
@@ -30,49 +30,51 @@ INFO: [Designutils 20-5440] No compile time benefit to using incremental synthes
 INFO: [Designutils 20-4379] Flow is switching to default flow due to incremental criteria not met. If you would like to alter this behaviour and have the flow terminate instead, please set the following parameter config_implementation {autoIncr.Synth.RejectBehavior Terminate}
 INFO: [Synth 8-7079] Multithreading enabled for synth_design using a maximum of 2 processes.
 INFO: [Synth 8-7078] Launching helper process for spawning children vivado processes
-INFO: [Synth 8-7075] Helper process launched with PID 16688
+INFO: [Synth 8-7075] Helper process launched with PID 5244
 ---------------------------------------------------------------------------------
-Starting RTL Elaboration : Time (s): cpu = 00:00:03 ; elapsed = 00:00:05 . Memory (MB): peak = 1348.457 ; gain = 441.074
+Starting RTL Elaboration : Time (s): cpu = 00:00:02 ; elapsed = 00:00:06 . Memory (MB): peak = 1348.230 ; gain = 439.473
 ---------------------------------------------------------------------------------
-INFO: [Synth 8-638] synthesizing module 'design_1_wrapper' [C:/Users/dries/IMU/IMU.gen/sources_1/bd/design_1/hdl/design_1_wrapper.vhd:43]
-INFO: [Synth 8-3491] module 'IOBUF' declared at 'C:/Xilinx/Vivado/2023.2/scripts/rt/data/unisim_comp.v:78197' bound to instance 'IIC_0_scl_iobuf' of component 'IOBUF' [C:/Users/dries/IMU/IMU.gen/sources_1/bd/design_1/hdl/design_1_wrapper.vhd:90]
+INFO: [Synth 8-638] synthesizing module 'design_1_wrapper' [C:/Users/dries/IMU/IMU.gen/sources_1/bd/design_1/hdl/design_1_wrapper.vhd:45]
+INFO: [Synth 8-3491] module 'IOBUF' declared at 'C:/Xilinx/Vivado/2023.2/scripts/rt/data/unisim_comp.v:78197' bound to instance 'IIC_0_0_scl_iobuf' of component 'IOBUF' [C:/Users/dries/IMU/IMU.gen/sources_1/bd/design_1/hdl/design_1_wrapper.vhd:104]
 INFO: [Synth 8-6157] synthesizing module 'IOBUF' [C:/Xilinx/Vivado/2023.2/scripts/rt/data/unisim_comp.v:78197]
 INFO: [Synth 8-6155] done synthesizing module 'IOBUF' (0#1) [C:/Xilinx/Vivado/2023.2/scripts/rt/data/unisim_comp.v:78197]
-INFO: [Synth 8-3491] module 'IOBUF' declared at 'C:/Xilinx/Vivado/2023.2/scripts/rt/data/unisim_comp.v:78197' bound to instance 'IIC_0_sda_iobuf' of component 'IOBUF' [C:/Users/dries/IMU/IMU.gen/sources_1/bd/design_1/hdl/design_1_wrapper.vhd:97]
-INFO: [Synth 8-3491] module 'design_1' declared at 'c:/Users/dries/IMU/IMU.gen/sources_1/bd/design_1/synth/design_1.vhd:580' bound to instance 'design_1_i' of component 'design_1' [C:/Users/dries/IMU/IMU.gen/sources_1/bd/design_1/hdl/design_1_wrapper.vhd:104]
-INFO: [Synth 8-638] synthesizing module 'design_1' [c:/Users/dries/IMU/IMU.gen/sources_1/bd/design_1/synth/design_1.vhd:616]
-INFO: [Synth 8-3491] module 'design_1_axi_iic_0_0' declared at 'C:/Users/dries/IMU/IMU.runs/synth_1/.Xil/Vivado-11188-dries_laptop/realtime/design_1_axi_iic_0_0_stub.vhdl:6' bound to instance 'axi_iic_0' of component 'design_1_axi_iic_0_0' [c:/Users/dries/IMU/IMU.gen/sources_1/bd/design_1/synth/design_1.vhd:863]
-INFO: [Synth 8-638] synthesizing module 'design_1_axi_iic_0_0' [C:/Users/dries/IMU/IMU.runs/synth_1/.Xil/Vivado-11188-dries_laptop/realtime/design_1_axi_iic_0_0_stub.vhdl:39]
-INFO: [Synth 8-3491] module 'design_1_processing_system7_0_0' declared at 'C:/Users/dries/IMU/IMU.runs/synth_1/.Xil/Vivado-11188-dries_laptop/realtime/design_1_processing_system7_0_0_stub.vhdl:6' bound to instance 'processing_system7_0' of component 'design_1_processing_system7_0_0' [c:/Users/dries/IMU/IMU.gen/sources_1/bd/design_1/synth/design_1.vhd:893]
-INFO: [Synth 8-638] synthesizing module 'design_1_processing_system7_0_0' [C:/Users/dries/IMU/IMU.runs/synth_1/.Xil/Vivado-11188-dries_laptop/realtime/design_1_processing_system7_0_0_stub.vhdl:78]
+INFO: [Synth 8-3491] module 'IOBUF' declared at 'C:/Xilinx/Vivado/2023.2/scripts/rt/data/unisim_comp.v:78197' bound to instance 'IIC_0_0_sda_iobuf' of component 'IOBUF' [C:/Users/dries/IMU/IMU.gen/sources_1/bd/design_1/hdl/design_1_wrapper.vhd:111]
+INFO: [Synth 8-3491] module 'IOBUF' declared at 'C:/Xilinx/Vivado/2023.2/scripts/rt/data/unisim_comp.v:78197' bound to instance 'IIC_0_scl_iobuf' of component 'IOBUF' [C:/Users/dries/IMU/IMU.gen/sources_1/bd/design_1/hdl/design_1_wrapper.vhd:118]
+INFO: [Synth 8-3491] module 'IOBUF' declared at 'C:/Xilinx/Vivado/2023.2/scripts/rt/data/unisim_comp.v:78197' bound to instance 'IIC_0_sda_iobuf' of component 'IOBUF' [C:/Users/dries/IMU/IMU.gen/sources_1/bd/design_1/hdl/design_1_wrapper.vhd:125]
+INFO: [Synth 8-3491] module 'design_1' declared at 'c:/Users/dries/IMU/IMU.gen/sources_1/bd/design_1/synth/design_1.vhd:580' bound to instance 'design_1_i' of component 'design_1' [C:/Users/dries/IMU/IMU.gen/sources_1/bd/design_1/hdl/design_1_wrapper.vhd:132]
+INFO: [Synth 8-638] synthesizing module 'design_1' [c:/Users/dries/IMU/IMU.gen/sources_1/bd/design_1/synth/design_1.vhd:622]
+INFO: [Synth 8-3491] module 'design_1_axi_iic_0_0' declared at 'C:/Users/dries/IMU/IMU.runs/synth_1/.Xil/Vivado-9740-dries_laptop/realtime/design_1_axi_iic_0_0_stub.vhdl:6' bound to instance 'axi_iic_0' of component 'design_1_axi_iic_0_0' [c:/Users/dries/IMU/IMU.gen/sources_1/bd/design_1/synth/design_1.vhd:893]
+INFO: [Synth 8-638] synthesizing module 'design_1_axi_iic_0_0' [C:/Users/dries/IMU/IMU.runs/synth_1/.Xil/Vivado-9740-dries_laptop/realtime/design_1_axi_iic_0_0_stub.vhdl:39]
+INFO: [Synth 8-3491] module 'design_1_processing_system7_0_0' declared at 'C:/Users/dries/IMU/IMU.runs/synth_1/.Xil/Vivado-9740-dries_laptop/realtime/design_1_processing_system7_0_0_stub.vhdl:6' bound to instance 'processing_system7_0' of component 'design_1_processing_system7_0_0' [c:/Users/dries/IMU/IMU.gen/sources_1/bd/design_1/synth/design_1.vhd:923]
+INFO: [Synth 8-638] synthesizing module 'design_1_processing_system7_0_0' [C:/Users/dries/IMU/IMU.runs/synth_1/.Xil/Vivado-9740-dries_laptop/realtime/design_1_processing_system7_0_0_stub.vhdl:84]
 INFO: [Synth 8-638] synthesizing module 'design_1_ps7_0_axi_periph_0' [c:/Users/dries/IMU/IMU.gen/sources_1/bd/design_1/synth/design_1.vhd:393]
 INFO: [Synth 8-638] synthesizing module 's00_couplers_imp_UYSKKA' [c:/Users/dries/IMU/IMU.gen/sources_1/bd/design_1/synth/design_1.vhd:79]
-INFO: [Synth 8-3491] module 'design_1_auto_pc_0' declared at 'C:/Users/dries/IMU/IMU.runs/synth_1/.Xil/Vivado-11188-dries_laptop/realtime/design_1_auto_pc_0_stub.vhdl:6' bound to instance 'auto_pc' of component 'design_1_auto_pc_0' [c:/Users/dries/IMU/IMU.gen/sources_1/bd/design_1/synth/design_1.vhd:260]
-INFO: [Synth 8-638] synthesizing module 'design_1_auto_pc_0' [C:/Users/dries/IMU/IMU.runs/synth_1/.Xil/Vivado-11188-dries_laptop/realtime/design_1_auto_pc_0_stub.vhdl:71]
+INFO: [Synth 8-3491] module 'design_1_auto_pc_0' declared at 'C:/Users/dries/IMU/IMU.runs/synth_1/.Xil/Vivado-9740-dries_laptop/realtime/design_1_auto_pc_0_stub.vhdl:6' bound to instance 'auto_pc' of component 'design_1_auto_pc_0' [c:/Users/dries/IMU/IMU.gen/sources_1/bd/design_1/synth/design_1.vhd:260]
+INFO: [Synth 8-638] synthesizing module 'design_1_auto_pc_0' [C:/Users/dries/IMU/IMU.runs/synth_1/.Xil/Vivado-9740-dries_laptop/realtime/design_1_auto_pc_0_stub.vhdl:71]
 INFO: [Synth 8-256] done synthesizing module 's00_couplers_imp_UYSKKA' (0#1) [c:/Users/dries/IMU/IMU.gen/sources_1/bd/design_1/synth/design_1.vhd:79]
 INFO: [Synth 8-256] done synthesizing module 'design_1_ps7_0_axi_periph_0' (0#1) [c:/Users/dries/IMU/IMU.gen/sources_1/bd/design_1/synth/design_1.vhd:393]
-INFO: [Synth 8-3491] module 'design_1_rst_ps7_0_100M_0' declared at 'C:/Users/dries/IMU/IMU.runs/synth_1/.Xil/Vivado-11188-dries_laptop/realtime/design_1_rst_ps7_0_100M_0_stub.vhdl:6' bound to instance 'rst_ps7_0_100M' of component 'design_1_rst_ps7_0_100M_0' [c:/Users/dries/IMU/IMU.gen/sources_1/bd/design_1/synth/design_1.vhd:1026]
-INFO: [Synth 8-638] synthesizing module 'design_1_rst_ps7_0_100M_0' [C:/Users/dries/IMU/IMU.runs/synth_1/.Xil/Vivado-11188-dries_laptop/realtime/design_1_rst_ps7_0_100M_0_stub.vhdl:22]
-INFO: [Synth 8-256] done synthesizing module 'design_1' (0#1) [c:/Users/dries/IMU/IMU.gen/sources_1/bd/design_1/synth/design_1.vhd:616]
-INFO: [Synth 8-256] done synthesizing module 'design_1_wrapper' (0#1) [C:/Users/dries/IMU/IMU.gen/sources_1/bd/design_1/hdl/design_1_wrapper.vhd:43]
+INFO: [Synth 8-3491] module 'design_1_rst_ps7_0_100M_0' declared at 'C:/Users/dries/IMU/IMU.runs/synth_1/.Xil/Vivado-9740-dries_laptop/realtime/design_1_rst_ps7_0_100M_0_stub.vhdl:6' bound to instance 'rst_ps7_0_100M' of component 'design_1_rst_ps7_0_100M_0' [c:/Users/dries/IMU/IMU.gen/sources_1/bd/design_1/synth/design_1.vhd:1062]
+INFO: [Synth 8-638] synthesizing module 'design_1_rst_ps7_0_100M_0' [C:/Users/dries/IMU/IMU.runs/synth_1/.Xil/Vivado-9740-dries_laptop/realtime/design_1_rst_ps7_0_100M_0_stub.vhdl:22]
+INFO: [Synth 8-256] done synthesizing module 'design_1' (0#1) [c:/Users/dries/IMU/IMU.gen/sources_1/bd/design_1/synth/design_1.vhd:622]
+INFO: [Synth 8-256] done synthesizing module 'design_1_wrapper' (0#1) [C:/Users/dries/IMU/IMU.gen/sources_1/bd/design_1/hdl/design_1_wrapper.vhd:45]
 WARNING: [Synth 8-7129] Port M_ACLK in module s00_couplers_imp_UYSKKA is either unconnected or has no load
 WARNING: [Synth 8-7129] Port M_ARESETN in module s00_couplers_imp_UYSKKA is either unconnected or has no load
 WARNING: [Synth 8-7129] Port ACLK in module design_1_ps7_0_axi_periph_0 is either unconnected or has no load
 WARNING: [Synth 8-7129] Port ARESETN in module design_1_ps7_0_axi_periph_0 is either unconnected or has no load
 ---------------------------------------------------------------------------------
-Finished RTL Elaboration : Time (s): cpu = 00:00:05 ; elapsed = 00:00:07 . Memory (MB): peak = 1461.844 ; gain = 554.461
+Finished RTL Elaboration : Time (s): cpu = 00:00:03 ; elapsed = 00:00:08 . Memory (MB): peak = 1461.684 ; gain = 552.926
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Handling Custom Attributes
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Handling Custom Attributes : Time (s): cpu = 00:00:05 ; elapsed = 00:00:07 . Memory (MB): peak = 1461.844 ; gain = 554.461
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:03 ; elapsed = 00:00:08 . Memory (MB): peak = 1461.684 ; gain = 552.926
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:05 ; elapsed = 00:00:07 . Memory (MB): peak = 1461.844 ; gain = 554.461
+Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:03 ; elapsed = 00:00:08 . Memory (MB): peak = 1461.684 ; gain = 552.926
 ---------------------------------------------------------------------------------
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.010 . Memory (MB): peak = 1461.844 ; gain = 0.000
-INFO: [Netlist 29-17] Analyzing 2 Unisim elements for replacement
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.010 . Memory (MB): peak = 1464.535 ; gain = 0.000
+INFO: [Netlist 29-17] Analyzing 4 Unisim elements for replacement
 INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
 INFO: [Project 1-570] Preparing netlist for logic optimization
 
@@ -96,24 +98,24 @@ Parsing XDC File [C:/Users/dries/IMU/IMU.runs/synth_1/dont_touch.xdc]
 Finished Parsing XDC File [C:/Users/dries/IMU/IMU.runs/synth_1/dont_touch.xdc]
 Completed Processing XDC Constraints
 
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1495.395 ; gain = 0.000
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1503.629 ; gain = 0.000
 INFO: [Project 1-111] Unisim Transformation Summary:
-  A total of 2 instances were transformed.
-  IOBUF => IOBUF (IBUF, OBUFT): 2 instances
+  A total of 4 instances were transformed.
+  IOBUF => IOBUF (IBUF, OBUFT): 4 instances
 
 The system cannot find the path specified.
-Constraint Validation Runtime : Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.005 . Memory (MB): peak = 1495.395 ; gain = 0.000
+Constraint Validation Runtime : Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.004 . Memory (MB): peak = 1503.629 ; gain = 0.000
 INFO: [Designutils 20-5440] No compile time benefit to using incremental synthesis; A full resynthesis will be run
 INFO: [Designutils 20-4379] Flow is switching to default flow due to incremental criteria not met. If you would like to alter this behaviour and have the flow terminate instead, please set the following parameter config_implementation {autoIncr.Synth.RejectBehavior Terminate}
 ---------------------------------------------------------------------------------
-Finished Constraint Validation : Time (s): cpu = 00:00:09 ; elapsed = 00:00:15 . Memory (MB): peak = 1495.395 ; gain = 588.012
+Finished Constraint Validation : Time (s): cpu = 00:00:06 ; elapsed = 00:00:16 . Memory (MB): peak = 1503.629 ; gain = 594.871
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Loading Part and Timing Information
 ---------------------------------------------------------------------------------
 Loading part: xc7z020clg400-1
 ---------------------------------------------------------------------------------
-Finished Loading Part and Timing Information : Time (s): cpu = 00:00:09 ; elapsed = 00:00:15 . Memory (MB): peak = 1495.395 ; gain = 588.012
+Finished Loading Part and Timing Information : Time (s): cpu = 00:00:06 ; elapsed = 00:00:16 . Memory (MB): peak = 1503.629 ; gain = 594.871
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Applying 'set_property' XDC Constraints
@@ -385,10 +387,10 @@ Applied set_property KEEP_HIERARCHY = SOFT for design_1_i/ps7_0_axi_periph/s00_c
 Applied set_property KEEP_HIERARCHY = SOFT for design_1_i/ps7_0_axi_periph. (constraint file  auto generated constraint).
 Applied set_property KEEP_HIERARCHY = SOFT for design_1_i/rst_ps7_0_100M. (constraint file  auto generated constraint).
 ---------------------------------------------------------------------------------
-Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:09 ; elapsed = 00:00:16 . Memory (MB): peak = 1495.395 ; gain = 588.012
+Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:06 ; elapsed = 00:00:16 . Memory (MB): peak = 1503.629 ; gain = 594.871
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:09 ; elapsed = 00:00:16 . Memory (MB): peak = 1495.395 ; gain = 588.012
+Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:06 ; elapsed = 00:00:16 . Memory (MB): peak = 1503.629 ; gain = 594.871
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start RTL Component Statistics 
@@ -415,25 +417,25 @@ WARNING: [Synth 8-7129] Port ARESETN in module design_1_ps7_0_axi_periph_0 is ei
 WARNING: [Synth 8-7129] Port M00_ACLK in module design_1_ps7_0_axi_periph_0 is either unconnected or has no load
 WARNING: [Synth 8-7129] Port M00_ARESETN in module design_1_ps7_0_axi_periph_0 is either unconnected or has no load
 ---------------------------------------------------------------------------------
-Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:11 ; elapsed = 00:00:18 . Memory (MB): peak = 1495.395 ; gain = 588.012
+Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:06 ; elapsed = 00:00:18 . Memory (MB): peak = 1503.629 ; gain = 594.871
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Applying XDC Timing Constraints
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Applying XDC Timing Constraints : Time (s): cpu = 00:00:13 ; elapsed = 00:00:22 . Memory (MB): peak = 1495.395 ; gain = 588.012
+Finished Applying XDC Timing Constraints : Time (s): cpu = 00:00:07 ; elapsed = 00:00:23 . Memory (MB): peak = 1503.629 ; gain = 594.871
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Timing Optimization
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Timing Optimization : Time (s): cpu = 00:00:13 ; elapsed = 00:00:22 . Memory (MB): peak = 1495.395 ; gain = 588.012
+Finished Timing Optimization : Time (s): cpu = 00:00:07 ; elapsed = 00:00:23 . Memory (MB): peak = 1503.629 ; gain = 594.871
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Technology Mapping
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Technology Mapping : Time (s): cpu = 00:00:13 ; elapsed = 00:00:22 . Memory (MB): peak = 1495.395 ; gain = 588.012
+Finished Technology Mapping : Time (s): cpu = 00:00:07 ; elapsed = 00:00:23 . Memory (MB): peak = 1503.629 ; gain = 594.871
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start IO Insertion
@@ -451,37 +453,37 @@ Start Final Netlist Cleanup
 Finished Final Netlist Cleanup
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished IO Insertion : Time (s): cpu = 00:00:16 ; elapsed = 00:00:26 . Memory (MB): peak = 1495.395 ; gain = 588.012
+Finished IO Insertion : Time (s): cpu = 00:00:08 ; elapsed = 00:00:27 . Memory (MB): peak = 1503.629 ; gain = 594.871
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Instances
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Instances : Time (s): cpu = 00:00:16 ; elapsed = 00:00:26 . Memory (MB): peak = 1495.395 ; gain = 588.012
+Finished Renaming Generated Instances : Time (s): cpu = 00:00:08 ; elapsed = 00:00:27 . Memory (MB): peak = 1503.629 ; gain = 594.871
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Rebuilding User Hierarchy
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:16 ; elapsed = 00:00:26 . Memory (MB): peak = 1495.395 ; gain = 588.012
+Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:08 ; elapsed = 00:00:27 . Memory (MB): peak = 1503.629 ; gain = 594.871
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Ports
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Ports : Time (s): cpu = 00:00:16 ; elapsed = 00:00:26 . Memory (MB): peak = 1495.395 ; gain = 588.012
+Finished Renaming Generated Ports : Time (s): cpu = 00:00:08 ; elapsed = 00:00:27 . Memory (MB): peak = 1503.629 ; gain = 594.871
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Handling Custom Attributes
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Handling Custom Attributes : Time (s): cpu = 00:00:16 ; elapsed = 00:00:26 . Memory (MB): peak = 1495.395 ; gain = 588.012
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:08 ; elapsed = 00:00:27 . Memory (MB): peak = 1503.629 ; gain = 594.871
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Nets
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Nets : Time (s): cpu = 00:00:16 ; elapsed = 00:00:26 . Memory (MB): peak = 1495.395 ; gain = 588.012
+Finished Renaming Generated Nets : Time (s): cpu = 00:00:08 ; elapsed = 00:00:27 . Memory (MB): peak = 1503.629 ; gain = 594.871
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Writing Synthesis Report
@@ -505,32 +507,32 @@ Report Cell Usage:
 |2     |design_1_axi_iic_0_0_bbox            |     1|
 |3     |design_1_processing_system7_0_0_bbox |     1|
 |4     |design_1_rst_ps7_0_100M_0_bbox       |     1|
-|5     |IOBUF                                |     2|
+|5     |IOBUF                                |     4|
 +------+-------------------------------------+------+
 ---------------------------------------------------------------------------------
-Finished Writing Synthesis Report : Time (s): cpu = 00:00:16 ; elapsed = 00:00:26 . Memory (MB): peak = 1495.395 ; gain = 588.012
+Finished Writing Synthesis Report : Time (s): cpu = 00:00:08 ; elapsed = 00:00:27 . Memory (MB): peak = 1503.629 ; gain = 594.871
 ---------------------------------------------------------------------------------
 Synthesis finished with 0 errors, 0 critical warnings and 5 warnings.
-Synthesis Optimization Runtime : Time (s): cpu = 00:00:10 ; elapsed = 00:00:24 . Memory (MB): peak = 1495.395 ; gain = 554.461
-Synthesis Optimization Complete : Time (s): cpu = 00:00:16 ; elapsed = 00:00:26 . Memory (MB): peak = 1495.395 ; gain = 588.012
+Synthesis Optimization Runtime : Time (s): cpu = 00:00:05 ; elapsed = 00:00:25 . Memory (MB): peak = 1503.629 ; gain = 552.926
+Synthesis Optimization Complete : Time (s): cpu = 00:00:08 ; elapsed = 00:00:27 . Memory (MB): peak = 1503.629 ; gain = 594.871
 INFO: [Project 1-571] Translating synthesized netlist
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.010 . Memory (MB): peak = 1495.395 ; gain = 0.000
-INFO: [Netlist 29-17] Analyzing 2 Unisim elements for replacement
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.010 . Memory (MB): peak = 1503.629 ; gain = 0.000
+INFO: [Netlist 29-17] Analyzing 4 Unisim elements for replacement
 INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
 INFO: [Project 1-570] Preparing netlist for logic optimization
 INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1495.395 ; gain = 0.000
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1503.629 ; gain = 0.000
 INFO: [Project 1-111] Unisim Transformation Summary:
-  A total of 2 instances were transformed.
-  IOBUF => IOBUF (IBUF, OBUFT): 2 instances
+  A total of 4 instances were transformed.
+  IOBUF => IOBUF (IBUF, OBUFT): 4 instances
 
 The system cannot find the path specified.
-Synth Design complete | Checksum: 7d5bbe5b
+Synth Design complete | Checksum: a10e6848
 INFO: [Common 17-83] Releasing license: Synthesis
-47 Infos, 11 Warnings, 0 Critical Warnings and 0 Errors encountered.
+49 Infos, 11 Warnings, 0 Critical Warnings and 0 Errors encountered.
 synth_design completed successfully
-synth_design: Time (s): cpu = 00:00:19 ; elapsed = 00:00:31 . Memory (MB): peak = 1495.395 ; gain = 1011.375
-Write ShapeDB Complete: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.001 . Memory (MB): peak = 1495.395 ; gain = 0.000
+synth_design: Time (s): cpu = 00:00:09 ; elapsed = 00:00:33 . Memory (MB): peak = 1503.629 ; gain = 1017.199
+Write ShapeDB Complete: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.001 . Memory (MB): peak = 1503.629 ; gain = 0.000
 INFO: [Common 17-1381] The checkpoint 'C:/Users/dries/IMU/IMU.runs/synth_1/design_1_wrapper.dcp' has been generated.
 INFO: [runtcl-4] Executing : report_utilization -file design_1_wrapper_utilization_synth.rpt -pb design_1_wrapper_utilization_synth.pb
-INFO: [Common 17-206] Exiting Vivado at Sat May  4 13:40:10 2024...
+INFO: [Common 17-206] Exiting Vivado at Tue May  7 09:30:15 2024...

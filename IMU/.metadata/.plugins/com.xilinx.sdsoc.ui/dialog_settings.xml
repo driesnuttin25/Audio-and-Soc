@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
-	<item key="sdx.custom.platform.repository.locations" value="C:\Users\dries\IMU\eFPGA_I2C\export\eFPGA_I2C;C:\Users\dries\IMU\design_1_wrapper\export\design_1_wrapper"/>
-	<item key="sdx.custom.platform.repository.last.directory.dialog.location" value="C:\Users\dries\IMU\design_1_wrapper\export\design_1_wrapper"/>
+	<item key="sdx.custom.platform.repository.locations" value="C:\Users\dries\IMU\design_1_wrapper\export\design_1_wrapper;C:\Users\dries\IMU\eFPGA_I2C\export\eFPGA_I2C"/>
+	<item key="sdx.custom.platform.repository.last.directory.dialog.location" value="C:\Users\dries\IMU\eFPGA_I2C\export\eFPGA_I2C"/>
 </section>

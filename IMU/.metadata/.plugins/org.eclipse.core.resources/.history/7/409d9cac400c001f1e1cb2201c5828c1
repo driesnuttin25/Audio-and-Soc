@@ -1,0 +1,129 @@
+#include <stdbool.h>
+#include <stdio.h>
+#include <unistd.h>
+#include "platform.h"
+#include "xil_printf.h"
+#include "xparameters.h"
+#include "xiic.h"
+#include <math.h>
+
+const int IMU = 0x68;
+
+u8 IMU_initialization[] = {0x6B, 0};
+u8 IMU_read[] = {0x3B};
+u8 GYRO_read[] = {0x43};
+
+u8 TEMP_read[] = {0x41}; // Register for temperature data
+
+int16_t Accelerometer_X;
+int16_t Accelerometer_Y;
+int16_t Accelerometer_Z;
+
+int16_t initialAccelerometer_X;
+int16_t initialAccelerometer_Y;
+int16_t initialAccelerometer_Z;
+
+int16_t Gyro_X;
+int16_t Gyro_Y;
+int16_t Gyro_Z;
+
+int16_t initialGyro_X;
+int16_t initialGyro_Y;
+int16_t initialGyro_Z;
+
+double calculated_pitch;
+double calculated_roll;
+
+int CorrectionTemperature;
+int16_t ActualTemperature;
+double temperature;
+double CorrectedTemperature;
+
+
+void PitchAndRoll(int AxisX, int AxisY, int AxisZ)
+{
+    double x_val = AxisX;
+    double y_val = AxisY;
+    double z_val = AxisZ;
+
+    calculated_pitch = atan(x_val / sqrt((y_val * y_val) + (z_val * z_val)));
+    calculated_roll = atan(y_val / sqrt((x_val * x_val) + (z_val * z_val)));
+
+    calculated_pitch = calculated_pitch * (180.0 / 3.14);
+    calculated_roll = calculated_roll * (180.0 / 3.14);
+}
+
+int main()
+{
+    u8 sensorData[14];
+    u8 sensorDataGyro[14];
+    u8 sensorDataTemperature[2];
+
+    init_platform();
+
+    XIic_Send(XPAR_IIC_0_BASEADDR, IMU, (u8*)IMU_initialization, 2, XIIC_STOP);
+    XIic_Send(XPAR_IIC_0_BASEADDR, IMU, IMU_read, 1, XIIC_REPEATED_START);
+    XIic_Recv(XPAR_IIC_0_BASEADDR, IMU, sensorData, 14, XIIC_STOP);
+
+    initialAccelerometer_X = (sensorData[0] << 8) | sensorData[1];
+    initialAccelerometer_Y = (sensorData[2] << 8) | sensorData[3];
+    initialAccelerometer_Z = (sensorData[4] << 8) | sensorData[5];
+
+    XIic_Send(XPAR_IIC_0_BASEADDR, IMU, GYRO_read, 1, XIIC_REPEATED_START);
+    XIic_Recv(XPAR_IIC_0_BASEADDR, IMU, sensorDataGyro, 14, XIIC_STOP);
+
+    initialGyro_X = (sensorData[0] << 8) | sensorDataGyro[1];
+    initialGyro_Y = (sensorData[2] << 8) | sensorDataGyro[3];
+    initialGyro_Z = (sensorData[4] << 8) | sensorDataGyro[5];
+
+    while (1)
+    {
+        XIic_Send(XPAR_IIC_0_BASEADDR, IMU, IMU_read, 1, XIIC_REPEATED_START);
+        XIic_Recv(XPAR_IIC_0_BASEADDR, IMU, sensorData, 14, XIIC_STOP);
+
+        Accelerometer_X = (sensorData[0] << 8) | sensorData[1];
+        Accelerometer_Y = (sensorData[2] << 8) | sensorData[3];
+        Accelerometer_Z = (sensorData[4] << 8) | sensorData[5];
+
+        PitchAndRoll(Accelerometer_X, Accelerometer_Y, Accelerometer_Z);
+
+        printf("Pitch = %.2f\n", calculated_pitch);
+        printf("Roll = %.2f\n\r", calculated_roll);
+
+        printf("X Accelerometer = %d\n", (Accelerometer_X - initialAccelerometer_X));
+        printf("Y Accelerometer = %d\n", (Accelerometer_Y - initialAccelerometer_Y));
+        printf("Z Accelerometer = %d\n\n", (Accelerometer_Z - initialAccelerometer_Z));
+
+        XIic_Send(XPAR_IIC_0_BASEADDR, IMU, GYRO_read, 1, XIIC_REPEATED_START);
+		XIic_Recv(XPAR_IIC_0_BASEADDR, IMU, sensorDataGyro, 14, XIIC_STOP);
+
+		Gyro_X = (sensorData[0] << 8) | sensorDataGyro[1];
+		Gyro_Y = (sensorData[2] << 8) | sensorDataGyro[3];
+		Gyro_Z = (sensorData[4] << 8) | sensorDataGyro[5];
+
+		printf("X Gyro = %d\n", (Gyro_X - initialGyro_X));
+		printf("Y Gyro = %d\n", (Gyro_Y - initialGyro_Y));
+		printf("Z Gyro = %d\n", (Gyro_Z - initialGyro_Z));
+
+		printf("initial X accel= %d gyro = %d\n",initialAccelerometer_X,initialGyro_X);
+		printf("initial y accel= %d gyro = %d\n",initialAccelerometer_Y,initialGyro_Y);
+		printf("initial Z accel= %d gyro = %d\n\n",initialAccelerometer_Z,initialGyro_Z);
+
+		XIic_Send(XPAR_IIC_0_BASEADDR, IMU, TEMP_read, 1, XIIC_REPEATED_START);
+		XIic_Recv(XPAR_IIC_0_BASEADDR, IMU, sensorDataTemperature, 2, XIIC_STOP);
+
+		ActualTemperature = (sensorDataTemperature[0] << 8) | sensorDataTemperature[1];
+
+
+		temperature = ActualTemperature + CorrectionTemperature;
+		CorrectedTemperature = temperature/340 + 36.53;
+
+		printf("Temperature in celsius = %.2f\n\r", CorrectedTemperature);
+
+		sleep(1);
+    }
+
+    cleanup_platform();
+    return 0;
+}
+

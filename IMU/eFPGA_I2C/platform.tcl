@@ -21,3 +21,9 @@ bsp config stdout "ps7_uart_0"
 bsp write
 platform write
 platform generate
+platform active {eFPGA_I2C}
+platform config -updatehw {C:/Users/dries/IMU/design_1_wrapper.xsa}
+platform generate
+platform active {eFPGA_I2C}
+platform config -updatehw {C:/Users/dries/IMU/design_1_wrapper.xsa}
+platform generate -domains 

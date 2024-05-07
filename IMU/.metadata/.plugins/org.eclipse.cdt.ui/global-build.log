@@ -1,6 +1,6 @@
 Nothing to build in platform 'design_1_wrapper'
 
-08:37:17 **** Incremental Build of configuration Debug for project eFPGA_I2C_Application_system ****
+09:36:08 **** Incremental Build of configuration Debug for project eFPGA_I2C_Application_system ****
 make all 
 make --no-print-directory pre-build
 a9-linaro-pre-build-step
@@ -11,6 +11,20 @@ make --no-print-directory main-build
 arm-none-eabi-gcc -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/helloworld.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -IC:/Users/dries/IMU/design_1_wrapper/export/design_1_wrapper/sw/design_1_wrapper/standalone_ps7_cortexa9_0/bspinclude/include -MMD -MP -MF"src/helloworld.d" -MT"src/helloworld.o" -o "src/helloworld.o" "../src/helloworld.c"
 'Finished building: ../src/helloworld.c'
 ' '
+'Building file: ../src/lis2ds12_pl.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/lis2ds12_pl.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -IC:/Users/dries/IMU/design_1_wrapper/export/design_1_wrapper/sw/design_1_wrapper/standalone_ps7_cortexa9_0/bspinclude/include -MMD -MP -MF"src/lis2ds12_pl.d" -MT"src/lis2ds12_pl.o" -o "src/lis2ds12_pl.o" "../src/lis2ds12_pl.c"
+../src/lis2ds12_pl.c: In function 'pollForAccel':
+../src/lis2ds12_pl.c:181:21: warning: variable 'iacceleration_Z' set but not used [-Wunused-but-set-variable]
+  181 |                 int iacceleration_Z;
+      |                     ^~~~~~~~~~~~~~~
+'Finished building: ../src/lis2ds12_pl.c'
+' '
+'Building file: ../src/platform.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/platform.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -IC:/Users/dries/IMU/design_1_wrapper/export/design_1_wrapper/sw/design_1_wrapper/standalone_ps7_cortexa9_0/bspinclude/include -MMD -MP -MF"src/platform.d" -MT"src/platform.o" -o "src/platform.o" "../src/platform.c"
+'Finished building: ../src/platform.c'
+' '
 'Building target: eFPGA_I2C_Application_system.elf'
 'Invoking: ARM v7 gcc linker'
 arm-none-eabi-gcc -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec -Wl,-T -Wl,../src/lscript.ld -LC:/Users/dries/IMU/design_1_wrapper/export/design_1_wrapper/sw/design_1_wrapper/standalone_ps7_cortexa9_0/bsplib/lib -o "eFPGA_I2C_Application_system.elf"  ./src/helloworld.o ./src/lis2ds12_pl.o ./src/platform.o   -lm -Wl,--start-group,-lxil,-lgcc,-lc,--end-group
@@ -19,6 +33,6 @@ arm-none-eabi-gcc -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=non
 'Invoking: ARM v7 Print Size'
 arm-none-eabi-size eFPGA_I2C_Application_system.elf  |tee "eFPGA_I2C_Application_system.elf.size"
    text	   data	    bss	    dec	    hex	filename
-  55751	   2584	  23384	  81719	  13f37	eFPGA_I2C_Application_system.elf
+  56071	   2584	  23384	  82039	  14077	eFPGA_I2C_Application_system.elf
 'Finished building: eFPGA_I2C_Application_system.elf.size'
 ' '

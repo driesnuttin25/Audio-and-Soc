@@ -2,7 +2,7 @@
 --Copyright 2022-2023 Advanced Micro Devices, Inc. All Rights Reserved.
 ----------------------------------------------------------------------------------
 --Tool Version: Vivado v.2023.2 (win64) Build 4029153 Fri Oct 13 20:14:34 MDT 2023
---Date        : Sat May  4 13:37:55 2024
+--Date        : Tue May  7 09:29:28 2024
 --Host        : dries_laptop running 64-bit major release  (build 9200)
 --Command     : generate_target design_1_wrapper.bd
 --Design      : design_1_wrapper
@@ -35,6 +35,8 @@ entity design_1_wrapper is
     FIXED_IO_ps_clk : inout STD_LOGIC;
     FIXED_IO_ps_porb : inout STD_LOGIC;
     FIXED_IO_ps_srstb : inout STD_LOGIC;
+    IIC_0_0_scl_io : inout STD_LOGIC;
+    IIC_0_0_sda_io : inout STD_LOGIC;
     IIC_0_scl_io : inout STD_LOGIC;
     IIC_0_sda_io : inout STD_LOGIC
   );
@@ -69,7 +71,13 @@ architecture STRUCTURE of design_1_wrapper is
     IIC_0_scl_t : out STD_LOGIC;
     IIC_0_sda_i : in STD_LOGIC;
     IIC_0_sda_o : out STD_LOGIC;
-    IIC_0_sda_t : out STD_LOGIC
+    IIC_0_sda_t : out STD_LOGIC;
+    IIC_0_0_sda_i : in STD_LOGIC;
+    IIC_0_0_sda_o : out STD_LOGIC;
+    IIC_0_0_sda_t : out STD_LOGIC;
+    IIC_0_0_scl_i : in STD_LOGIC;
+    IIC_0_0_scl_o : out STD_LOGIC;
+    IIC_0_0_scl_t : out STD_LOGIC
   );
   end component design_1;
   component IOBUF is
@@ -80,6 +88,12 @@ architecture STRUCTURE of design_1_wrapper is
     IO : inout STD_LOGIC
   );
   end component IOBUF;
+  signal IIC_0_0_scl_i : STD_LOGIC;
+  signal IIC_0_0_scl_o : STD_LOGIC;
+  signal IIC_0_0_scl_t : STD_LOGIC;
+  signal IIC_0_0_sda_i : STD_LOGIC;
+  signal IIC_0_0_sda_o : STD_LOGIC;
+  signal IIC_0_0_sda_t : STD_LOGIC;
   signal IIC_0_scl_i : STD_LOGIC;
   signal IIC_0_scl_o : STD_LOGIC;
   signal IIC_0_scl_t : STD_LOGIC;
@@ -87,6 +101,20 @@ architecture STRUCTURE of design_1_wrapper is
   signal IIC_0_sda_o : STD_LOGIC;
   signal IIC_0_sda_t : STD_LOGIC;
 begin
+IIC_0_0_scl_iobuf: component IOBUF
+     port map (
+      I => IIC_0_0_scl_o,
+      IO => IIC_0_0_scl_io,
+      O => IIC_0_0_scl_i,
+      T => IIC_0_0_scl_t
+    );
+IIC_0_0_sda_iobuf: component IOBUF
+     port map (
+      I => IIC_0_0_sda_o,
+      IO => IIC_0_0_sda_io,
+      O => IIC_0_0_sda_i,
+      T => IIC_0_0_sda_t
+    );
 IIC_0_scl_iobuf: component IOBUF
      port map (
       I => IIC_0_scl_o,
@@ -124,6 +152,12 @@ design_1_i: component design_1
       FIXED_IO_ps_clk => FIXED_IO_ps_clk,
       FIXED_IO_ps_porb => FIXED_IO_ps_porb,
       FIXED_IO_ps_srstb => FIXED_IO_ps_srstb,
+      IIC_0_0_scl_i => IIC_0_0_scl_i,
+      IIC_0_0_scl_o => IIC_0_0_scl_o,
+      IIC_0_0_scl_t => IIC_0_0_scl_t,
+      IIC_0_0_sda_i => IIC_0_0_sda_i,
+      IIC_0_0_sda_o => IIC_0_0_sda_o,
+      IIC_0_0_sda_t => IIC_0_0_sda_t,
       IIC_0_scl_i => IIC_0_scl_i,
       IIC_0_scl_o => IIC_0_scl_o,
       IIC_0_scl_t => IIC_0_scl_t,
