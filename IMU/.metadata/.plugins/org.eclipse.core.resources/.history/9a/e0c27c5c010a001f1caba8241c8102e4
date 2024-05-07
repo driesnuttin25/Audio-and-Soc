@@ -1,0 +1,74 @@
+#include "xiic.h"
+#include "xil_printf.h"
+#include "xparameters.h"
+
+#define ADXL345_ADDR 0x53    // ADXL345 device address
+#define ADXL345_DEVICE_ID_REG 0x00  // Device ID register
+
+XIic IicInstance;
+
+void initI2C() {
+    XIic_Config *Config = XIic_LookupConfig(XPAR_IIC_0_DEVICE_ID);
+    if (Config == NULL) {
+        xil_printf("Error: No config found for I2C device\r\n");
+        return;
+    }
+
+    int Status = XIic_CfgInitialize(&IicInstance, Config, Config->BaseAddress);
+    if (Status != XST_SUCCESS) {
+        xil_printf("Error: Initialization failed\r\n");
+        return;
+    }
+
+    XIic_Reset(&IicInstance);
+}
+
+void i2cScan() {
+    u8 Address;
+    int Status;
+    xil_printf("Scanning I2C bus...\r\n");
+
+    for (Address = 1; Address < 128; Address++) {
+        XIic_SetAddress(&IicInstance, XII_ADDR_TO_SEND_TYPE, Address);
+        Status = XIic_MasterSend(&IicInstance, NULL, 0);  // Try to send without data
+
+        if (Status == XST_SUCCESS) {
+            xil_printf("I2C device found at address 0x%02x\r\n", Address);
+        }
+    }
+}
+
+u8 readDeviceID() {
+    u8 regAddress = ADXL345_DEVICE_ID_REG;
+    u8 deviceID = 0;
+    int Status;
+
+    XIic_SetAddress(&IicInstance, XII_ADDR_TO_SEND_TYPE, ADXL345_ADDR);
+    Status = XIic_MasterSend(&IicInstance, &regAddress, 1);
+    if (Status != XST_SUCCESS) {
+        xil_printf("Error: Failed to send read command\r\n");
+        return 0;
+    }
+
+    while (XIic_IsIicBusy(&IicInstance) == TRUE);
+
+    Status = XIic_MasterRecv(&IicInstance, &deviceID, 1);
+    if (Status != XST_SUCCESS) {
+        xil_printf("Error: Failed to receive data\r\n");
+        return 0;
+    }
+
+    return deviceID;
+}
+
+int main() {
+    init_platform();
+    initI2C();
+    i2cScan();  // Scan the I2C bus for devices
+
+    u8 deviceID = readDeviceID();
+    xil_printf("Device ID: 0x%02x\r\n", deviceID);  // Print the device ID
+
+    cleanup_platform();
+    return 0;
+}

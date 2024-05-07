@@ -1,0 +1,71 @@
+#include "xil_printf.h"
+#include "xiic.h"
+#include "xparameters.h"
+#include "xil_exception.h"
+#include "sleep.h"
+
+#define ADXL345_ADDR 0x53
+#define ADXL345_REG_DATA_X0 0x32
+
+#define IIC_DEVICE_ID XPAR_AXI_IIC_0_DEVICE_ID
+
+XIic IicInstance;
+
+int initIIC(XIic *IicInstance, u16 DeviceId);
+int16_t readADXL345XAxis(XIic *IicInstance);
+
+int main() {
+    init_platform();
+
+    int Status = initIIC(&IicInstance, IIC_DEVICE_ID);
+    if (Status != XST_SUCCESS) {
+        xil_printf("IIC initialization failed\r\n");
+        return XST_FAILURE;
+    }
+
+    while (1) {
+        int16_t accX = readADXL345XAxis(&IicInstance);
+        xil_printf("Acceleration X: %d\r\n", accX);
+        usleep(1000000); // Delay for 1 second
+    }
+
+    cleanup_platform();
+    return 0;
+}
+
+int initIIC(XIic *IicInstance, u16 DeviceId) {
+    XIic_Config *ConfigPtr = XIic_LookupConfig(DeviceId);
+    if (ConfigPtr == NULL) {
+        xil_printf("No IIC config found for device id %d\r\n", DeviceId);
+        return XST_FAILURE;
+    }
+
+    int Status = XIic_CfgInitialize(IicInstance, ConfigPtr, ConfigPtr->BaseAddress);
+    if (Status != XST_SUCCESS) {
+        xil_printf("IIC configuration initialization failed\r\n");
+        return XST_FAILURE;
+    }
+
+    XIic_Reset(IicInstance);
+    return XST_SUCCESS;
+}
+
+int16_t readADXL345XAxis(XIic *IicInstance) {
+    u8 recvBuffer[2];
+    int Status;
+
+    Status = XIic_Send(IicInstance->BaseAddress, ADXL345_ADDR, &ADXL345_REG_DATA_X0, 1, XIIC_REPEATED_START);
+    if (Status != 1) {
+        xil_printf("Failed to send register address\r\n");
+        return -1;
+    }
+
+    Status = XIic_Recv(IicInstance->BaseAddress, ADXL345_ADDR, recvBuffer, 2, XIIC_STOP);
+    if (Status != 2) {
+        xil_printf("Failed to read from register\r\n");
+        return -1;
+    }
+
+    int16_t accX = (recvBuffer[1] << 8) | recvBuffer[0]; // Data is in little-endian format
+    return accX;
+}

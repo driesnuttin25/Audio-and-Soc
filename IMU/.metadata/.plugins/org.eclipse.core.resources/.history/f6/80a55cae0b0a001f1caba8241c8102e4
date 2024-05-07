@@ -1,0 +1,89 @@
+#include "xil_printf.h"
+#include "xiic.h"
+#include "xparameters.h"
+#include "xil_exception.h"
+#include "sleep.h"
+
+#define MPU6050_ADDR 0x58
+#define MPU6050_REG_PWR_MGMT_1 0x6B
+#define MPU6050_REG_ACCEL_XOUT_H 0x3B
+
+#define IIC_DEVICE_ID XPAR_AXI_IIC_0_DEVICE_ID
+
+XIic IicInstance;
+
+int initIIC(XIic *IicInstance, u16 DeviceId);
+int initMPU6050(XIic *IicInstance);
+int16_t readMPU6050RawData(XIic *IicInstance, u8 regAddr);
+
+int main() {
+    init_platform();
+
+    int Status = initIIC(&IicInstance, IIC_DEVICE_ID);
+    if (Status != XST_SUCCESS) {
+        xil_printf("IIC initialization failed\r\n");
+        return XST_FAILURE;
+    }
+
+    Status = initMPU6050(&IicInstance);
+    if (Status != XST_SUCCESS) {
+        xil_printf("MPU6050 initialization failed\r\n");
+        return XST_FAILURE;
+    }
+
+    while (1) {
+        int16_t rawAccX = readMPU6050RawData(&IicInstance, MPU6050_REG_ACCEL_XOUT_H);
+        xil_printf("Raw AccX: %d\r\n", rawAccX);
+        usleep(10); // Delay for 1 second
+    }
+
+    cleanup_platform();
+    return 0;
+}
+
+int initIIC(XIic *IicInstance, u16 DeviceId) {
+    XIic_Config *ConfigPtr = XIic_LookupConfig(DeviceId);
+    if (ConfigPtr == NULL) {
+        xil_printf("No IIC config found for device id %d\r\n", DeviceId);
+        return XST_FAILURE;
+    }
+
+    int Status = XIic_CfgInitialize(IicInstance, ConfigPtr, ConfigPtr->BaseAddress);
+    if (Status != XST_SUCCESS) {
+        xil_printf("IIC configuration initialization failed\r\n");
+        return XST_FAILURE;
+    }
+
+    XIic_Reset(IicInstance);
+    return XST_SUCCESS;
+}
+
+int initMPU6050(XIic *IicInstance) {
+    u8 sendBuffer[2] = {MPU6050_REG_PWR_MGMT_1, 0x00}; // Wake up MPU6050
+    int Status = XIic_Send(IicInstance->BaseAddress, MPU6050_ADDR, sendBuffer, 2, XIIC_STOP);
+    if (Status != 2) {
+        xil_printf("Failed to write PWR_MGMT_1 register\r\n");
+        return XST_FAILURE;
+    }
+    return XST_SUCCESS;
+}
+
+int16_t readMPU6050RawData(XIic *IicInstance, u8 regAddr) {
+    u8 recvBuffer[2];
+    int Status;
+
+    Status = XIic_Send(IicInstance->BaseAddress, MPU6050_ADDR, &regAddr, 1, XIIC_REPEATED_START);
+    if (Status != 1) {
+        xil_printf("Failed to send register address\r\n");
+        return -1;
+    }
+
+    Status = XIic_Recv(IicInstance->BaseAddress, MPU6050_ADDR, recvBuffer, 2, XIIC_STOP);
+    if (Status != 2) {
+        xil_printf("Failed to read from register\r\n");
+        return -1;
+    }
+
+    int16_t rawData = (recvBuffer[0] << 8) | recvBuffer[1];
+    return rawData;
+}

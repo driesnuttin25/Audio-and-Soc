@@ -1,0 +1,7 @@
+set_property SRC_FILE_INFO {cfile:C:/Users/dries/IMU/IMU.srcs/constrs_1/new/constr.xdc rfile:../../../IMU.srcs/constrs_1/new/constr.xdc id:1} [current_design]
+set_property src_info {type:XDC file:1 line:1 export:INPUT save:INPUT read:READ} [current_design]
+set_property PACKAGE_PIN G15 [get_ports iic_rtl_scl_io]
+set_property src_info {type:XDC file:1 line:5 export:INPUT save:INPUT read:READ} [current_design]
+set_property PACKAGE_PIN P16 [get_ports IIC_0_scl_io]
+set_property src_info {type:XDC file:1 line:6 export:INPUT save:INPUT read:READ} [current_design]
+set_property PACKAGE_PIN P15 [get_ports IIC_0_sda_io]
