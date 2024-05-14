@@ -189,3 +189,226 @@ int main() {
     return 0;
 }
 
+
+
+
+
+FULL CODE MOTOR CONTROL
+
+
+#include "xparameters.h"
+#include "xgpio.h"
+#include "xtmrctr.h"
+#include "xscugic.h"
+#include "xil_exception.h"
+#include "xil_printf.h"
+#include "sleep.h"
+
+// Definitions for the GPIO
+#define GPIO_DEVICE_ID       XPAR_AXI_GPIO_0_DEVICE_ID
+#define GPIO_CHANNEL         1
+
+// GPIO pin numbers based on the constraints file
+#define IN1_PIN              0 // GPIO_0_tri_io[0] is connected to pin Y11
+#define IN2_PIN              1 // GPIO_0_tri_io[1] is connected to pin Y12
+#define IN3_PIN              2 // GPIO_0_tri_io[2] is connected to pin W11
+#define IN4_PIN              3 // GPIO_0_tri_io[3] is connected to pin V11
+
+XGpio Gpio; // GPIO driver instance
+
+// Definitions for the PWM
+#define SCUGIC_DEVICE_ID        XPAR_SCUGIC_SINGLE_DEVICE_ID
+#define AXI_TIMER_DEVICE_ID     XPAR_AXI_TIMER_0_DEVICE_ID
+#define AXI_TIMER_IRPT_INTR     XPAR_FABRIC_AXI_TIMER_0_INTERRUPT_INTR
+
+XTmrCtr xTmrCtr_Inst;
+XScuGic xScuGic_Inst;
+
+#define AXI_TIMER_CHANNEL_1     0
+#define AXI_TIMER_CHANNEL_2     1
+
+#define AXI_TIMER_PWM_TEST_SW   1
+
+#define AXI_TIMER_PERIOD_US     10000
+#define AXI_TIMER_PWM_HIGH_TIME_US 5000
+
+void xTmrCtr_Int_Handler(void *CallBackRef, u8 TmrCtrNumber) {
+    XTmrCtr *InstancePtr = (XTmrCtr *)CallBackRef;
+    //xil_printf("AXI Timer Int! Channel: %d\n", TmrCtrNumber + 1);
+    u32 CounterValue = XTmrCtr_GetValue(InstancePtr, TmrCtrNumber);
+    //xil_printf("Current Timer Value (Channel %d): %u\n", TmrCtrNumber + 1, CounterValue);
+}
+
+u32 xTmr_US_To_RegValue(u32 US) {
+    u32 Value;
+    Value = 50 * US;
+    //xil_printf("xTmr_US_To_RegValue: US = %d, Value = %u\n", US, Value);
+    return 0xFFFFFFFF - Value;
+}
+
+u32 xTmr_US_To_NS(u32 US) {
+    //xil_printf("xTmr_US_To_NS: US = %d\n", US);
+    return US * 1000;
+}
+
+int xTmrCtr_Init(XTmrCtr *xTmrCtr_Ptr, u32 DeviceId) {
+    int Status, DutyCycle;
+    //xil_printf("Initializing AXI Timer...\n");
+
+    Status = XTmrCtr_Initialize(xTmrCtr_Ptr, DeviceId);
+    if (Status != XST_SUCCESS) {
+        xil_printf("XTmrCtr_Initialize failed\n");
+        return XST_FAILURE;
+    }
+
+    Status = XTmrCtr_SelfTest(xTmrCtr_Ptr, 2 - 1);
+    if (Status != XST_SUCCESS) {
+        xil_printf("XTmrCtr_SelfTest failed\n");
+        return XST_FAILURE;
+    }
+
+    xil_printf("Setting Timer Handler\n");
+    XTmrCtr_SetHandler(xTmrCtr_Ptr, xTmrCtr_Int_Handler, xTmrCtr_Ptr);
+
+    xil_printf("Setting Reset Values\n");
+    XTmrCtr_SetResetValue(xTmrCtr_Ptr, AXI_TIMER_CHANNEL_1, xTmr_US_To_RegValue(AXI_TIMER_PERIOD_US));
+    XTmrCtr_SetResetValue(xTmrCtr_Ptr, AXI_TIMER_CHANNEL_2, xTmr_US_To_RegValue(AXI_TIMER_PERIOD_US));
+
+    xil_printf("Setting Timer Options\n");
+    XTmrCtr_SetOptions(xTmrCtr_Ptr, AXI_TIMER_CHANNEL_1, XTC_INT_MODE_OPTION | XTC_AUTO_RELOAD_OPTION);
+    XTmrCtr_SetOptions(xTmrCtr_Ptr, AXI_TIMER_CHANNEL_2, XTC_INT_MODE_OPTION | XTC_AUTO_RELOAD_OPTION);
+
+#if AXI_TIMER_PWM_TEST_SW
+    xil_printf("Configuring PWM\n");
+    DutyCycle = XTmrCtr_PwmConfigure(xTmrCtr_Ptr, xTmr_US_To_NS(AXI_TIMER_PERIOD_US), xTmr_US_To_NS(AXI_TIMER_PWM_HIGH_TIME_US));
+    xil_printf("AXI Timer PWM DutyCycle: %d%%!\n", DutyCycle);
+#endif
+
+    xil_printf("AXI Timer Initialized Successfully\n");
+    return XST_SUCCESS;
+}
+
+int xScuGic_Init(XScuGic *ScuGic_Ptr, XTmrCtr *xTmrCtr_Ptr) {
+    int Status;
+    XScuGic_Config *intc_cfg_ptr;
+
+    xil_printf("Initializing GIC...\n");
+    intc_cfg_ptr = XScuGic_LookupConfig(SCUGIC_DEVICE_ID);
+    if (intc_cfg_ptr == NULL) {
+        xil_printf("XScuGic_LookupConfig failed\n");
+        return XST_FAILURE;
+    }
+
+    Status = XScuGic_CfgInitialize(ScuGic_Ptr, intc_cfg_ptr, intc_cfg_ptr->CpuBaseAddress);
+    if (Status != XST_SUCCESS) {
+        xil_printf("XScuGic_CfgInitialize failed\n");
+        return XST_FAILURE;
+    }
+
+    xil_printf("Registering Exception Handler\n");
+    Xil_ExceptionRegisterHandler(XIL_EXCEPTION_ID_INT, (Xil_ExceptionHandler)XScuGic_InterruptHandler, ScuGic_Ptr);
+    Xil_ExceptionEnable();
+
+    xil_printf("Connecting Timer Interrupt\n");
+    Status = XScuGic_Connect(ScuGic_Ptr, AXI_TIMER_IRPT_INTR, (Xil_ExceptionHandler)XTmrCtr_InterruptHandler, (void *)xTmrCtr_Ptr);
+    if (Status != XST_SUCCESS) {
+        xil_printf("XScuGic_Connect failed\n");
+        return XST_FAILURE;
+    }
+
+    xil_printf("Enabling Timer Interrupt in GIC\n");
+    XScuGic_Enable(ScuGic_Ptr, AXI_TIMER_IRPT_INTR);
+
+    xil_printf("GIC Initialized Successfully\n");
+    return XST_SUCCESS;
+}
+
+void Motor_Forward() {
+    xil_printf("Motor Forward\n");
+    XGpio_DiscreteWrite(&Gpio, GPIO_CHANNEL, (1 << IN1_PIN) | (1 << IN4_PIN)); // IN1 and IN3 high, IN2 and IN4 low
+    xil_printf("GPIO Output: %x\n", (1 << IN1_PIN) | (1 << IN3_PIN));
+}
+
+void Motor_Right() {
+    xil_printf("Motor Right\n");
+    XGpio_DiscreteWrite(&Gpio, GPIO_CHANNEL, (1 << IN1_PIN) | (1 << IN3_PIN)); // IN1 and IN2 high, IN3 and IN4 low
+    xil_printf("GPIO Output: %x\n", (1 << IN1_PIN) | (1 << IN2_PIN));
+}
+
+void Motor_Left() {
+    xil_printf("Motor Left\n");
+    XGpio_DiscreteWrite(&Gpio, GPIO_CHANNEL, (1 << IN2_PIN) | (1 << IN4_PIN)); // IN2 and IN4 high, IN1 and IN3 low
+    xil_printf("GPIO Output: %x\n", (1 << IN2_PIN) | (1 << IN4_PIN));
+}
+
+int main() {
+    int Status;
+
+    xil_printf("Motor Driver Test Program\n");
+
+    // Initialize the platform
+    init_platform();
+
+    // Initialize the GPIO driver
+    xil_printf("Initializing GPIO...\n");
+    Status = XGpio_Initialize(&Gpio, GPIO_DEVICE_ID);
+    if (Status != XST_SUCCESS) {
+        xil_printf("GPIO initialization failed\n");
+        return XST_FAILURE;
+    }
+
+    // Set the direction for the specified pins and enable output
+    XGpio_SetDataDirection(&Gpio, GPIO_CHANNEL, ~(1 << IN1_PIN | 1 << IN2_PIN | 1 << IN3_PIN | 1 << IN4_PIN)); // Set IN1, IN2, IN3, IN4 as output
+
+    // Initialize and start the PWM timer
+    xil_printf("Initializing Timer...\n");
+    Status = xTmrCtr_Init(&xTmrCtr_Inst, AXI_TIMER_DEVICE_ID);
+    if (Status != XST_SUCCESS) {
+        xil_printf("AXI Timer Init Error!\n");
+        return XST_FAILURE;
+    }
+
+    // Initialize the GIC for the timer interrupt
+    xil_printf("Initializing GIC...\n");
+    Status = xScuGic_Init(&xScuGic_Inst, &xTmrCtr_Inst);
+    if (Status != XST_SUCCESS) {
+        xil_printf("GIC Init Error!\n");
+        return XST_FAILURE;
+    }
+
+    // Start the PWM channels
+    xil_printf("Starting Timer Channels...\n");
+    XTmrCtr_Start(&xTmrCtr_Inst, AXI_TIMER_CHANNEL_1);
+    XTmrCtr_Start(&xTmrCtr_Inst, AXI_TIMER_CHANNEL_2);
+
+    // Enable PWM if required
+#if AXI_TIMER_PWM_TEST_SW
+    xil_printf("Disabling PWM\n");
+    XTmrCtr_PwmDisable(&xTmrCtr_Inst);
+    xil_printf("Enabling PWM\n");
+    XTmrCtr_PwmEnable(&xTmrCtr_Inst);
+#endif
+
+    // Test motor functions
+    xil_printf("Entering Main Loop\n");
+    while (1) {
+        // Main loop
+        Motor_Forward();
+        sleep(2);
+
+        Motor_Left();
+        sleep(2);
+
+        Motor_Right();
+        sleep(2);
+
+        usleep(1000000);  // 1 second delay
+    }
+
+    // Cleanup and exit (this part of the code will never be reached in a properly running embedded application)
+    xil_printf("Cleaning up Platform...\n");
+    cleanup_platform();
+    return 0;
+}
+
+
