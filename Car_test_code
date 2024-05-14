@@ -90,106 +90,125 @@ int main()
 #include "xil_printf.h"
 #include <stdio.h>
 #include "platform.h"
-#include "xil_printf.h"
-#include "sleep.h"
-#include "speed_sensor.h"
 
-#define SCUGIC_DEVICE_ID 	XPAR_SCUGIC_SINGLE_DEVICE_ID
-#define AXI_TIMER_DEVICE_ID XPAR_AXI_TIMER_0_DEVICE_ID
-#define AXI_TIMER_IRPT_INTR XPAR_FABRIC_AXI_TIMER_0_INTERRUPT_INTR
+// Definitions based on the screenshots
+#define SCUGIC_DEVICE_ID        XPAR_SCUGIC_SINGLE_DEVICE_ID
+#define AXI_TIMER_DEVICE_ID     XPAR_AXI_TIMER_0_DEVICE_ID
+#define AXI_TIMER_IRPT_INTR     XPAR_FABRIC_AXI_TIMER_0_INTERRUPT_INTR
 
-XTmrCtr	xTmrCtr_Inst;
+XTmrCtr xTmrCtr_Inst;
 XScuGic xScuGic_Inst;
 
-#define AXI_TIMER_CHANNEL_1	0
-#define AXI_TIMER_CHANNEL_2	1
+#define AXI_TIMER_CHANNEL_1     0
+#define AXI_TIMER_CHANNEL_2     1
 
-#define AXI_TIMER_PWM_TEST_SW	1
+#define AXI_TIMER_PWM_TEST_SW   1
 
-#define AXI_TIMER_PERIOD_US	10000
+#define AXI_TIMER_PERIOD_US     10000
+#define AXI_TIMER_PWM_HIGH_TIME_US 5000
 
-#define AXI_TIMER_PWM_HIGH_TIME_US	5000
-
-void xTmrCtr_Int_Handler(void *CallBackRef, u8 TmrCtrNumber)
-{
-	//xil_printf("AXI Timer Int! Channel: %d\n", TmrCtrNumber+1);
-
+void xTmrCtr_Int_Handler(void *CallBackRef, u8 TmrCtrNumber) {
+    XTmrCtr *InstancePtr = (XTmrCtr *)CallBackRef;
+    xil_printf("AXI Timer Int! Channel: %d\n", TmrCtrNumber + 1);
+    u32 CounterValue = XTmrCtr_GetValue(InstancePtr, TmrCtrNumber);
+    xil_printf("Current Timer Value (Channel %d): %u\n", TmrCtrNumber + 1, CounterValue);
 }
 
-u32 xTmr_US_To_RegValue(u32 US)
-{
-	u32 Value;
-	Value = 50*US;
-	return 0xFFFFFFFF - Value;
+u32 xTmr_US_To_RegValue(u32 US) {
+    u32 Value;
+    Value = 50 * US;
+    xil_printf("xTmr_US_To_RegValue: US = %d, Value = %u\n", US, Value);
+    return 0xFFFFFFFF - Value;
 }
 
-u32 xTmr_US_To_NS(u32 US)
-{
-	return US*1000;
+u32 xTmr_US_To_NS(u32 US) {
+    xil_printf("xTmr_US_To_NS: US = %d\n", US);
+    return US * 1000;
 }
 
+int xTmrCtr_Init(XTmrCtr *xTmrCtr_Ptr, u32 DeviceId) {
+    int Status, DutyCycle;
+    xil_printf("Initializing AXI Timer...\n");
 
-int xTmrCtr_Init(XTmrCtr *xTmrCtr_Ptr, u32 DeviceId)
-{
-	int Status, DutyCycle;
+    Status = XTmrCtr_Initialize(xTmrCtr_Ptr, DeviceId);
+    if (Status != XST_SUCCESS) {
+        xil_printf("XTmrCtr_Initialize failed\n");
+        return XST_FAILURE;
+    }
 
-	Status = XTmrCtr_Initialize(xTmrCtr_Ptr, DeviceId);
-	if(Status != XST_SUCCESS)
-		{
-		return XST_FAILURE;
-		}
+    Status = XTmrCtr_SelfTest(xTmrCtr_Ptr, 2 - 1);
+    if (Status != XST_SUCCESS) {
+        xil_printf("XTmrCtr_SelfTest failed\n");
+        return XST_FAILURE;
+    }
 
-		Status = XTmrCtr_SelfTest(xTmrCtr_Ptr, 2-1);
-		if(Status != XST_SUCCESS)
-			{
-			return XST_FAILURE;
-			}
+    xil_printf("Setting Timer Handler\n");
+    XTmrCtr_SetHandler(xTmrCtr_Ptr, xTmrCtr_Int_Handler, xTmrCtr_Ptr);
 
+    xil_printf("Setting Reset Values\n");
+    XTmrCtr_SetResetValue(xTmrCtr_Ptr, AXI_TIMER_CHANNEL_1, xTmr_US_To_RegValue(AXI_TIMER_PERIOD_US));
+    XTmrCtr_SetResetValue(xTmrCtr_Ptr, AXI_TIMER_CHANNEL_2, xTmr_US_To_RegValue(AXI_TIMER_PERIOD_US));
 
-		XTmrCtr_SetHandler(xTmrCtr_Ptr,xTmrCtr_Int_Handler,xTmrCtr_Ptr);
+    xil_printf("Setting Timer Options\n");
+    XTmrCtr_SetOptions(xTmrCtr_Ptr, AXI_TIMER_CHANNEL_1, XTC_INT_MODE_OPTION | XTC_AUTO_RELOAD_OPTION);
+    XTmrCtr_SetOptions(xTmrCtr_Ptr, AXI_TIMER_CHANNEL_2, XTC_INT_MODE_OPTION | XTC_AUTO_RELOAD_OPTION);
 
-		XTmrCtr_SetResetValue(xTmrCtr_Ptr,AXI_TIMER_CHANNEL_1,xTmr_US_To_RegValue (AXI_TIMER_PERIOD_US));
+#if AXI_TIMER_PWM_TEST_SW
+    xil_printf("Configuring PWM\n");
+    DutyCycle = XTmrCtr_PwmConfigure(xTmrCtr_Ptr, xTmr_US_To_NS(AXI_TIMER_PERIOD_US), xTmr_US_To_NS(AXI_TIMER_PWM_HIGH_TIME_US));
+    xil_printf("AXI Timer PWM DutyCycle: %d%%!\n", DutyCycle);
+#endif
 
-		XTmrCtr_SetResetValue(xTmrCtr_Ptr, AXI_TIMER_CHANNEL_2,xTmr_US_To_RegValue (AXI_TIMER_PERIOD_US));
-
-		XTmrCtr_SetOptions(xTmrCtr_Ptr, AXI_TIMER_CHANNEL_1, XTC_INT_MODE_OPTION | XTC_AUTO_RELOAD_OPTION); XTmrCtr_SetOptions(xTmrCtr_Ptr, AXI_TIMER_CHANNEL_2, XTC_INT_MODE_OPTION | XTC_AUTO_RELOAD_OPTION);
-
-			#if AXI_TIMER_PWM_TEST_SW
-			DutyCycle = XTmrCtr_PwmConfigure(xTmrCtr_Ptr, xTmr_US_To_NS (AXI_TIMER_PERIOD_US),xTmr_US_To_NS (AXI_TIMER_PWM_HIGH_TIME_US));
-			xil_printf("AXI Timer PWM DutyCycle: %d%!\n",DutyCycle);
-			#endif
-			return XST_SUCCESS;
+    xil_printf("AXI Timer Initialized Successfully\n");
+    return XST_SUCCESS;
 }
 
-int xScuGic_Init(XScuGic *ScuGic_Ptr,XTmrCtr *xTmrCtr_Ptr)
-{
-	int Status;
-	XScuGic_Config *intc_cfg_ptr;
-	intc_cfg_ptr = XScuGic_LookupConfig(SCUGIC_DEVICE_ID);
-	if(intc_cfg_ptr == NULL)
-	{
-		return XST_FAILURE;
-	}
-	Status = XScuGic_CfgInitialize(ScuGic_Ptr, intc_cfg_ptr,intc_cfg_ptr->CpuBaseAddress);
+int xScuGic_Init(XScuGic *ScuGic_Ptr, XTmrCtr *xTmrCtr_Ptr) {
+    int Status;
+    XScuGic_Config *intc_cfg_ptr;
 
-	if(Status != XST_SUCCESS)
-	{
-		return XST_FAILURE;
-	}
-	Xil_ExceptionRegisterHandler(XIL_EXCEPTION_ID_INT, (Xil_ExceptionHandler) XScuGic_InterruptHandler, ScuGic_Ptr);
-	Xil_ExceptionEnable();
-	XScuGic_Connect(ScuGic_Ptr, AXI_TIMER_IRPT_INTR, (Xil_ExceptionHandler)XTmrCtr_InterruptHandler, (void *)xTmrCtr_Ptr);
-	XScuGic_Enable(ScuGic_Ptr, AXI_TIMER_IRPT_INTR);
-	return XST_SUCCESS;
+    xil_printf("Initializing GIC...\n");
+    intc_cfg_ptr = XScuGic_LookupConfig(SCUGIC_DEVICE_ID);
+    if (intc_cfg_ptr == NULL) {
+        xil_printf("XScuGic_LookupConfig failed\n");
+        return XST_FAILURE;
+    }
+
+    Status = XScuGic_CfgInitialize(ScuGic_Ptr, intc_cfg_ptr, intc_cfg_ptr->CpuBaseAddress);
+    if (Status != XST_SUCCESS) {
+        xil_printf("XScuGic_CfgInitialize failed\n");
+        return XST_FAILURE;
+    }
+
+    xil_printf("Registering Exception Handler\n");
+    Xil_ExceptionRegisterHandler(XIL_EXCEPTION_ID_INT, (Xil_ExceptionHandler)XScuGic_InterruptHandler, ScuGic_Ptr);
+    Xil_ExceptionEnable();
+
+    xil_printf("Connecting Timer Interrupt\n");
+    Status = XScuGic_Connect(ScuGic_Ptr, AXI_TIMER_IRPT_INTR, (Xil_ExceptionHandler)XTmrCtr_InterruptHandler, (void *)xTmrCtr_Ptr);
+    if (Status != XST_SUCCESS) {
+        xil_printf("XScuGic_Connect failed\n");
+        return XST_FAILURE;
+    }
+
+    xil_printf("Enabling Timer Interrupt in GIC\n");
+    XScuGic_Enable(ScuGic_Ptr, AXI_TIMER_IRPT_INTR);
+
+    xil_printf("GIC Initialized Successfully\n");
+    return XST_SUCCESS;
 }
 
 int main() {
-    u32 Status;
-    unsigned int value = 0;
+    int Status;
 
-    xil_printf("AXI Timer and Speed Sensor Test!\n");
+    xil_printf("AXI Timer and PWM Test!\n");
+
+    // Initialize the platform
+    xil_printf("Initializing Platform...\n");
+    init_platform();
 
     // Initialize and start the PWM timer
+    xil_printf("Initializing Timer...\n");
     Status = xTmrCtr_Init(&xTmrCtr_Inst, AXI_TIMER_DEVICE_ID);
     if (Status != XST_SUCCESS) {
         xil_printf("AXI Timer Init Error!\n");
@@ -197,36 +216,35 @@ int main() {
     }
 
     // Initialize the GIC for the timer interrupt
+    xil_printf("Initializing GIC...\n");
     Status = xScuGic_Init(&xScuGic_Inst, &xTmrCtr_Inst);
     if (Status != XST_SUCCESS) {
-        xil_printf("AXI Timer Init Error!\n");
+        xil_printf("GIC Init Error!\n");
         return XST_FAILURE;
     }
 
     // Start the PWM channels
+    xil_printf("Starting Timer Channels...\n");
     XTmrCtr_Start(&xTmrCtr_Inst, AXI_TIMER_CHANNEL_1);
     XTmrCtr_Start(&xTmrCtr_Inst, AXI_TIMER_CHANNEL_2);
 
     // Enable PWM if required
-    #if AXI_TIMER_PWM_TEST_SW
+#if AXI_TIMER_PWM_TEST_SW
+    xil_printf("Disabling PWM\n");
     XTmrCtr_PwmDisable(&xTmrCtr_Inst);
+    xil_printf("Enabling PWM\n");
     XTmrCtr_PwmEnable(&xTmrCtr_Inst);
-    #endif
+#endif
 
-    // Configure speed sensor register (assuming this is necessary for starting the sensor)
-    SPEED_SENSOR_mWriteReg(XPAR_SPEED_SENSOR_0_S00_AXI_BASEADDR, SPEED_SENSOR_S00_AXI_SLV_REG1_OFFSET, 0b1111);
-
-    // Main application loop
+    xil_printf("Entering Main Loop\n");
     while (1) {
-        // Sleep for a certain period - this could be adjusted based on how often you need to read the sensor
-        sleep_A9(1);
-
-        // Read the pulse count from the speed sensor
-        value = SPEED_SENSOR_mReadReg(XPAR_SPEED_SENSOR_0_S00_AXI_BASEADDR, SPEED_SENSOR_S00_AXI_SLV_REG2_OFFSET);
-        xil_printf("Pulses: [%u]\n\r", value);
+        // Main loop with delay for easier observation
+        usleep(1000000);  // 1 second delay
     }
 
     // Cleanup and exit (this part of the code will never be reached in a properly running embedded application)
+    xil_printf("Cleaning up Platform...\n");
     cleanup_platform();
     return 0;
 }
+
