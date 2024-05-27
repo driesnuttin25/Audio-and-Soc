@@ -1,210 +1,12 @@
-/*
- * made by: Dries Nuttin
- *
- * Welcome to my project for PXL-Digital System on chip
- * This project includes both code for the HC-SR04 ultrasonic sensor,
- * a joyit speed sensor and PWM signals for motor control.
- */
-
-
-/* -----------------------------------------------
- * | ULTRASOON                                    |
- * ----------------------------------------------*/
-
-#include <stdio.h>
-#include "platform.h"
-#include "xil_printf.h"
-#include "ultrasoon.h"
-#include "sleep.h"
-
-int main()
-{
-    init_platform();
-    unsigned int distance0;
-    unsigned int distance1;
-    print("HC_SR04 Test code in centimeters:\n");
-    print("=======================\n\r");
-
-    for(;;){
-    	sleep_A9(1);
-    	distance0 = ULTRASOON_mReadReg(XPAR_ULTRASOON_0_S00_AXI_BASEADDR,ULTRASOON_S00_AXI_SLV_REG2_OFFSET);
-    	distance1 = ULTRASOON_mReadReg(XPAR_ULTRASOON_1_S00_AXI_BASEADDR,ULTRASOON_S00_AXI_SLV_REG2_OFFSET);
-    	printf("Distance 1 = %d cm\n\r",distance0);
-    	printf("Distance 2 = %d cm\n\r",distance1);
-    	printf("\n\r");
-    }
-
-
-    cleanup_platform();
-    return 0;
-}
-
-
-
-
-
-/* -----------------------------------------------
- * | SPEED SENSOR 		                          |
- * ----------------------------------------------*/
-
-#include <stdio.h>
-#include "platform.h"
-#include "xil_printf.h"
-#include "sleep.h"
-#include "speed_sensor.h"
-
-int main()
-{
-    init_platform();
-    unsigned int value_1 = 0;
-    unsigned int value_2 = 0;
-    print("Speed Sensor test \n\r");
-	SPEED_SENSOR_mWriteReg(XPAR_SPEED_SENSOR_0_S00_AXI_BASEADDR,SPEED_SENSOR_S00_AXI_SLV_REG1_OFFSET,0b1111);
-	SPEED_SENSOR_mWriteReg(XPAR_SPEED_SENSOR_1_S00_AXI_BASEADDR,SPEED_SENSOR_S00_AXI_SLV_REG1_OFFSET,0b1111);
-
-
-    for(;;)
-    {
-    	sleep_A9(1);
-    	value_1 = SPEED_SENSOR_mReadReg(XPAR_SPEED_SENSOR_0_S00_AXI_BASEADDR,SPEED_SENSOR_S00_AXI_SLV_REG2_OFFSET);
-    	value_2 = SPEED_SENSOR_mReadReg(XPAR_SPEED_SENSOR_1_S00_AXI_BASEADDR,SPEED_SENSOR_S00_AXI_SLV_REG2_OFFSET);
-
-        printf("Pulses 2: [%d]\n\r",value_1);
-        printf("Pulses 1: [%d]\n\r\n\r",value_2);
-    }
-    cleanup_platform();
-    return 0;
-}
-
-
-
-
-
-/* -----------------------------------------------
- * | MOTOR CONTROL                                |
- * ----------------------------------------------*/
-
-
-#include "xparameters.h"
-#include "xtmrctr.h"
-#include "xscugic.h"
-#include "xil_exception.h"
-#include "xil_printf.h"
-#include "platform.h"
-
-// Definitions
-#define SCUGIC_DEVICE_ID        XPAR_SCUGIC_SINGLE_DEVICE_ID
-#define AXI_TIMER_DEVICE_ID     XPAR_AXI_TIMER_0_DEVICE_ID
-#define AXI_TIMER_IRPT_INTR     XPAR_FABRIC_AXI_TIMER_0_INTERRUPT_INTR
-
-#define AXI_TIMER_CHANNEL_1     0
-#define AXI_TIMER_CHANNEL_2     1
-
-#define AXI_TIMER_PERIOD_US     10000
-#define AXI_TIMER_PWM_HIGH_TIME_US 2000
-
-XTmrCtr TimerInstance;
-XScuGic IntcInstance;
-
-void TimerInterruptHandler(void *CallBackRef, u8 TmrCtrNumber) {
-    XTmrCtr *InstancePtr = (XTmrCtr *)CallBackRef;
-    xil_printf("AXI Timer Int! Channel: %d\n", TmrCtrNumber + 1);
-}
-
-u32 US_To_RegValue(u32 US) {
-    return 0xFFFFFFFF - (50 * US);
-}
-
-u32 US_To_NS(u32 US) {
-    return US * 1000;
-}
-
-int InitializeTimer(XTmrCtr *TimerPtr, u32 DeviceId) {
-    int Status, DutyCycle;
-
-    Status = XTmrCtr_Initialize(TimerPtr, DeviceId);
-    if (Status != XST_SUCCESS) return XST_FAILURE;
-
-    Status = XTmrCtr_SelfTest(TimerPtr, 1);
-    if (Status != XST_SUCCESS) return XST_FAILURE;
-
-    XTmrCtr_SetHandler(TimerPtr, TimerInterruptHandler, TimerPtr);
-    XTmrCtr_SetResetValue(TimerPtr, AXI_TIMER_CHANNEL_1, US_To_RegValue(AXI_TIMER_PERIOD_US));
-    XTmrCtr_SetResetValue(TimerPtr, AXI_TIMER_CHANNEL_2, US_To_RegValue(AXI_TIMER_PERIOD_US));
-    XTmrCtr_SetOptions(TimerPtr, AXI_TIMER_CHANNEL_1, XTC_INT_MODE_OPTION | XTC_AUTO_RELOAD_OPTION);
-    XTmrCtr_SetOptions(TimerPtr, AXI_TIMER_CHANNEL_2, XTC_INT_MODE_OPTION | XTC_AUTO_RELOAD_OPTION);
-
-    DutyCycle = XTmrCtr_PwmConfigure(TimerPtr, US_To_NS(AXI_TIMER_PERIOD_US), US_To_NS(AXI_TIMER_PWM_HIGH_TIME_US));
-    xil_printf("AXI Timer PWM DutyCycle: %d%%!\n", DutyCycle);
-
-    return XST_SUCCESS;
-}
-
-int InitializeInterruptSystem(XScuGic *IntcPtr, XTmrCtr *TimerPtr) {
-    int Status;
-    XScuGic_Config *IntcConfig;
-
-    IntcConfig = XScuGic_LookupConfig(SCUGIC_DEVICE_ID);
-    if (IntcConfig == NULL) return XST_FAILURE;
-
-    Status = XScuGic_CfgInitialize(IntcPtr, IntcConfig, IntcConfig->CpuBaseAddress);
-    if (Status != XST_SUCCESS) return XST_FAILURE;
-
-    Xil_ExceptionRegisterHandler(XIL_EXCEPTION_ID_INT, (Xil_ExceptionHandler)XScuGic_InterruptHandler, IntcPtr);
-    Xil_ExceptionEnable();
-
-    Status = XScuGic_Connect(IntcPtr, AXI_TIMER_IRPT_INTR, (Xil_ExceptionHandler)TimerInterruptHandler, TimerPtr);
-    if (Status != XST_SUCCESS) return XST_FAILURE;
-
-    XScuGic_Enable(IntcPtr, AXI_TIMER_IRPT_INTR);
-
-    return XST_SUCCESS;
-}
-
-int main() {
-    xil_printf("AXI Timer and PWM Test!\n");
-    init_platform();
-
-    if (InitializeTimer(&TimerInstance, AXI_TIMER_DEVICE_ID) != XST_SUCCESS) {
-        xil_printf("AXI Timer Initialization Failed!\n");
-        return XST_FAILURE;
-    }
-
-    if (InitializeInterruptSystem(&IntcInstance, &TimerInstance) != XST_SUCCESS) {
-        xil_printf("GIC Initialization Failed!\n");
-        return XST_FAILURE;
-    }
-
-    XTmrCtr_Start(&TimerInstance, AXI_TIMER_CHANNEL_1);
-    XTmrCtr_Start(&TimerInstance, AXI_TIMER_CHANNEL_2);
-
-    XTmrCtr_PwmEnable(&TimerInstance);
-
-    xil_printf("Entering Main Loop\n");
-    while (1) {
-        usleep(1000000);  // 1 second delay
-    }
-
-    cleanup_platform();
-    return 0;
-}
-
-
-
-
-
-FULL CODE MOTOR CONTROL
-
-
 #include "xparameters.h"
 #include "xgpio.h"
 #include "xtmrctr.h"
 #include "xscugic.h"
 #include "xil_exception.h"
-#include "xil_printf.h"
-#include "sleep.h"
+#include "ultrasoon.h"
+#include "speed_sensor.h"
 
-// Definitions for the GPIO
+/******************* GPIO DEFINITIONS *******************/
 #define GPIO_DEVICE_ID       XPAR_AXI_GPIO_0_DEVICE_ID
 #define GPIO_CHANNEL         1
 
@@ -216,7 +18,7 @@ FULL CODE MOTOR CONTROL
 
 XGpio Gpio; // GPIO driver instance
 
-// Definitions for the PWM
+/******************* PWM DEFINITIONS *******************/
 #define SCUGIC_DEVICE_ID        XPAR_SCUGIC_SINGLE_DEVICE_ID
 #define AXI_TIMER_DEVICE_ID     XPAR_AXI_TIMER_0_DEVICE_ID
 #define AXI_TIMER_IRPT_INTR     XPAR_FABRIC_AXI_TIMER_0_INTERRUPT_INTR
@@ -230,185 +32,235 @@ XScuGic xScuGic_Inst;
 #define AXI_TIMER_PWM_TEST_SW   1
 
 #define AXI_TIMER_PERIOD_US     10000
-#define AXI_TIMER_PWM_HIGH_TIME_US 5000
+#define AXI_TIMER_PWM_HIGH_TIME_US 7000
 
+/******************* ULTRASONIC AND SPEED SENSOR DEFINITIONS *******************/
+#define ULTRASONIC_BASEADDR_0   XPAR_ULTRASOON_0_S00_AXI_BASEADDR
+#define ULTRASONIC_BASEADDR_1   XPAR_ULTRASOON_1_S00_AXI_BASEADDR
+#define SPEED_SENSOR_BASEADDR_0 XPAR_SPEED_SENSOR_0_S00_AXI_BASEADDR
+#define SPEED_SENSOR_BASEADDR_1 XPAR_SPEED_SENSOR_1_S00_AXI_BASEADDR
+
+#define TURN_THRESHOLD_CM 25
+#define TURN_COUNT_THRESHOLD 2
+
+/******************* HELPER FUNCTIONS *******************/
 void xTmrCtr_Int_Handler(void *CallBackRef, u8 TmrCtrNumber) {
     XTmrCtr *InstancePtr = (XTmrCtr *)CallBackRef;
-    //xil_printf("AXI Timer Int! Channel: %d\n", TmrCtrNumber + 1);
     u32 CounterValue = XTmrCtr_GetValue(InstancePtr, TmrCtrNumber);
-    //xil_printf("Current Timer Value (Channel %d): %u\n", TmrCtrNumber + 1, CounterValue);
 }
 
 u32 xTmr_US_To_RegValue(u32 US) {
-    u32 Value;
-    Value = 50 * US;
-    //xil_printf("xTmr_US_To_RegValue: US = %d, Value = %u\n", US, Value);
-    return 0xFFFFFFFF - Value;
+    return 0xFFFFFFFF - (50 * US);
 }
 
 u32 xTmr_US_To_NS(u32 US) {
-    //xil_printf("xTmr_US_To_NS: US = %d\n", US);
     return US * 1000;
 }
 
+/******************* PWM CONTROLLER *******************/
 int xTmrCtr_Init(XTmrCtr *xTmrCtr_Ptr, u32 DeviceId) {
     int Status, DutyCycle;
-    //xil_printf("Initializing AXI Timer...\n");
 
     Status = XTmrCtr_Initialize(xTmrCtr_Ptr, DeviceId);
     if (Status != XST_SUCCESS) {
-        xil_printf("XTmrCtr_Initialize failed\n");
         return XST_FAILURE;
     }
 
     Status = XTmrCtr_SelfTest(xTmrCtr_Ptr, 2 - 1);
     if (Status != XST_SUCCESS) {
-        xil_printf("XTmrCtr_SelfTest failed\n");
         return XST_FAILURE;
     }
 
-    xil_printf("Setting Timer Handler\n");
     XTmrCtr_SetHandler(xTmrCtr_Ptr, xTmrCtr_Int_Handler, xTmrCtr_Ptr);
-
-    xil_printf("Setting Reset Values\n");
     XTmrCtr_SetResetValue(xTmrCtr_Ptr, AXI_TIMER_CHANNEL_1, xTmr_US_To_RegValue(AXI_TIMER_PERIOD_US));
     XTmrCtr_SetResetValue(xTmrCtr_Ptr, AXI_TIMER_CHANNEL_2, xTmr_US_To_RegValue(AXI_TIMER_PERIOD_US));
-
-    xil_printf("Setting Timer Options\n");
     XTmrCtr_SetOptions(xTmrCtr_Ptr, AXI_TIMER_CHANNEL_1, XTC_INT_MODE_OPTION | XTC_AUTO_RELOAD_OPTION);
     XTmrCtr_SetOptions(xTmrCtr_Ptr, AXI_TIMER_CHANNEL_2, XTC_INT_MODE_OPTION | XTC_AUTO_RELOAD_OPTION);
 
 #if AXI_TIMER_PWM_TEST_SW
-    xil_printf("Configuring PWM\n");
     DutyCycle = XTmrCtr_PwmConfigure(xTmrCtr_Ptr, xTmr_US_To_NS(AXI_TIMER_PERIOD_US), xTmr_US_To_NS(AXI_TIMER_PWM_HIGH_TIME_US));
-    xil_printf("AXI Timer PWM DutyCycle: %d%%!\n", DutyCycle);
 #endif
 
-    xil_printf("AXI Timer Initialized Successfully\n");
     return XST_SUCCESS;
 }
 
+void SetMotorSpeed(int high_time_us) {
+    XTmrCtr_SetResetValue(&xTmrCtr_Inst, AXI_TIMER_CHANNEL_2, xTmr_US_To_RegValue(high_time_us));
+}
+
+/******************* INTERRUPT CONTROLLER *******************/
 int xScuGic_Init(XScuGic *ScuGic_Ptr, XTmrCtr *xTmrCtr_Ptr) {
     int Status;
     XScuGic_Config *intc_cfg_ptr;
 
-    xil_printf("Initializing GIC...\n");
     intc_cfg_ptr = XScuGic_LookupConfig(SCUGIC_DEVICE_ID);
     if (intc_cfg_ptr == NULL) {
-        xil_printf("XScuGic_LookupConfig failed\n");
         return XST_FAILURE;
     }
 
     Status = XScuGic_CfgInitialize(ScuGic_Ptr, intc_cfg_ptr, intc_cfg_ptr->CpuBaseAddress);
     if (Status != XST_SUCCESS) {
-        xil_printf("XScuGic_CfgInitialize failed\n");
         return XST_FAILURE;
     }
 
-    xil_printf("Registering Exception Handler\n");
     Xil_ExceptionRegisterHandler(XIL_EXCEPTION_ID_INT, (Xil_ExceptionHandler)XScuGic_InterruptHandler, ScuGic_Ptr);
     Xil_ExceptionEnable();
 
-    xil_printf("Connecting Timer Interrupt\n");
     Status = XScuGic_Connect(ScuGic_Ptr, AXI_TIMER_IRPT_INTR, (Xil_ExceptionHandler)XTmrCtr_InterruptHandler, (void *)xTmrCtr_Ptr);
     if (Status != XST_SUCCESS) {
-        xil_printf("XScuGic_Connect failed\n");
         return XST_FAILURE;
     }
 
-    xil_printf("Enabling Timer Interrupt in GIC\n");
     XScuGic_Enable(ScuGic_Ptr, AXI_TIMER_IRPT_INTR);
 
-    xil_printf("GIC Initialized Successfully\n");
     return XST_SUCCESS;
 }
 
+/******************* MOTOR CONTROL *******************/
 void Motor_Forward() {
-    xil_printf("Motor Forward\n");
-    XGpio_DiscreteWrite(&Gpio, GPIO_CHANNEL, (1 << IN1_PIN) | (1 << IN4_PIN)); // IN1 and IN3 high, IN2 and IN4 low
-    xil_printf("GPIO Output: %x\n", (1 << IN1_PIN) | (1 << IN3_PIN));
+    XGpio_DiscreteWrite(&Gpio, GPIO_CHANNEL, (1 << IN2_PIN) | (1 << IN3_PIN));
 }
 
 void Motor_Right() {
-    xil_printf("Motor Right\n");
-    XGpio_DiscreteWrite(&Gpio, GPIO_CHANNEL, (1 << IN1_PIN) | (1 << IN3_PIN)); // IN1 and IN2 high, IN3 and IN4 low
-    xil_printf("GPIO Output: %x\n", (1 << IN1_PIN) | (1 << IN2_PIN));
+    XGpio_DiscreteWrite(&Gpio, GPIO_CHANNEL, (1 << IN1_PIN) | (1 << IN3_PIN));
 }
 
 void Motor_Left() {
-    xil_printf("Motor Left\n");
-    XGpio_DiscreteWrite(&Gpio, GPIO_CHANNEL, (1 << IN2_PIN) | (1 << IN4_PIN)); // IN2 and IN4 high, IN1 and IN3 low
-    xil_printf("GPIO Output: %x\n", (1 << IN2_PIN) | (1 << IN4_PIN));
+    XGpio_DiscreteWrite(&Gpio, GPIO_CHANNEL, (1 << IN2_PIN) | (1 << IN4_PIN));
 }
 
+/******************* ULTRASONIC SENSOR *******************/
+void Ultrasonic_Init() {}
+
+unsigned int Get_Ultrasonic_Distance_0() {
+    return ULTRASOON_mReadReg(ULTRASONIC_BASEADDR_0, ULTRASOON_S00_AXI_SLV_REG2_OFFSET);
+}
+
+unsigned int Get_Ultrasonic_Distance_1() {
+    return ULTRASOON_mReadReg(ULTRASONIC_BASEADDR_1, ULTRASOON_S00_AXI_SLV_REG2_OFFSET);
+}
+
+/******************* SPEED SENSOR *******************/
+void Speed_Sensor_Init() {
+    SPEED_SENSOR_mWriteReg(SPEED_SENSOR_BASEADDR_0, SPEED_SENSOR_S00_AXI_SLV_REG1_OFFSET, 0b1111);
+    SPEED_SENSOR_mWriteReg(SPEED_SENSOR_BASEADDR_1, SPEED_SENSOR_S00_AXI_SLV_REG1_OFFSET, 0b1111);
+}
+
+unsigned int Get_Speed_Sensor_Value_0() {
+    return SPEED_SENSOR_mReadReg(SPEED_SENSOR_BASEADDR_0, SPEED_SENSOR_S00_AXI_SLV_REG2_OFFSET);
+}
+
+unsigned int Get_Speed_Sensor_Value_1() {
+    return SPEED_SENSOR_mReadReg(SPEED_SENSOR_BASEADDR_1, SPEED_SENSOR_S00_AXI_SLV_REG2_OFFSET);
+}
+
+/******************* TURNING FUNCTIONS *******************/
+void Turn_Right_Pulses(int pulses) {
+    int count = 0;
+    while (count < pulses) {
+        XGpio_DiscreteWrite(&Gpio, GPIO_CHANNEL, (1 << IN1_PIN) | (1 << IN3_PIN)); // Correct GPIO output for right turn
+        count++;
+        usleep(100000);
+    }
+}
+
+void Turn_Left_Pulses(int pulses) {
+    int initial_pulse_count_1 = Get_Speed_Sensor_Value_1();
+    while (Get_Speed_Sensor_Value_1() < initial_pulse_count_1 + pulses) {
+        Motor_Left();
+        if (Get_Ultrasonic_Distance_0() < 15 || Get_Ultrasonic_Distance_1() < 15) {
+            Motor_Forward();
+            initial_pulse_count_1 = Get_Speed_Sensor_Value_1();
+        }
+    }
+}
+
+/******************* MAIN FUNCTION *******************/
 int main() {
     int Status;
-
-    xil_printf("Motor Driver Test Program\n");
 
     // Initialize the platform
     init_platform();
 
     // Initialize the GPIO driver
-    xil_printf("Initializing GPIO...\n");
     Status = XGpio_Initialize(&Gpio, GPIO_DEVICE_ID);
     if (Status != XST_SUCCESS) {
-        xil_printf("GPIO initialization failed\n");
         return XST_FAILURE;
     }
 
     // Set the direction for the specified pins and enable output
-    XGpio_SetDataDirection(&Gpio, GPIO_CHANNEL, ~(1 << IN1_PIN | 1 << IN2_PIN | 1 << IN3_PIN | 1 << IN4_PIN)); // Set IN1, IN2, IN3, IN4 as output
+    XGpio_SetDataDirection(&Gpio, GPIO_CHANNEL, ~(1 << IN1_PIN | 1 << IN2_PIN | 1 << IN3_PIN | 1 << IN4_PIN));
 
     // Initialize and start the PWM timer
-    xil_printf("Initializing Timer...\n");
     Status = xTmrCtr_Init(&xTmrCtr_Inst, AXI_TIMER_DEVICE_ID);
     if (Status != XST_SUCCESS) {
-        xil_printf("AXI Timer Init Error!\n");
         return XST_FAILURE;
     }
 
     // Initialize the GIC for the timer interrupt
-    xil_printf("Initializing GIC...\n");
     Status = xScuGic_Init(&xScuGic_Inst, &xTmrCtr_Inst);
     if (Status != XST_SUCCESS) {
-        xil_printf("GIC Init Error!\n");
         return XST_FAILURE;
     }
 
     // Start the PWM channels
-    xil_printf("Starting Timer Channels...\n");
     XTmrCtr_Start(&xTmrCtr_Inst, AXI_TIMER_CHANNEL_1);
     XTmrCtr_Start(&xTmrCtr_Inst, AXI_TIMER_CHANNEL_2);
 
     // Enable PWM if required
 #if AXI_TIMER_PWM_TEST_SW
-    xil_printf("Disabling PWM\n");
     XTmrCtr_PwmDisable(&xTmrCtr_Inst);
-    xil_printf("Enabling PWM\n");
     XTmrCtr_PwmEnable(&xTmrCtr_Inst);
 #endif
 
-    // Test motor functions
-    xil_printf("Entering Main Loop\n");
+    // Initialize sensors
+    Ultrasonic_Init();
+    Speed_Sensor_Init();
+
+    // Main loop
+    Motor_Forward();
+    int belowThresholdCount = 0;
     while (1) {
-        // Main loop
-        Motor_Forward();
-        sleep(2);
+        // Read distances from ultrasonic sensors
+        int distance0 = ULTRASOON_mReadReg(XPAR_ULTRASOON_0_S00_AXI_BASEADDR, ULTRASOON_S00_AXI_SLV_REG2_OFFSET);
+        int distance1 = ULTRASOON_mReadReg(XPAR_ULTRASOON_1_S00_AXI_BASEADDR, ULTRASOON_S00_AXI_SLV_REG2_OFFSET);
 
-        Motor_Left();
-        sleep(2);
+        // Print distances
+        xil_printf("Distance 0: %d cm, Distance 1: %d cm\n", distance0, distance1);
 
-        Motor_Right();
-        sleep(2);
+        // Filter out invalid readings (e.g., very small values when the sensor is blocked)
+        if (distance0 < 5) distance0 = 1000;
+        if (distance1 < 5) distance1 = 1000;
 
-        usleep(1000000);  // 1 second delay
+        // Check for obstacles with filtering
+        if (distance0 < TURN_THRESHOLD_CM || distance1 < TURN_THRESHOLD_CM) {
+            belowThresholdCount++;
+            if (belowThresholdCount >= TURN_COUNT_THRESHOLD) {
+                if (distance0 < TURN_THRESHOLD_CM) {
+                    xil_printf("Object detected by left sensor! Turning right.\n");
+                    Turn_Right_Pulses(15);
+                } else if (distance1 < TURN_THRESHOLD_CM) {
+                    xil_printf("Object detected by right sensor! Turning left.\n");
+                    Turn_Left_Pulses(15);
+                }
+                belowThresholdCount = 0; // Reset counter after turning
+            }
+        } else if ((distance0 >= 25 && distance0 <= 50) || (distance1 >= 25 && distance1 <= 50)) {
+            xil_printf("Object detected within 50 cm to 25 cm range! Slowing down.\n");
+            // Slow down the car by reducing the PWM duty cycle
+            SetMotorSpeed(AXI_TIMER_PWM_HIGH_TIME_US / 2);
+        } else {
+            belowThresholdCount = 0; // Reset counter if no obstacle is detected
+            // Set normal speed
+            SetMotorSpeed(AXI_TIMER_PWM_HIGH_TIME_US);
+            Motor_Forward();
+        }
+
+        // Small delay
+        usleep(100000);  // 100 milliseconds
     }
 
-    // Cleanup and exit (this part of the code will never be reached in a properly running embedded application)
-    xil_printf("Cleaning up Platform...\n");
+    // Cleanup and exit
     cleanup_platform();
     return 0;
 }
-
-
