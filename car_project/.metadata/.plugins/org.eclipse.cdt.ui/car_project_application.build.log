@@ -1,0 +1,44 @@
+18:08:52 **** Incremental Build of configuration Debug for project car_project_application ****
+make all 
+make --no-print-directory pre-build
+a9-linaro-pre-build-step
+' '
+make --no-print-directory main-build
+'Building file: ../src/helloworld.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/helloworld.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -IC:/Users/dries/car_project/design_1_wrapper/export/design_1_wrapper/sw/design_1_wrapper/standalone_ps7_cortexa9_0/bspinclude/include -MMD -MP -MF"src/helloworld.d" -MT"src/helloworld.o" -o "src/helloworld.o" "../src/helloworld.c"
+../src/helloworld.c: In function 'xTmrCtr_Int_Handler':
+../src/helloworld.c:49:9: warning: unused variable 'CounterValue' [-Wunused-variable]
+   49 |     u32 CounterValue = XTmrCtr_GetValue(InstancePtr, TmrCtrNumber);
+      |         ^~~~~~~~~~~~
+../src/helloworld.c: In function 'xTmrCtr_Init':
+../src/helloworld.c:62:17: warning: variable 'DutyCycle' set but not used [-Wunused-but-set-variable]
+   62 |     int Status, DutyCycle;
+      |                 ^~~~~~~~~
+../src/helloworld.c: In function 'Turn_Right_Pulses':
+../src/helloworld.c:163:9: warning: implicit declaration of function 'usleep' [-Wimplicit-function-declaration]
+  163 |         usleep(100000);
+      |         ^~~~~~
+../src/helloworld.c: In function 'main':
+../src/helloworld.c:184:5: warning: implicit declaration of function 'init_platform' [-Wimplicit-function-declaration]
+  184 |     init_platform();
+      |     ^~~~~~~~~~~~~
+../src/helloworld.c:265:5: warning: implicit declaration of function 'cleanup_platform' [-Wimplicit-function-declaration]
+  265 |     cleanup_platform();
+      |     ^~~~~~~~~~~~~~~~
+'Finished building: ../src/helloworld.c'
+' '
+'Building target: car_project_application.elf'
+'Invoking: ARM v7 gcc linker'
+arm-none-eabi-gcc -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec -Wl,-T -Wl,../src/lscript.ld -LC:/Users/dries/car_project/design_1_wrapper/export/design_1_wrapper/sw/design_1_wrapper/standalone_ps7_cortexa9_0/bsplib/lib -o "car_project_application.elf"  ./src/helloworld.o ./src/platform.o   -Wl,--start-group,-lxil,-lgcc,-lc,--end-group
+'Finished building target: car_project_application.elf'
+' '
+'Invoking: ARM v7 Print Size'
+arm-none-eabi-size car_project_application.elf  |tee "car_project_application.elf.size"
+   text	   data	    bss	    dec	    hex	filename
+  33599	   1960	  22672	  58231	   e377	car_project_application.elf
+'Finished building: car_project_application.elf.size'
+' '
+
+18:08:54 Build Finished (took 1s.944ms)
+

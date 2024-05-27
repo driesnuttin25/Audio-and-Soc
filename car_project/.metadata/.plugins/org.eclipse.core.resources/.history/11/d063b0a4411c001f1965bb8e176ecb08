@@ -1,0 +1,250 @@
+#include "xparameters.h"
+#include "xgpio.h"
+#include "xtmrctr.h"
+#include "xscugic.h"
+#include "xil_exception.h"
+#include "ultrasoon.h"
+#include "speed_sensor.h"
+
+// Definitions for the GPIO
+#define GPIO_DEVICE_ID       XPAR_AXI_GPIO_0_DEVICE_ID
+#define GPIO_CHANNEL         1
+
+// GPIO pin numbers based on the constraints file
+#define IN1_PIN              0 // GPIO_0_tri_io[0] is connected to pin Y11
+#define IN2_PIN              1 // GPIO_0_tri_io[1] is connected to pin Y12
+#define IN3_PIN              2 // GPIO_0_tri_io[2] is connected to pin W11
+#define IN4_PIN              3 // GPIO_0_tri_io[3] is connected to pin V11
+
+XGpio Gpio; // GPIO driver instance
+
+// Definitions for the PWM
+#define SCUGIC_DEVICE_ID        XPAR_SCUGIC_SINGLE_DEVICE_ID
+#define AXI_TIMER_DEVICE_ID     XPAR_AXI_TIMER_0_DEVICE_ID
+#define AXI_TIMER_IRPT_INTR     XPAR_FABRIC_AXI_TIMER_0_INTERRUPT_INTR
+
+XTmrCtr xTmrCtr_Inst;
+XScuGic xScuGic_Inst;
+
+#define AXI_TIMER_CHANNEL_1     0
+#define AXI_TIMER_CHANNEL_2     1
+
+#define AXI_TIMER_PWM_TEST_SW   1
+
+#define AXI_TIMER_PERIOD_US     10000
+#define AXI_TIMER_PWM_HIGH_TIME_US 7000
+
+#define ULTRASONIC_BASEADDR_0   XPAR_ULTRASOON_0_S00_AXI_BASEADDR
+#define ULTRASONIC_BASEADDR_1   XPAR_ULTRASOON_1_S00_AXI_BASEADDR
+#define SPEED_SENSOR_BASEADDR_0 XPAR_SPEED_SENSOR_0_S00_AXI_BASEADDR
+#define SPEED_SENSOR_BASEADDR_1 XPAR_SPEED_SENSOR_1_S00_AXI_BASEADDR
+
+#define TURN_THRESHOLD_CM 25
+#define TURN_COUNT_THRESHOLD 2
+
+void xTmrCtr_Int_Handler(void *CallBackRef, u8 TmrCtrNumber) {
+    XTmrCtr *InstancePtr = (XTmrCtr *)CallBackRef;
+    u32 CounterValue = XTmrCtr_GetValue(InstancePtr, TmrCtrNumber);
+}
+
+u32 xTmr_US_To_RegValue(u32 US) {
+    return 0xFFFFFFFF - (50 * US);
+}
+
+u32 xTmr_US_To_NS(u32 US) {
+    return US * 1000;
+}
+
+int xTmrCtr_Init(XTmrCtr *xTmrCtr_Ptr, u32 DeviceId) {
+    int Status, DutyCycle;
+
+    Status = XTmrCtr_Initialize(xTmrCtr_Ptr, DeviceId);
+    if (Status != XST_SUCCESS) {
+        return XST_FAILURE;
+    }
+
+    Status = XTmrCtr_SelfTest(xTmrCtr_Ptr, 2 - 1);
+    if (Status != XST_SUCCESS) {
+        return XST_FAILURE;
+    }
+
+    XTmrCtr_SetHandler(xTmrCtr_Ptr, xTmrCtr_Int_Handler, xTmrCtr_Ptr);
+    XTmrCtr_SetResetValue(xTmrCtr_Ptr, AXI_TIMER_CHANNEL_1, xTmr_US_To_RegValue(AXI_TIMER_PERIOD_US));
+    XTmrCtr_SetResetValue(xTmrCtr_Ptr, AXI_TIMER_CHANNEL_2, xTmr_US_To_RegValue(AXI_TIMER_PERIOD_US));
+    XTmrCtr_SetOptions(xTmrCtr_Ptr, AXI_TIMER_CHANNEL_1, XTC_INT_MODE_OPTION | XTC_AUTO_RELOAD_OPTION);
+    XTmrCtr_SetOptions(xTmrCtr_Ptr, AXI_TIMER_CHANNEL_2, XTC_INT_MODE_OPTION | XTC_AUTO_RELOAD_OPTION);
+
+#if AXI_TIMER_PWM_TEST_SW
+    DutyCycle = XTmrCtr_PwmConfigure(xTmrCtr_Ptr, xTmr_US_To_NS(AXI_TIMER_PERIOD_US), xTmr_US_To_NS(AXI_TIMER_PWM_HIGH_TIME_US));
+#endif
+
+    return XST_SUCCESS;
+}
+
+int xScuGic_Init(XScuGic *ScuGic_Ptr, XTmrCtr *xTmrCtr_Ptr) {
+    int Status;
+    XScuGic_Config *intc_cfg_ptr;
+
+    intc_cfg_ptr = XScuGic_LookupConfig(SCUGIC_DEVICE_ID);
+    if (intc_cfg_ptr == NULL) {
+        return XST_FAILURE;
+    }
+
+    Status = XScuGic_CfgInitialize(ScuGic_Ptr, intc_cfg_ptr, intc_cfg_ptr->CpuBaseAddress);
+    if (Status != XST_SUCCESS) {
+        return XST_FAILURE;
+    }
+
+    Xil_ExceptionRegisterHandler(XIL_EXCEPTION_ID_INT, (Xil_ExceptionHandler)XScuGic_InterruptHandler, ScuGic_Ptr);
+    Xil_ExceptionEnable();
+
+    Status = XScuGic_Connect(ScuGic_Ptr, AXI_TIMER_IRPT_INTR, (Xil_ExceptionHandler)XTmrCtr_InterruptHandler, (void *)xTmrCtr_Ptr);
+    if (Status != XST_SUCCESS) {
+        return XST_FAILURE;
+    }
+
+    XScuGic_Enable(ScuGic_Ptr, AXI_TIMER_IRPT_INTR);
+
+    return XST_SUCCESS;
+}
+
+void Motor_Forward() {
+    XGpio_DiscreteWrite(&Gpio, GPIO_CHANNEL, (1 << IN2_PIN) | (1 << IN3_PIN));
+}
+
+void Motor_Right() {
+    XGpio_DiscreteWrite(&Gpio, GPIO_CHANNEL, (1 << IN1_PIN) | (1 << IN3_PIN));
+}
+
+void Motor_Left() {
+    XGpio_DiscreteWrite(&Gpio, GPIO_CHANNEL, (1 << IN2_PIN) | (1 << IN4_PIN));
+}
+
+void Ultrasonic_Init() {}
+
+unsigned int Get_Ultrasonic_Distance_0() {
+    return ULTRASOON_mReadReg(ULTRASONIC_BASEADDR_0, ULTRASOON_S00_AXI_SLV_REG2_OFFSET);
+}
+
+unsigned int Get_Ultrasonic_Distance_1() {
+    return ULTRASOON_mReadReg(ULTRASONIC_BASEADDR_1, ULTRASOON_S00_AXI_SLV_REG2_OFFSET);
+}
+
+void Speed_Sensor_Init() {
+    SPEED_SENSOR_mWriteReg(SPEED_SENSOR_BASEADDR_0, SPEED_SENSOR_S00_AXI_SLV_REG1_OFFSET, 0b1111);
+    SPEED_SENSOR_mWriteReg(SPEED_SENSOR_BASEADDR_1, SPEED_SENSOR_S00_AXI_SLV_REG1_OFFSET, 0b1111);
+}
+
+unsigned int Get_Speed_Sensor_Value_0() {
+    return SPEED_SENSOR_mReadReg(SPEED_SENSOR_BASEADDR_0, SPEED_SENSOR_S00_AXI_SLV_REG2_OFFSET);
+}
+
+unsigned int Get_Speed_Sensor_Value_1() {
+    return SPEED_SENSOR_mReadReg(SPEED_SENSOR_BASEADDR_1, SPEED_SENSOR_S00_AXI_SLV_REG2_OFFSET);
+}
+
+void Turn_Right_Pulses(int pulses) {
+    int count = 0;
+    while (count < pulses) {
+        XGpio_DiscreteWrite(&Gpio, GPIO_CHANNEL, (1 << IN1_PIN) | (1 << IN3_PIN)); // Correct GPIO output for right turn
+        count++;
+        usleep(100000);
+    }
+}
+
+
+void Turn_Left_Pulses(int pulses) {
+    int initial_pulse_count_1 = Get_Speed_Sensor_Value_1();
+    while (Get_Speed_Sensor_Value_1() < initial_pulse_count_1 + pulses) {
+        Motor_Left();
+        if (Get_Ultrasonic_Distance_0() < 15 || Get_Ultrasonic_Distance_1() < 15) {
+            Motor_Forward();
+            initial_pulse_count_1 = Get_Speed_Sensor_Value_1();
+        }
+    }
+}
+
+int main() {
+    int Status;
+
+    // Initialize the platform
+    init_platform();
+
+    // Initialize the GPIO driver
+    Status = XGpio_Initialize(&Gpio, GPIO_DEVICE_ID);
+    if (Status != XST_SUCCESS) {
+        return XST_FAILURE;
+    }
+
+    // Set the direction for the specified pins and enable output
+    XGpio_SetDataDirection(&Gpio, GPIO_CHANNEL, ~(1 << IN1_PIN | 1 << IN2_PIN | 1 << IN3_PIN | 1 << IN4_PIN));
+
+    // Initialize and start the PWM timer
+    Status = xTmrCtr_Init(&xTmrCtr_Inst, AXI_TIMER_DEVICE_ID);
+    if (Status != XST_SUCCESS) {
+        return XST_FAILURE;
+    }
+
+    // Initialize the GIC for the timer interrupt
+    Status = xScuGic_Init(&xScuGic_Inst, &xTmrCtr_Inst);
+    if (Status != XST_SUCCESS) {
+        return XST_FAILURE;
+    }
+
+    // Start the PWM channels
+    XTmrCtr_Start(&xTmrCtr_Inst, AXI_TIMER_CHANNEL_1);
+    XTmrCtr_Start(&xTmrCtr_Inst, AXI_TIMER_CHANNEL_2);
+
+    // Enable PWM if required
+#if AXI_TIMER_PWM_TEST_SW
+    XTmrCtr_PwmDisable(&xTmrCtr_Inst);
+    XTmrCtr_PwmEnable(&xTmrCtr_Inst);
+#endif
+
+    // Initialize sensors
+    Ultrasonic_Init();
+    Speed_Sensor_Init();
+
+    // Main loop
+    Motor_Forward();
+    int belowThresholdCount = 0;
+    while (1) {
+        // Read distances from ultrasonic sensors
+        int distance0 = ULTRASOON_mReadReg(XPAR_ULTRASOON_0_S00_AXI_BASEADDR, ULTRASOON_S00_AXI_SLV_REG2_OFFSET);
+        int distance1 = ULTRASOON_mReadReg(XPAR_ULTRASOON_1_S00_AXI_BASEADDR, ULTRASOON_S00_AXI_SLV_REG2_OFFSET);
+
+        // Print distances
+        xil_printf("Distance 0: %d cm, Distance 1: %d cm\n", distance0, distance1);
+
+        // Check for obstacles with filtering
+        if (distance0 < TURN_THRESHOLD_CM || distance1 < TURN_THRESHOLD_CM) {
+            belowThresholdCount++;
+            if (belowThresholdCount >= TURN_COUNT_THRESHOLD) {
+                if (distance0 < TURN_THRESHOLD_CM) {
+                    xil_printf("Object detected by left sensor! Turning right.\n");
+                    Turn_Right_Pulses(15);
+                } else if (distance1 < TURN_THRESHOLD_CM) {
+                    xil_printf("Object detected by right sensor! Turning left.\n");
+                    Turn_Left_Pulses(15);
+                }
+                belowThresholdCount = 0; // Reset counter after turning
+            }
+        } else if ((distance0 >= 25 && distance0 <= 50) || (distance1 >= 25 && distance1 <= 50)) {
+            xil_printf("Object detected within 50 cm to 25 cm range! Slowing down.\n");
+            // Code to slow down the car, e.g., reducing the PWM duty cycle
+            XTmrCtr_SetResetValue(&xTmrCtr_Inst, AXI_TIMER_CHANNEL_2, xTmr_US_To_RegValue(AXI_TIMER_PWM_HIGH_TIME_US / 2));
+        } else {
+            belowThresholdCount = 0; // Reset counter if no obstacle is detected
+            // Code to set normal speed
+            XTmrCtr_SetResetValue(&xTmrCtr_Inst, AXI_TIMER_CHANNEL_2, xTmr_US_To_RegValue(AXI_TIMER_PWM_HIGH_TIME_US));
+            Motor_Forward();
+        }
+
+        // Small delay
+        usleep(100000);  // 100 milliseconds
+    }
+
+    // Cleanup and exit
+    cleanup_platform();
+    return 0;
+}
