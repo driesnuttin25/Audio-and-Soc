@@ -179,8 +179,11 @@ void Turn_Left_Pulses(int pulses) {
 int main() {
     int Status;
 
+    // Initialize the platform
+
     init_platform();
 
+    // Initialize the GPIO driver
     Status = XGpio_Initialize(&Gpio, GPIO_DEVICE_ID);
     if (Status != XST_SUCCESS) {
         return XST_FAILURE;
@@ -189,11 +192,13 @@ int main() {
     // Set the direction for the specified pins and enable output
     XGpio_SetDataDirection(&Gpio, GPIO_CHANNEL, ~(1 << IN1_PIN | 1 << IN2_PIN | 1 << IN3_PIN | 1 << IN4_PIN));
 
+    // Initialize and start the PWM timer
     Status = xTmrCtr_Init(&xTmrCtr_Inst, AXI_TIMER_DEVICE_ID);
     if (Status != XST_SUCCESS) {
         return XST_FAILURE;
     }
 
+    // Initialize the GIC for the timer interrupt
     Status = xScuGic_Init(&xScuGic_Inst, &xTmrCtr_Inst);
     if (Status != XST_SUCCESS) {
         return XST_FAILURE;
@@ -203,6 +208,7 @@ int main() {
     XTmrCtr_Start(&xTmrCtr_Inst, AXI_TIMER_CHANNEL_1);
     XTmrCtr_Start(&xTmrCtr_Inst, AXI_TIMER_CHANNEL_2);
 
+    // Enable PWM if required
 #if AXI_TIMER_PWM_TEST_SW
     XTmrCtr_PwmDisable(&xTmrCtr_Inst);
     XTmrCtr_PwmEnable(&xTmrCtr_Inst);
@@ -212,6 +218,7 @@ int main() {
     Ultrasonic_Init();
     Speed_Sensor_Init();
 
+    // Main loop
     Motor_Forward();
     int belowThresholdCount = 0;
     while (1) {
@@ -219,9 +226,10 @@ int main() {
         int distance0 = ULTRASOON_mReadReg(XPAR_ULTRASOON_0_S00_AXI_BASEADDR, ULTRASOON_S00_AXI_SLV_REG2_OFFSET);
         int distance1 = ULTRASOON_mReadReg(XPAR_ULTRASOON_1_S00_AXI_BASEADDR, ULTRASOON_S00_AXI_SLV_REG2_OFFSET);
 
+        // Print distances
         xil_printf("Distance 0: %d cm, Distance 1: %d cm\n", distance0, distance1);
 
-        // Filter out invalid readings because at the moment the left wheel blocks when values get below 14
+        // Filter out invalid readings (e.g., very small values when the sensor is blocked)
         if (distance0 < 5) distance0 = 1000;
         if (distance1 < 5) distance1 = 1000;
 
@@ -240,7 +248,7 @@ int main() {
             }
         } else if ((distance0 >= 25 && distance0 <= 50) || (distance1 >= 25 && distance1 <= 50)) {
             xil_printf("Object detected within 50 cm to 25 cm range! Slowing down.\n");
-            // Slow down the car by reducing the PWM duty cycle, doesn't work yet somehow
+            // Slow down the car by reducing the PWM duty cycle
             SetMotorSpeed(AXI_TIMER_PWM_HIGH_TIME_US / 2);
         } else {
             belowThresholdCount = 0; // Reset counter if no obstacle is detected
